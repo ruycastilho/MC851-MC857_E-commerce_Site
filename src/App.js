@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import OptionsBar from './components/OptionsBar';
+import SearchBar from './components/SearchBar';
+import ProductList from './components/ProductList';
+import styled from 'styled-components';
+// import './App.css';
+
+const PageDiv = styled.div`
+    border:none;
+    float:left;
+    width:100%;
+
+`;
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Boas-vindas Ao E-Commerce!</h1>
-        </header>
-        <p className="App-intro">
-          Em Breve.
-        </p>
-      </div>
+      <PageDiv className="App" >
+        <Header/>
+        <OptionsBar />
+        <div >
+          <SearchBar />
+          <ProductList />
+        </div>
+        <Footer/>
+      </PageDiv>
     );
   }
 }
 
 export default App;
+
+// color:#9e1847;
