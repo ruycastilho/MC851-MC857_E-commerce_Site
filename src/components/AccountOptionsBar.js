@@ -3,19 +3,19 @@ import styled from 'styled-components';
 
 const OptionsDiv = styled.div`
     background-color: coral;
-    overflow:hidden;
-    margin-top: 80px;
-    height: 50px;
-    float:right;
-    width:75%;
-    -webkit-border-radius: 50px 0 0 50px;
-    -moz-border-radius: 50px 0 0 50px;
-    border-radius: 50px 0 0 50px;
-
-    border-bottom-style: inset;
     border-left-style: outset;
     border-width: 3px;
     border-color: silver;
+    overflow:hidden;
+    height: 100%;
+    float:right;
+    width:60%;
+    margin-top: 100px;
+    -webkit-border-radius: 50px 0 0 0;
+    -moz-border-radius: 50px 0 0 0;
+    border-radius: 50px 0 0 0;
+
+
 `;
 
 const Ul = styled.ul`
@@ -23,12 +23,13 @@ const Ul = styled.ul`
     margin: 0;
     padding: 0;
     width:100%;
+    height:100%;
     overflow: hidden;
     background-color: coral;
     text-align:center;
     display: flex;
     justify-content: space-around;
-  
+
 `;
 
 const Il = styled.li`
@@ -63,17 +64,16 @@ const Link = styled.a`
     }
 `;
 
-class OptionsBar extends Component {
+class AccountOptionsBar extends Component {
 
   render() {
     return (
       <OptionsDiv className="Header">
         <header className="Header">
            <Ul>
-            <Il><Link href="#Eletrodomesticos">Eletrodomésticos</Link></Il>
-            <Il><Link href="#Eletronics" active>Eletrônicos</Link></Il>
-            <Il><Link href="#Informatica">Informática</Link></Il>
-            <Il><Link href="#Livros">Livros</Link></Il>
+            <Il><Link href="#Configuracoes" active>Configurações</Link></Il>
+            <Il><Link href="#Pedidos">Pedidos</Link></Il>
+            <Il><Link href="#Tickets">Tickets</Link></Il>
            </Ul>
         </header>
       </OptionsDiv>
@@ -81,4 +81,4 @@ class OptionsBar extends Component {
   }
 }
 
-export default OptionsBar;
+export default AccountOptionsBar;

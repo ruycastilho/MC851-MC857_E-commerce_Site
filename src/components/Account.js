@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import OptionsBar from './AccountOptionsBar';
 import styled from 'styled-components';
 
 const PageDiv = styled.div`
@@ -24,12 +25,12 @@ const MiddleDiv = styled.div`
 
 `;
 
-const TopDiv = styled.div`
+const TopDivLeft = styled.div`
     background-color: coral;
     border-bottom-style: inset;
     border-right-style: inset;
     border-width: 3px;
-    border-color: gray;
+    border-color: silver;
     overflow:hidden;
     height: 100%;
     float:left;
@@ -68,13 +69,12 @@ const Form = styled.form`
     padding: auto;
     color: oldlace;
     margin:0px
-    max-width:30%;
+    max-width:40%;
     position:relative;
     top:5%;
     left:20%;
     max-height: 100%;
-    display: flex;
-    flex-direction: column;
+
 `;
 
 const Input = styled.input`
@@ -102,26 +102,35 @@ const SubmitInput = styled.input`
     -moz-border-radius: 30px;
     border-radius: 30px;
     font-size: 1.5 em;
+    float:right;
 `;
 
-class Signup extends Component {
+const CriticalInput = SubmitInput.extend`
+    background: red;
+    border: none;
+
+`;
+
+class Account extends Component {
   render() {
     return (
-      <PageDiv className="Signup" >
+      <PageDiv className="Account" >
         <Header/>
-        <TopDiv>
-            <Title>Cadastro</Title>
-        </TopDiv>
+        <TopDivLeft>
+            <Title>Conta</Title>
+        </TopDivLeft>
+        <OptionsBar/>
         <MiddleDiv >
             <Form>
                 <LabelText>Nome</LabelText>
-                <Input type="text" placeholder="Digite um nome" ></Input>
+                <Input type="text" placeholder="seunome" ></Input>
+                <CriticalInput type="submit" value="Remover Conta"></CriticalInput>      
                 <LabelText>Senha</LabelText>
-                <Input type="password" placeholder="Digite uma senha" ></Input>
+                <Input type="password" placeholder="****" ></Input>
                 <LabelText>E-mail</LabelText>
-                <Input type="text" placeholder="Digite um e-mail" ></Input>
-                <SubmitInput type="submit" value="Cadastrar"></SubmitInput> 
-            </Form>
+                <Input type="text" placeholder="seuemail@mail.com" ></Input>
+                <SubmitInput type="submit" value="Salvar Alterações"></SubmitInput>      
+                <SubmitInput type="submit" value="Cancelar"></SubmitInput>             </Form>
         </MiddleDiv>
         <Footer/>
       </PageDiv>
@@ -129,6 +138,6 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Account;
 
 // color:#9e1847;

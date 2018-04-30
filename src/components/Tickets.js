@@ -41,6 +41,18 @@ const TopDiv = styled.div`
 
 `;
 
+const SelectDiv = styled.div`
+    background-color: transparent;
+    border:none;
+    overflow:hidden;
+    padding:5px;
+    height: 10%;
+    float:left;
+    width:100%;
+    display: flex;
+    justify-content: left;
+`;
+
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1em;
@@ -65,21 +77,28 @@ const LabelText = Text.extend`
 
 const Form = styled.form`
     font-family: 'Ubuntu', sans-serif;
-    padding: auto;
+    padding:5px;
     color: oldlace;
-    margin:0px
-    max-width:30%;
-    position:relative;
-    top:5%;
-    left:20%;
+    max-width:80%;
     max-height: 100%;
-    display: flex;
-    flex-direction: column;
+    float:left;
+
+`;
+const Select = styled.select`
+    padding: 0.5em;
+    margin:3px;
+    color: whitesmoke;
+    background: coral;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-color:transparent;
+    max-height: 35px;
+    float:left;
 `;
 
 const Input = styled.input`
     padding: 0.5em;
-    margin: 0.5em;
     color: coral;
     background: white;
     border: solid;
@@ -91,36 +110,64 @@ const Input = styled.input`
 `;
 
 const SubmitInput = styled.input`
+    float:right;
     padding: 1.0em;
-    margin: auto;
     color: oldlace;
     background: coral;
     border: solid;
     border-width: 2px;
+    margin-top:160px;
     max-height: 50px;
     -webkit-border-radius: 30px;
     -moz-border-radius: 30px;
     border-radius: 30px;
     font-size: 1.5 em;
+    
 `;
 
-class Signup extends Component {
+const TextArea = styled.textarea`
+    float:left;
+    color: coral;
+    background: white;
+    border: solid;
+    border-width: 1px;
+    margin: 10px;
+    width:500px;
+    height:200px;
+    max-height:100%;
+    max-width:100%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-color:coral;
+    font-size: 2.0 em;
+`;
+
+class Tickets extends Component {
   render() {
     return (
-      <PageDiv className="Signup" >
+      <PageDiv className="Tickets" >
         <Header/>
         <TopDiv>
-            <Title>Cadastro</Title>
+            <Title>Novo Ticket</Title>
         </TopDiv>
         <MiddleDiv >
+            <SelectDiv>
+                <LabelText>Selecione o tipo de Ticket:</LabelText>
+                <Select name="type">
+                    <option value="Geral">Geral</option>
+                    <option value="Pedido">Pedido</option>
+                </Select>
+                <LabelText>Código do Pedido:</LabelText>
+                <Input type="text" placeholder="Digite o número do pedido" ></Input>
+
+            </SelectDiv>
+
             <Form>
-                <LabelText>Nome</LabelText>
-                <Input type="text" placeholder="Digite um nome" ></Input>
-                <LabelText>Senha</LabelText>
-                <Input type="password" placeholder="Digite uma senha" ></Input>
-                <LabelText>E-mail</LabelText>
-                <Input type="text" placeholder="Digite um e-mail" ></Input>
-                <SubmitInput type="submit" value="Cadastrar"></SubmitInput> 
+                <LabelText>Corpo do Ticket</LabelText>
+                <TextArea type="text" placeholder="Escreva seu ticket aqui.." ></TextArea> 
+                <SubmitInput type="submit" value="Enviar Ticket"></SubmitInput>      
+                <SubmitInput type="submit" value="Cancelar"></SubmitInput> 
             </Form>
         </MiddleDiv>
         <Footer/>
@@ -129,6 +176,6 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Tickets;
 
 // color:#9e1847;

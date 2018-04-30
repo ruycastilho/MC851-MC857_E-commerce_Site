@@ -43,7 +43,7 @@ const TopDiv = styled.div`
 
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.5em;
     text-align: center;
     padding:auto;
     color: whitesmoke;
@@ -53,7 +53,7 @@ const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
     padding: 5px;
     margin: 10px;
-    font-size: 1.5  em;
+    font-size: 1.1  em;
     color: coral;
     border-bottom: 1px solid;
 `;
@@ -68,18 +68,16 @@ const Form = styled.form`
     padding: auto;
     color: oldlace;
     margin:0px
-    max-width:30%;
+    max-width:50%;
     position:relative;
     top:5%;
     left:20%;
     max-height: 100%;
-    display: flex;
-    flex-direction: column;
+
 `;
 
 const Input = styled.input`
     padding: 0.5em;
-    margin: 0.5em;
     color: coral;
     background: white;
     border: solid;
@@ -91,8 +89,8 @@ const Input = styled.input`
 `;
 
 const SubmitInput = styled.input`
+    float:right;
     padding: 1.0em;
-    margin: auto;
     color: oldlace;
     background: coral;
     border: solid;
@@ -104,23 +102,26 @@ const SubmitInput = styled.input`
     font-size: 1.5 em;
 `;
 
-class Signup extends Component {
+class Payment extends Component {
   render() {
     return (
-      <PageDiv className="Signup" >
+      <PageDiv className="Payment" >
         <Header/>
         <TopDiv>
-            <Title>Cadastro</Title>
+            <Title>Pagamento</Title>
         </TopDiv>
         <MiddleDiv >
             <Form>
-                <LabelText>Nome</LabelText>
+                <LabelText>Nome dx Titular</LabelText>
                 <Input type="text" placeholder="Digite um nome" ></Input>
-                <LabelText>Senha</LabelText>
+                <LabelText>Número do Cartão</LabelText>
                 <Input type="password" placeholder="Digite uma senha" ></Input>
-                <LabelText>E-mail</LabelText>
+                <LabelText>Código de Segurança</LabelText>
                 <Input type="text" placeholder="Digite um e-mail" ></Input>
-                <SubmitInput type="submit" value="Cadastrar"></SubmitInput> 
+                <LabelText>Validade</LabelText>
+                <Input type="text" placeholder="Digite um e-mail" ></Input> 
+                <SubmitInput type="submit" value="Cadastrar"></SubmitInput>      
+                <SubmitInput type="submit" value="Cancelar"></SubmitInput> 
             </Form>
         </MiddleDiv>
         <Footer/>
@@ -129,6 +130,6 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Payment;
 
 // color:#9e1847;
