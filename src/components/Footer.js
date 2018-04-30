@@ -15,16 +15,17 @@ const Text = styled.p`
 
 const FooterDiv = styled.div`
     background-color: whitesmoke;
-    border:none;
-    position:absolute;
-    bottom:0;
-    width:100%;
+    padding:0;
     height:60px;
     overflow:hidden;
     float:left;
     border-top-style: outset;
     border-width: 2px;
     border-color: coral;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     
 `;
 

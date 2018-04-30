@@ -11,7 +11,9 @@ const PageDiv = styled.div`
     border:none;
     float:left;
     width:100%;
-
+    margin:0;
+    padding:0;
+    min-height:100%;
 `;
 
 
