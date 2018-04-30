@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import styled from 'styled-components';
-
-const PageDiv = styled.div`
-    border:none;
-    float:left;
-    width:100%;
-
-`;
+// import { Switch, Route } from 'react-router-dom'
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -103,13 +95,16 @@ const SubmitInput = styled.input`
 `;
 
 class Payment extends Component {
+
+  constructor() {
+      super();
+      this.state = {
+          typeOfPayment: "creditCard",
+      }
+  }
+
   render() {
-    return (
-      <PageDiv className="Payment" >
-        <Header/>
-        <TopDiv>
-            <Title>Pagamento</Title>
-        </TopDiv>
+    const paymentMethod = this.state.typeOfPayment === "creditCard" ? (
         <MiddleDiv >
             <Form>
                 <LabelText>Nome dx Titular</LabelText>
@@ -124,12 +119,21 @@ class Payment extends Component {
                 <SubmitInput type="submit" value="Cancelar"></SubmitInput> 
             </Form>
         </MiddleDiv>
-        <Footer/>
-      </PageDiv>
+    ) : (
+        <LabelText>Imprima o boleto</LabelText>
+
+    );
+
+    return (
+        <div>
+            <TopDiv>
+                <Title>Pagamento</Title>
+            </TopDiv>
+            {paymentMethod}
+        </div>
+
     );
   }
 }
 
 export default Payment;
-
-// color:#9e1847;

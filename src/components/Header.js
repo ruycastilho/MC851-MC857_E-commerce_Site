@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import logo from '../logo.svg';
 import cart from '../cart.svg';
+import user from '../user.svg';
+import { Link } from 'react-router-dom'
 
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
@@ -42,9 +44,7 @@ const HeaderDiv = styled.div`
     height: 50px;
     float:left;
     width:100%;
-    `;
-
-
+`;
 
 const Form = styled.form`
   font-family: 'Ubuntu', sans-serif;
@@ -73,7 +73,7 @@ const Input = styled.input`
     border-radius: 50px;
 `;
 
-const Button = styled.button`
+const SubmitInput = styled.input`
   background: coral;
   color: oldlace;
   font-size: 0.75em;
@@ -92,12 +92,27 @@ const Button = styled.button`
 
 `;
 
-const SignButton = Button.extend`
+const PageLink = styled(Link)`
   font-size: 1.1em;
-
+  background: coral;
+  color: oldlace;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  border: solid;
+  border-width: 1px;
+  border-color: coral;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  max-width:100%;
+  max-height:100%;
+  float:right;
+  font-family: 'Ubuntu', sans-serif;
+  text-decoration: none;
 `;
 
-const Cart = styled.input`
+
+const Img = styled.img`
   max-height: 40px;
   padding: 0.25em 1em;
   border: none;
@@ -105,25 +120,54 @@ const Cart = styled.input`
 
 `;
 
-class Header extends Component {
 
-  // const status = this.state.status;
+class Header extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      isLoggedIn: true,
+      username: "Nome",
+    };
+  }
+
+  handleSubmit() {
+    var login = document.getElementById("loginForm");
+    
+    if (login.elements[0].value === "test" && login.elements[1].value === "test1") {
+      this.setState({isLoggedIn: true, username:login.elements[0]});
+      super.setState({isLoggedIn:true,  username:login.elements[0]});
+    }
+
+  } 
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
+
+    const shownElement = isLoggedIn ? (
+        <div>
+          <Text>Boas vindas, {this.state.username}!</Text>
+          <Link to='/User'><Img type="image" src={user} ></Img></Link>
+        </div>
+      ) : (
+        <div>
+          <PageLink to='/Cadastro'>Cadastro</PageLink>
+          <Text>Não tem conta?</Text>
+          <Form onSubmit={this.handleSubmit}>
+            <Input name="loginId" type="text" placeholder="Nome" ></Input>
+            <Input name="loginPwd" type="password" placeholder="Senha" ></Input>
+            <SubmitInput type="submit" value="Entrar"></SubmitInput>      
+          </Form>
+        </div>
+      );
+
     return (
       <HeaderDiv className="Header">
         <header className="Header">
           <Logo src={logo} className="Title-Logo"/>
           <Title className="Header-title">SAColão E-Commerce</Title>
-          <Cart type="image" src={cart}></Cart>
-          <SignButton>Cadastro</SignButton>
-          <Text>Não tem conta?</Text>
-         
-          <Form>
-            <Input type="text" placeholder="Nome" ></Input>
-            <Input type="password" placeholder="Senha" ></Input>
-            <Button type="button" onclick="alert('!!')">Entrar</Button> 
-          </Form>
+          <Link to='/Carrinho'><Img type="image" src={cart} ></Img></Link>
+          {shownElement}
         </header>
       </HeaderDiv>
     );

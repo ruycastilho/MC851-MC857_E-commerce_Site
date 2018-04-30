@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import OptionsBar from './components/OptionsBar';
-import SearchBar from './components/SearchBar';
-import ProductList from './components/ProductList';
+import Main from './components/Main';
 import styled from 'styled-components';
-// import './App.css';
 
 const PageDiv = styled.div`
     border:none;
@@ -18,15 +15,20 @@ const PageDiv = styled.div`
 
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoggedIn: false,
+
+    };
+
+
+  }
   render() {
     return (
       <PageDiv className="App" >
-        <Header/>
-        <OptionsBar />
-        <div >
-          <SearchBar />
-          <ProductList />
-        </div>
+        <Header status={this.state.isLoggedIn}/>
+        {/* <Main status={this.state.isLoggedIn}/> */}
         <Footer/>
       </PageDiv>
     );
