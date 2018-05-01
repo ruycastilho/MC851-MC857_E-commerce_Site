@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
     border-bottom-style: inset;
@@ -41,6 +40,30 @@ const SelectDiv = styled.div`
     height: 10%;
     float:left;
     width:100%;
+    float:left;
+    display: flex;
+    justify-content:left;
+`;
+
+const SelectLeftDiv = styled.div`
+    background-color: transparent;
+    border:none;
+    overflow:hidden;
+    padding:5px;
+    height: 100%;
+    float:left;
+    width:20%;
+    display: flex;
+    justify-content: left;
+`;
+
+const SelectRightDiv = styled.div`
+    background-color: transparent;
+    border:none;
+    overflow:hidden;
+    padding:5px;
+    height: 100%;
+    float:left;
     display: flex;
     justify-content: left;
 `;
@@ -135,8 +158,31 @@ const TextArea = styled.textarea`
     font-size: 2.0 em;
 `;
 
-class Contact extends Component {
+class Tickets extends Component {
+    constructor() {
+        super();
+        this.handleChange = this.handleChange.bind(this);
+
+        this.state = {
+            typeOfTicket: "Default",
+        }
+    }
+
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
+
   render() {
+
+    const typeOfTicket = this.state.typeOfTicket === "Default" ? (
+        null
+    ) : (
+        <SelectRightDiv>
+            <LabelText>Código do Pedido:</LabelText>
+            <Input type="text" placeholder="Digite o número do pedido" ></Input>
+        </SelectRightDiv>
+    );
+    
     return (
       <div>
         <TopDiv>
@@ -144,13 +190,14 @@ class Contact extends Component {
         </TopDiv>
         <MiddleDiv >
             <SelectDiv>
+                <SelectLeftDiv>
                 <LabelText>Selecione o tipo de Ticket:</LabelText>
-                <Select name="type">
-                    <option value="Geral">Geral</option>
-                    <option value="Pedido">Pedido</option>
-                </Select>
-                <LabelText>Código do Pedido:</LabelText>
-                <Input type="text" placeholder="Digite o número do pedido" ></Input>
+                    <Select name="typeOfTicket" onChange={this.handleChange}>
+                        <option value="Default">Geral</option>
+                        <option value="Order">Pedido</option>
+                    </Select>
+                </SelectLeftDiv>
+                {typeOfTicket}
 
             </SelectDiv>
 
@@ -166,4 +213,4 @@ class Contact extends Component {
   }
 }
 
-export default Contact;
+export default Tickets;

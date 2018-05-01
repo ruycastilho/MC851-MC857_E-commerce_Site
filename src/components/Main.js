@@ -6,13 +6,23 @@ import User from './User';
 import Cart from './Cart';
 import Contact from './Contact';
 import { Switch, Route } from 'react-router-dom'
-// import styled from 'styled-components';
+import styled from 'styled-components';
+
+const MainDiv = styled.main`
+    border:none;
+    float:left;
+    width:100%;
+    margin:0;
+    padding:0;
+    min-height:100%;
+`;
+
 
 class Main extends Component {
 
   render() {
     return (
-    <main>
+    <MainDiv>
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/Cadastro' component={Signup}/>
@@ -21,7 +31,7 @@ class Main extends Component {
             <Route path='/Carrinho' component={Cart}/>
             <Route path='/Contato' component={Contact}/>
         </Switch>
-    </main>
+    </MainDiv>
     );
   }
 }

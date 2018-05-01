@@ -41,9 +41,11 @@ const HeaderDiv = styled.div`
     border-width: 3px;
     border-color: coral;
     overflow:hidden;
-    height: 50px;
+    max-height: 50px;
     float:left;
     width:100%;
+    position: fixed;
+
 `;
 
 const Form = styled.form`
@@ -51,12 +53,12 @@ const Form = styled.form`
   padding: auto;
   color: oldlace;
 
-    margin:0px
-    font-size: 1.5em;
-    text-align: left;
-    max-width:100%;
-    max-height: 100%;
-    float:right;
+  margin:0px
+  font-size: 1.5em;
+  text-align: left;
+  max-width:100%;
+  max-height: 100%;
+  float:right;
 
 `;
 
@@ -77,6 +79,25 @@ const SubmitInput = styled.input`
   background: coral;
   color: oldlace;
   font-size: 0.75em;
+  margin: 0.5em;
+  padding: 0.25em 1em;
+  border: solid;
+  border-width: 1px;
+  border-color: coral;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  max-width:100%;
+  max-height:100%;
+  float:right;
+  font-family: 'Ubuntu', sans-serif;
+
+`;
+
+const Button = styled.button`
+  background: coral;
+  color: oldlace;
+  font-size: 1.1em;
   margin: 0.5em;
   padding: 0.25em 1em;
   border: solid;
@@ -113,39 +134,48 @@ const PageLink = styled(Link)`
 
 
 const Img = styled.img`
-  max-height: 40px;
+  width: 40px;
   padding: 0.25em 1em;
   border: none;
   float:right;
-
+  max-width:100%;
+  max-height:100%;
 `;
 
 
 class Header extends Component {
   constructor() {
     super();
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.state = {
       isLoggedIn: false,
       username: "Nome",
     };
   }
 
-  handleSubmit() {
+  handleLogin() {
     var login = document.getElementById("loginForm");
-    
-    if (login.elements[0].value === "test" && login.elements[1].value === "test") {
+
+    if (login.elements[0].value === "admin" && login.elements[1].value === "admin") {
       this.setState({isLoggedIn: true, username:login.elements[0].value});
       super.setState({isLoggedIn:true,  username:login.elements[0].value});
     }
 
   } 
 
+  handleLogout() {
+    this.setState({isLoggedIn: false});
+    super.setState({isLoggedIn: false});
+
+  }
+
   render() {
     const isLoggedIn = this.state.isLoggedIn;
 
     const shownElement = isLoggedIn ? (
         <div>
+          <Button type="button" onClick={this.handleLogout}>Sair</Button>          
           <Text>Boas vindas, {this.state.username}!</Text>
           <Link to='/User'><Img type="image" src={user} ></Img></Link>
         </div>
@@ -153,7 +183,7 @@ class Header extends Component {
         <div>
           <PageLink to='/Cadastro'>Cadastro</PageLink>
           <Text>Não tem conta?</Text>
-          <Form onSubmit={this.handleSubmit}>
+          <Form id="loginForm" onSubmit={this.handleLogin}>
             <Input name="loginId" type="text" placeholder="Nome" ></Input>
             <Input name="loginPwd" type="password" placeholder="Senha" ></Input>
             <SubmitInput type="submit" value="Entrar"></SubmitInput>      

@@ -44,11 +44,16 @@ const TopLeftDiv = styled.div`
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1em;
-    text-align: center;
-    padding:auto;
-    color: whitesmoke;
-
+    display: block;
+    color: oldlace;
+    text-align:center;
+    height:100%;
+    margin:0;
+    padding: 14px 16px;
+    text-decoration: none;
 `;
+
+
 // const Text = styled.p`
 //     font-family: 'Ubuntu', sans-serif;
 //     padding: 5px;
