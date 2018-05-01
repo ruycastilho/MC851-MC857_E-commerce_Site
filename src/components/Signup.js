@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import styled from 'styled-components';
-
-const PageDiv = styled.div`
-    border:none;
-    float:left;
-    width:100%;
-
-`;
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;

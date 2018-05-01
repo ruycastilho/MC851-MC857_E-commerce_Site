@@ -48,7 +48,7 @@ class Footer extends Component {
     return (
       <FooterDiv className="Footer">
         <header className="Header">
-          <ContactButton to='/User/Tickets/'>Fale Conosco!</ContactButton>
+          <ContactButton to='/Contato'>Fale Conosco!</ContactButton>
           <Text>&copy; 2018 - Grupo SAC - MC851/MC857 </Text>
         </header>
       </FooterDiv>

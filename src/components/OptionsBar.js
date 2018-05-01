@@ -70,8 +70,8 @@ class OptionsBar extends Component {
       <OptionsDiv className="Header">
         <header className="Header">
            <Ul>
-            <Il><Link href="#Eletrodomesticos">Eletrodomésticos</Link></Il>
-            <Il><Link href="#Eletronics" active>Eletrônicos</Link></Il>
+            <Il><Link href="#Eletrodomesticos" active>Eletrodomésticos</Link></Il>
+            <Il><Link href="#Eletronics">Eletrônicos</Link></Il>
             <Il><Link href="#Informatica">Informática</Link></Il>
             <Il><Link href="#Livros">Livros</Link></Il>
            </Ul>

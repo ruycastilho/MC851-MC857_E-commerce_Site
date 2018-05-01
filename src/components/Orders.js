@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
     border-bottom-style: inset;
@@ -134,7 +135,7 @@ const TextArea = styled.textarea`
     font-size: 2.0 em;
 `;
 
-class Tickets extends Component {
+class Orders extends Component {
   render() {
     return (
       <div>
@@ -165,4 +166,4 @@ class Tickets extends Component {
   }
 }
 
-export default Tickets;
+export default Orders;

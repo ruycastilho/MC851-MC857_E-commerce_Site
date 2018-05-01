@@ -1,31 +1,59 @@
 import React, { Component } from 'react';
 // import { Switch, Route } from 'react-router-dom'
 import AccountOptionsBar from './AccountOptionsBar';
+import UserMain from './UserMain';
 import styled from 'styled-components';
 
 const TopDiv = styled.div`
+    background-color: transparent;
+    overflow:hidden;
+    height: 10%;
+    float:left;
+    width:100%;
+    height:10%;
+    margin-top: 100px;
+    display:inline-block;
+`;
+
+const TopLeftDiv = styled.div`
     background-color: coral;
-    border-bottom-style: inset;
     border-right-style: inset;
     border-width: 3px;
     border-color: gray;
     overflow:hidden;
     height: 100%;
     float:left;
-    width:20%;
-    margin-top: 100px;
+    width:20%;    
     -webkit-border-radius: 0 50px 0 0;
     -moz-border-radius: 0 50px 0 0;
     border-radius: 0 50px 0 0;
-
 `;
+
 
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
-    font-size: 1.5em;
-    text-align: center;
-    padding:auto;
-    color: whitesmoke;
+    font-size: 1.1em;
+    display: block;
+    color: oldlace;
+    text-align:center;
+    height:100%;
+    margin:0;
+    padding: 14px 16px;
+    text-decoration: none;
+`;
+
+
+const MiddleDiv = styled.div`
+    background-color: whitesmoke;
+    border-bottom-style: inset;
+    border-top-style: outset;
+    border-width: 3px;
+    border-color: gray;
+    overflow:hidden;
+    // height: 100%;
+    height: 400px;
+    width:100%;
+    margin-top: 200px;
 
 `;
 
@@ -34,10 +62,14 @@ class User extends Component {
     return (
         <div>
             <TopDiv>
-                <Title>Conta</Title>
+                <TopLeftDiv>
+                    <Title>Conta</Title>
+                </TopLeftDiv>
                 <AccountOptionsBar />
             </TopDiv>
-            {/* dsadasd */}
+            <MiddleDiv>
+                <UserMain />    
+            </MiddleDiv>
         </div>
 
     );
