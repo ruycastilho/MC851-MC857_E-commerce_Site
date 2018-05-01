@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
-// import { Switch, Route } from 'react-router-dom'
 import AccountOptionsBar from './AccountOptionsBar';
 import UserMain from './UserMain';
 import styled from 'styled-components';
+
+const MiddleDiv = styled.div`
+    background-color: whitesmoke;
+    border-bottom-style: inset;
+    border-top-style: outset;
+    border-width: 3px;
+    border-color: gray;
+    overflow:hidden;
+    // height: 100%;
+    height: 400px;
+    width:100%;
+    margin-top: 200px;
+
+`;
 
 const TopDiv = styled.div`
     background-color: transparent;
@@ -29,7 +42,6 @@ const TopLeftDiv = styled.div`
     border-radius: 0 50px 0 0;
 `;
 
-
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1em;
@@ -40,21 +52,6 @@ const Title = styled.h1`
     margin:0;
     padding: 14px 16px;
     text-decoration: none;
-`;
-
-
-const MiddleDiv = styled.div`
-    background-color: whitesmoke;
-    border-bottom-style: inset;
-    border-top-style: outset;
-    border-width: 3px;
-    border-color: gray;
-    overflow:hidden;
-    // height: 100%;
-    height: 400px;
-    width:100%;
-    margin-top: 200px;
-
 `;
 
 class User extends Component {

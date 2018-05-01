@@ -16,30 +16,42 @@ const MiddleDiv = styled.div`
 `;
 
 const TopDiv = styled.div`
+    background-color: transparent;
+    overflow:hidden;
+    height: 10%;
+    float:left;
+    width:100%;
+    height:10%;
+    margin-top: 100px;
+    display:inline-block;
+`;
+
+const TopLeftDiv = styled.div`
     background-color: coral;
-    border-bottom-style: inset;
     border-right-style: inset;
     border-width: 3px;
     border-color: gray;
     overflow:hidden;
     height: 100%;
     float:left;
-    width:20%;
-    margin-top: 100px;
+    width:20%;    
     -webkit-border-radius: 0 50px 0 0;
     -moz-border-radius: 0 50px 0 0;
     border-radius: 0 50px 0 0;
-
 `;
 
 const Title = styled.h1`
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1em;
-    text-align: center;
-    padding:auto;
-    color: whitesmoke;
-
+    display: block;
+    color: oldlace;
+    text-align:center;
+    height:100%;
+    margin:0;
+    padding: 14px 16px;
+    text-decoration: none;
 `;
+
 const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
     padding: 5px;
@@ -100,7 +112,9 @@ class Signup extends Component {
     return (
         <div>
             <TopDiv>
-                <Title>Cadastro</Title>
+                <TopLeftDiv>
+                    <Title>Cadastro</Title>
+                </TopLeftDiv>
             </TopDiv>
             <MiddleDiv >
                 <Form>

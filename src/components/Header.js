@@ -183,7 +183,7 @@ class Header extends Component {
         <div>
           <PageLink to='/Cadastro'>Cadastro</PageLink>
           <Text>Não tem conta?</Text>
-          <Form id="loginForm" onSubmit={this.handleLogin}>
+          <Form id="loginForm" onSubmit={this.handleLogin} method="post">
             <Input name="loginId" type="text" placeholder="Nome" ></Input>
             <Input name="loginPwd" type="password" placeholder="Senha" ></Input>
             <SubmitInput type="submit" value="Entrar"></SubmitInput>      

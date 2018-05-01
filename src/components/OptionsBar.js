@@ -38,7 +38,9 @@ const Il = styled.li`
     width:33%;
     margin:0;
     padding:0;
-    &:(last-child) {
+
+                                                        // FIX THIS
+    &:last-child {
         border-right: none;
     }
 
@@ -48,7 +50,6 @@ const Il = styled.li`
 const Link = styled.a`
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.1em;
-
     display: block;
     color: oldlace;
     text-align:center;

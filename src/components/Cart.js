@@ -53,60 +53,6 @@ const Title = styled.h1`
     text-decoration: none;
 `;
 
-
-// const Text = styled.p`
-//     font-family: 'Ubuntu', sans-serif;
-//     padding: 5px;
-//     margin: 10px;
-//     font-size: 1.1  em;
-//     color: coral;
-//     border-bottom: 1px solid;
-// `;
-// const LabelText = Text.extend`
-//     text-align:left;    
-//     border:none;
-
-// `;
-
-// const Form = styled.form`
-//     font-family: 'Ubuntu', sans-serif;
-//     padding: auto;
-//     color: oldlace;
-//     margin:0px
-//     max-width:50%;
-//     position:relative;
-//     top:5%;
-//     left:20%;
-//     max-height: 100%;
-
-// `;
-
-// const Input = styled.input`
-//     padding: 0.5em;
-//     color: coral;
-//     background: white;
-//     border: solid;
-//     border-width: 2px;
-//     max-height: 50px;
-//     -webkit-border-radius: 50px;
-//     -moz-border-radius: 50px;
-//     border-radius: 50px;
-// `;
-
-// const SubmitInput = styled.input`
-//     float:right;
-//     padding: 1.0em;
-//     color: oldlace;
-//     background: coral;
-//     border: solid;
-//     border-width: 2px;
-//     max-height: 50px;
-//     -webkit-border-radius: 30px;
-//     -moz-border-radius: 30px;
-//     border-radius: 30px;
-//     font-size: 1.5 em;
-// `;
-
 class Cart extends Component {
   render() {
     return (

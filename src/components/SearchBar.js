@@ -5,11 +5,12 @@ const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
     padding: 5px;
     margin: 10px;
-    font-size: 1.5  em;
+    font-size: 1.5 em;
     text-align: center;
     color: coral;
     border-bottom: 1px solid;
 `;
+
 const LabelText = Text.extend`
     float:left;
     text-align:left;    
@@ -79,7 +80,6 @@ class SearchBar extends Component {
   render() {
     return (
       <SearchDiv className="Header">
-        <header className="Header">
           <Text>Busca por Produtos</Text>
           <Form>
             <LabelText>Nome</LabelText>
@@ -90,7 +90,6 @@ class SearchBar extends Component {
             <Input type="text" placeholder="Digite uma marca" ></Input>
             <SubmitInput type="submit" value="Buscar"></SubmitInput> 
           </Form>
-        </header>
       </SearchDiv>
     );
   }

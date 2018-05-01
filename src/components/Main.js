@@ -13,6 +13,7 @@ const MainDiv = styled.main`
     float:left;
     width:100%;
     margin:0;
+    margin-top:3%;  
     padding:0;
     min-height:100%;
 `;
