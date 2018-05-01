@@ -154,17 +154,28 @@ class Header extends Component {
     };
   }
 
-  handleLogin() {
+  handleLogin(event) {
     var login = document.getElementById("loginForm");
+    event.preventDefault();
 
     if (login.elements[0].value === "admin" && login.elements[1].value === "admin") {
       this.setState({isLoggedIn: true, username:login.elements[0].value});
       super.setState({isLoggedIn:true,  username:login.elements[0].value});
     }
+    else {
+      var input = document.getElementById("loginId");
+      input.value = input.defaultValue;
+
+      input = document.getElementById("loginPwd");
+      input.value = input.defaultValue;
+      alert("Nome e/ou Senha inválidos.");
+      
+    }
 
   } 
 
-  handleLogout() {
+  handleLogout(event) {
+    event.preventDefault();
     this.setState({isLoggedIn: false});
     super.setState({isLoggedIn: false});
 
@@ -184,8 +195,8 @@ class Header extends Component {
           <PageLink to='/Cadastro'>Cadastro</PageLink>
           <Text>Não tem conta?</Text>
           <Form id="loginForm" onSubmit={this.handleLogin} method="post">
-            <Input name="loginId" type="text" placeholder="Nome" ></Input>
-            <Input name="loginPwd" type="password" placeholder="Senha" ></Input>
+            <Input id="loginId" type="text" placeholder="Nome" ></Input>
+            <Input id="loginPwd" type="password" placeholder="Senha" ></Input>
             <SubmitInput type="submit" value="Entrar"></SubmitInput>      
           </Form>
         </div>
