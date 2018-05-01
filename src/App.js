@@ -28,7 +28,7 @@ class App extends Component {
     return (
       <PageDiv className="App" >
         <Header status={this.state.isLoggedIn}/>
-        {/* <Main status={this.state.isLoggedIn}/> */}
+        <Main />
         <Footer/>
       </PageDiv>
     );

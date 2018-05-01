@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 import styled from 'styled-components';
-
-const PageDiv = styled.div`
-    border:none;
-    float:left;
-    width:100%;
-
-`;
+// import { Switch, Route } from 'react-router-dom'
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -53,7 +45,7 @@ const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
     padding: 5px;
     margin: 10px;
-    font-size: 1.5  em;
+    font-size: 1.1  em;
     color: coral;
     border-bottom: 1px solid;
 `;
@@ -68,18 +60,16 @@ const Form = styled.form`
     padding: auto;
     color: oldlace;
     margin:0px
-    max-width:30%;
+    max-width:50%;
     position:relative;
     top:5%;
     left:20%;
     max-height: 100%;
-    display: flex;
-    flex-direction: column;
+
 `;
 
 const Input = styled.input`
     padding: 0.5em;
-    margin: 0.5em;
     color: coral;
     background: white;
     border: solid;
@@ -91,8 +81,8 @@ const Input = styled.input`
 `;
 
 const SubmitInput = styled.input`
+    float:right;
     padding: 1.0em;
-    margin: auto;
     color: oldlace;
     background: coral;
     border: solid;
@@ -104,27 +94,19 @@ const SubmitInput = styled.input`
     font-size: 1.5 em;
 `;
 
-class Signup extends Component {
+class Cart extends Component {
   render() {
     return (
         <div>
             <TopDiv>
-                <Title>Cadastro</Title>
+                <Title>Carrinho</Title>
             </TopDiv>
-            <MiddleDiv >
-                <Form>
-                    <LabelText>Nome</LabelText>
-                    <Input type="text" placeholder="Digite um nome" ></Input>
-                    <LabelText>Senha</LabelText>
-                    <Input type="password" placeholder="Digite uma senha" ></Input>
-                    <LabelText>E-mail</LabelText>
-                    <Input type="text" placeholder="Digite um e-mail" ></Input>
-                    <SubmitInput type="submit" value="Cadastrar"></SubmitInput> 
-                </Form>
+            <MiddleDiv>
             </MiddleDiv>
         </div>
+
     );
   }
 }
 
-export default Signup;
+export default Cart;

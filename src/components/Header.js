@@ -126,7 +126,7 @@ class Header extends Component {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      isLoggedIn: true,
+      isLoggedIn: false,
       username: "Nome",
     };
   }
@@ -134,9 +134,9 @@ class Header extends Component {
   handleSubmit() {
     var login = document.getElementById("loginForm");
     
-    if (login.elements[0].value === "test" && login.elements[1].value === "test1") {
-      this.setState({isLoggedIn: true, username:login.elements[0]});
-      super.setState({isLoggedIn:true,  username:login.elements[0]});
+    if (login.elements[0].value === "test" && login.elements[1].value === "test") {
+      this.setState({isLoggedIn: true, username:login.elements[0].value});
+      super.setState({isLoggedIn:true,  username:login.elements[0].value});
     }
 
   } 
@@ -165,7 +165,7 @@ class Header extends Component {
       <HeaderDiv className="Header">
         <header className="Header">
           <Logo src={logo} className="Title-Logo"/>
-          <Title className="Header-title">SAColão E-Commerce</Title>
+          <Link to='/'><Title className="Header-title">SAColão E-Commerce</Title></Link>
           <Link to='/Carrinho'><Img type="image" src={cart} ></Img></Link>
           {shownElement}
         </header>

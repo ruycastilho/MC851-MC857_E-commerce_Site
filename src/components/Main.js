@@ -3,6 +3,7 @@ import Home from './Home';
 import Signup from './Signup';
 import Payment from './Payment';
 import User from './User';
+import Cart from './Cart';
 import { Switch, Route } from 'react-router-dom'
 // import styled from 'styled-components';
 
@@ -14,9 +15,9 @@ class Main extends Component {
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/Cadastro' component={Signup}/>
-            <Route path='/Payment' component={Payment}/>
+            <Route path='/Pagamento' component={Payment}/>
             <Route path='/User' component={User}/>
-            {/* <Route path='/Cart' component={Cart}/> */}
+            <Route path='/Carrinho' component={Cart}/>
         </Switch>
     </main>
     );
@@ -25,4 +26,3 @@ class Main extends Component {
 
 export default Main;
 
-// color:#9e1847;

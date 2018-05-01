@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'
 
 const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
@@ -29,7 +30,7 @@ const FooterDiv = styled.div`
     
 `;
 
-const ContactButton = styled.a`
+const ContactButton = styled(Link)`
   font-family: 'Ubuntu', sans-serif;
   padding: 5px;
   margin: 20px;
@@ -47,7 +48,7 @@ class Footer extends Component {
     return (
       <FooterDiv className="Footer">
         <header className="Header">
-          <ContactButton href="/SAC/" class="button">Fale Conosco!</ContactButton>
+          <ContactButton to='/User/Tickets/'>Fale Conosco!</ContactButton>
           <Text>&copy; 2018 - Grupo SAC - MC851/MC857 </Text>
         </header>
       </FooterDiv>
