@@ -39,9 +39,25 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Adicoes
     'sac',
+    'rest_framework',
+    'corsheaders',
 ]
 
+# Adicionado
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
+# Adicionado
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+)
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # CORS
+    'django.middleware.common.CommonMiddleware', # CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
