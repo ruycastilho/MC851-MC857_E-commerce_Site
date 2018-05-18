@@ -4,10 +4,17 @@ from django.shortcuts import render
 from rest_framework import generics
 from django.http import HttpResponse
 
+# Postman error
+from django.views.decorators.csrf import csrf_exempt
+
 from . import models
 from . import serializer
 import requests
 import json
+
+def format_json(response):
+	body_unicode = response.body.decode('utf-8')
+	return json.loads(body_unicode)
 
 class TicketList(generics.ListCreateAPIView):
     queryset = models.Ticket.objects.all()
@@ -17,21 +24,36 @@ class DetailTicket(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Ticket.objects.all()
     serializer_class = serializer.SACSerializer
 
+# Tag para o postman
+@csrf_exempt
 def add_ticket(request):
-	# request.body deveria mostrar o payload
-	print(request.body)
+	# formatar a .json
+	body = format_json(request)
 
-	# hard coded
+	# debug
+	# print(body)
+
 	payload={
-		'timestamp': '2018-05-18T02:57',
-  		'sender': 'sample string 3',
-  		'message': 'sample string 4'
+		'timestamp': body['timestamp'],
+  		'sender'   : body['sender'],
+  		'message'  : body['message']
 	}
-	response = requests.post('http://centralatendimento-mc857.azurewebsites.net/tickets/bafecfbf93a5ecf25ca8c6ca19d46ea3bffdee0c/cliente1', json=payload)
+
+	# Trocar teste1 por um id nosso, cliente3 idem
+	response = requests.post('http://centralatendimento-mc857.azurewebsites.net/tickets/teste1/cliente3', json=payload)
+	
+	# debug
 	# print(response.text)
+	# print(response.status_code)
+
 	django_response = HttpResponse(
 		content      = response.content,
 		status       = response.status_code,
 		content_type = response.headers['Content-Type']
 		)
+
+	# TODO: aqui tb teria uma implementacao do save do ticket no BE
+	# 		ticket_id deve pegar o systemMessage do response do request
+	models.Ticket.objects.create(ticket_description=body['message'], ticket_id=100)
+	print(models.Ticket.objects.all())
 	return django_response
