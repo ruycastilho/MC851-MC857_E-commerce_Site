@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from django.http import HttpResponse
 
-# Postman error
+# Permitir requisoces do Postman
 from django.views.decorators.csrf import csrf_exempt
 
 from . import models
@@ -12,8 +12,8 @@ from . import serializer
 import requests
 import json
 
-def format_json(response):
-	body_unicode = response.body.decode('utf-8')
+def format_json(request):
+	body_unicode = request.body.decode('utf-8')
 	return json.loads(body_unicode)
 
 class TicketList(generics.ListCreateAPIView):
@@ -24,10 +24,9 @@ class DetailTicket(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Ticket.objects.all()
     serializer_class = serializer.SACSerializer
 
-# Tag para o postman
+# Tag para permitir requisicoes do Postman
 @csrf_exempt
 def add_ticket(request):
-	# formatar a .json
 	body = format_json(request)
 
 	# debug
@@ -51,9 +50,8 @@ def add_ticket(request):
 		status       = response.status_code,
 		content_type = response.headers['Content-Type']
 		)
-
-	# TODO: aqui tb teria uma implementacao do save do ticket no BE
-	# 		ticket_id deve pegar o systemMessage do response do request
-	models.Ticket.objects.create(ticket_description=body['message'], ticket_id=100)
-	print(models.Ticket.objects.all())
+	
+	# Save no BD
+	ticket_id=(json.loads(response.text))['systemMessage']
+	models.Ticket.objects.create(ticket_description=body['message'], ticket_id=ticket_id)
 	return django_response

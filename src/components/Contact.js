@@ -175,14 +175,42 @@ class Tickets extends Component {
     constructor() {
         super();
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
+            ticket: [],
             typeOfTicket: "Default",
         }
     }
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
+    }
+
+    handleSubmit(event) {
+        
+        var text = document.getElementById("mensagem").value;
+        try {
+            const res = fetch('http://127.0.0.1:8000/api/add_ticket/', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    // message: 'Alguma mensagem num ticket',
+                    message: text,
+                    sender: 'sindo',
+                    timestamp: '2018-05-18T12:00',
+                }),
+            });
+            const ticket = res.json();
+            this.setState({
+                ticket
+            });
+        } catch (e) {
+           console.log(e);
+        }
     }
 
   render() {
@@ -216,10 +244,10 @@ class Tickets extends Component {
 
             </SelectDiv>
 
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <LabelText>Corpo do Ticket</LabelText>
-                <TextArea type="text" placeholder="Escreva seu ticket aqui.." ></TextArea> 
-                <SubmitInput type="submit" value="Enviar Ticket"></SubmitInput>      
+                <TextArea id="mensagem" type="text" placeholder="Escreva seu ticket aqui.." ></TextArea> 
+                <SubmitInput type="submit" value="Enviar Ticket" ></SubmitInput>      
                 <SubmitInput type="submit" value="Cancelar"></SubmitInput> 
             </Form>
         </MiddleDiv>
