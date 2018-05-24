@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'sac',
     'rest_framework',
     'corsheaders',
+    'loginSystem'
 ]
 
 # Adicionado
