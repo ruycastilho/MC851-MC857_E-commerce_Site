@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'sac',
     'rest_framework',
     'corsheaders',
-    'loginSystem'
+    'loginSystem',
+    'cart'
 ]
 
 # Adicionado
@@ -137,3 +138,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CART_SESSION_ID = 'cart_session_id'

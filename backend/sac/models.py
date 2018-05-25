@@ -5,7 +5,9 @@ class Ticket(models.Model):
 	# Adicionar as outras informacoes da tabela
 	# i.e. nome, ID ticket, data, etc
     ticket_description = models.CharField(max_length=200)
-    ticket_id   = models.IntegerField()
+    ticket_id   	   = models.IntegerField()
+    # Descomentar depois que integrar com a parte de clientes
+    # ticket_user_id     = models.IntegerField()
 
     def __str__(self):
         """A string representation of the model."""
