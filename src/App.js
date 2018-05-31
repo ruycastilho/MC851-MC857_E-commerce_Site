@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Header from './components/Header';
+import Header from './components/Header.jsx';
 import Footer from './components/Footer';
 import Main from './components/Main';
 import styled from 'styled-components';
+
 
 const PageDiv = styled.div`
     border:none;
@@ -15,24 +16,24 @@ const PageDiv = styled.div`
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoggedIn: false,
+    constructor() {
+	super();
+	this.state = {
+	    isLoggedIn: false,
 
-    };
+	};
 
 
-  }
-  render() {
-    return (
-      <PageDiv className="App" >
-        <Header status={this.state.isLoggedIn}/>
-        <Main />
-        <Footer/>
-      </PageDiv>
-    );
-  }
+    }
+    render() {
+	return (
+	    <PageDiv className="App" >
+              <Header status={this.state.isLoggedIn}/>
+               <Main />
+              <Footer/>
+	    </PageDiv>
+	);
+    }
 }
 
 export default App;

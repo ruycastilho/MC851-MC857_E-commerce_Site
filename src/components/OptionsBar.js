@@ -11,7 +11,6 @@ const OptionsDiv = styled.div`
     -webkit-border-radius: 50px 0 0 50px;
     -moz-border-radius: 50px 0 0 50px;
     border-radius: 50px 0 0 50px;
-
     border-bottom-style: inset;
     border-left-style: outset;
     border-width: 3px;

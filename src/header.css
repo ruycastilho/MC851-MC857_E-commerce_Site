@@ -1,0 +1,150 @@
+@media (min-width: 768px){
+    .navbar2 {
+	background-color: whitesmoke;
+	height: 80px;
+    }
+
+    .navbar-brand2 {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 1.5em;
+	text-align: left;
+	padding: auto;
+	color: coral !important;
+    }
+    
+    .navbar2 form button {
+	background-color: coral;
+	border: 2px solid coral;
+	border-radius: 50px;
+	max-height: 50px;
+	padding: 0.5em;
+	margin: 0.5em 0.1em;
+	width: 100px;
+    }
+
+    .navbar2 input {
+	padding: 0.5em;
+	margin: 0.5em 0.1em;
+	color: coral;
+	background: white;
+	border: solid;
+	border-width: 2px;
+	max-height: 50px;
+	max-width: 120px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+    }
+
+    .navbar-collapse {
+	display: block;
+	background-color: whitesmoke;
+    }
+
+    .show {
+	border-bottom: 3px solid coral;
+    }
+
+    
+    .navbar2 h1{
+	font-size: 1em !important;
+	line-height: 4em;
+	margin: auto 1em;
+    }
+}
+@media (max-width: 767px){
+    .navbar2 {
+	background-color: whitesmoke;
+    }
+
+
+    .navbar-brand2 {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 1.5em;
+	text-align: left;
+	padding: auto;
+	color: coral !important;
+    }
+
+    .navbar2 form li{
+	margin: 0.25em;
+    }
+
+    .navbar2 form, .navbar2 form ul {
+	width: 100%;
+    }
+    .navbar2 form button, .navbar2 form input{
+	height: 50px;
+	max-width: 80% !important;
+	width: 400px !important;
+    }
+
+    .navbar2 form{
+	float: left;
+    }
+
+    .navbar2 form button {
+	background-color: coral;
+	border: 2px solid coral;
+    }
+
+    .navbar2 h1{
+	font-size: 2em !important;
+    }
+
+}
+
+#link {
+    max-height: 40px;
+    max-width:40px;
+    min-width: 20px;
+    min-height: 20px;
+    padding: 0;
+    margin: 0.25em;
+    border: none;
+    float:right;
+}
+
+#carrinho {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.navbar2 h1{
+    font-family: 'Ubuntu', sans-serif;
+     padding: auto;
+     text-align: left;
+     color: coral;
+     max-height: 50px;
+     float:left;
+
+}
+
+.search-nav form{
+    width: 100%;
+    padding: 0 1em 0.5em 1em;
+}
+.search-nav input{
+    width: 100%;
+    height: 50px;
+    border: 2px solid coral;
+    border-radius: 50px;
+}
+.search-nav {
+    background-color: whitesmoke;
+    border-bottom: 3px solid coral;   
+}
+.btn-coral{
+    background-color: coral;
+    border: 2px solid coral;
+}
+.search-bar-button {
+    border-radius: 0 50px 50px 0 !important;
+    padding: .375rem 1rem .375rem .75rem;
+    width: 100%;
+}
+
+.input-group-prepend {
+    width: 10%;
+    min-width: 80px;
+}
