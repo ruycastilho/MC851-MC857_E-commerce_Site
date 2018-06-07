@@ -46,6 +46,15 @@ def product_existance(product_id):
 		return False
 	return True
 
+def get_product_specs(product_id):
+	largest = 0
+	infos = get_product_info(product_id)
+	length, width, height = int(infos['length']), int(infos['width']), int(infos['height'])
+	price = infos['price']
+	weight = infos['weight']
+	max_dimention = str(largest)
+	return [price, weight, length, width, height]
+
 # API's
 
 # Adicionar produto ao carrinho
@@ -66,7 +75,8 @@ def add_product(requisition):
 		return django_message("Nao existe quantia suficiente no estoque", 404)
 	elif(check_quantity(body['product_id'], body['product_quantity']) == -2):
 		return django_message("Quantia deve ser maior do que zero", 404)
-	cart.add_product(body['product_id'], body['product_quantity'])
+	p, w, l, wid, h = get_product_specs(body['product_id'])
+	cart.add_product(body['product_id'], body['product_quantity'], p, w, l, wid, h)
 	return django_message("Produto adicionado no carrinho", 200)
 
 # Atualizar quantidade de itens do produto no carrinho
@@ -116,3 +126,26 @@ def show_cart(requisition):
 	cart = Cart(requisition)
 	cart_itens = cart.get_cart_itens()
 	return django_message("Mostrando carrinho", 200, cart_itens)
+
+# Mostra valor total do frete para o carrinho em reais.
+# nao precisa mandar nada, so um get
+# ex de chamada: http://localhost:8000/api/get_frete_value/ (GET)
+# Devolve sinal 200
+@csrf_exempt
+def get_frete_value(requisition):
+	CEP = '13091904'
+	tipoEntrega = 'PAC'
+	cart = Cart(requisition)
+	content = cart.get_frete_price(CEP, tipoEntrega)
+	return django_message("Mostrando frete, valor em centavos", 200, content)
+
+
+# Mostra valor total dos itens no carrinho em reais.
+# nao precisa mandar nada, so um get
+# ex de chamada: http://localhost:8000/api/get_cart_value/ (GET)
+# Devolve sinal 200
+@csrf_exempt
+def get_cart_value(requisition):
+	cart = Cart(requisition)
+	content = cart.get_cart_price()
+	return django_message("Mostrando preco carrinho", 200, content)
