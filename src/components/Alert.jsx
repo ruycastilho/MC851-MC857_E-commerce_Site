@@ -22,7 +22,9 @@ class AlertMsg extends React.Component {
 	if(type === "error")
 	    return "danger";
 	else if (type === "warning")
-	    return "warning";
+		return "warning";
+	else if (type === "success")
+		return "success";
 	return type;
     }
     setMessage(msg){

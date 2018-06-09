@@ -10,18 +10,12 @@ import Products from "./Products";
 class Home extends Component {
     render() {
 	return (
-            <div>
-              <OptionsNav />
-	      <Products/>
-            </div>
+        <div>
+            <OptionsNav />
+	        <Products/>
+        </div>
 	);
     }
 }
 
 export default Home;
-
-
-/* <div >
- * 
- * <ProductList />
- * </div>*/

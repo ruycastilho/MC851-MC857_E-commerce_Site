@@ -23,10 +23,11 @@ const FooterDiv = styled.div`
     border-top-style: outset;
     border-width: 2px;
     border-color: coral;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    // position: fixed;
+    // left: 0;
+    // bottom: 0;
     width: 100%;
+    z-index: -1;
     
 `;
 
