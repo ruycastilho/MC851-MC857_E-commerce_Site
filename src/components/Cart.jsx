@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
 import producttest from '../producttest.jpg';
+import {Navbar, Nav, NavItem, NavLink, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
+import "../Cart.css";
+
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -162,192 +165,192 @@ const CartColumnDiv = styled.div`
     // justify-content: spaced-around;
 
 `;
-const Title = styled.h1`
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 1.1em;
-    display: block;
-    color: oldlace;
-    text-align:center;
-    height:100%;
-    margin:0;
-    padding: 14px 16px;
-    text-decoration: none;
-`;
+// const Title = styled.h1`
+//     font-family: 'Ubuntu', sans-serif;
+//     font-size: 1.1em;
+//     display: block;
+//     color: oldlace;
+//     text-align:center;
+//     height:100%;
+//     margin:0;
+//     padding: 14px 16px;
+//     text-decoration: none;
+// `;
 
-const PageLink = styled(Link)`
-  font-size: 1.1em;
-  background: coral;
-  color: oldlace;
-  margin: 0.5em;
-  padding: 0.25em 1em;
-  border: solid;
-  border-width: 1px;
-  border-color: coral;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  border-radius: 50px;
-  width:100%;
-  height:100%;
-  font-family: 'Ubuntu', sans-serif;
-  text-decoration: none;
+// const PageLink = styled(Link)`
+//   font-size: 1.1em;
+//   background: coral;
+//   color: oldlace;
+//   margin: 0.5em;
+//   padding: 0.25em 1em;
+//   border: solid;
+//   border-width: 1px;
+//   border-color: coral;
+//   -webkit-border-radius: 50px;
+//   -moz-border-radius: 50px;
+//   border-radius: 50px;
+//   width:100%;
+//   height:100%;
+//   font-family: 'Ubuntu', sans-serif;
+//   text-decoration: none;
   
-`;
+// `;
 
 
-const Text = styled.p`
-    font-family: 'Ubuntu', sans-serif;
-    padding: 5px;
-    margin: 10px;
-    font-size: 1.5 em;
-    text-align: center;
-    color: coral;
-    border-bottom: 1px solid;
-`;
+// const Text = styled.p`
+//     font-family: 'Ubuntu', sans-serif;
+//     padding: 5px;
+//     margin: 10px;
+//     font-size: 1.5 em;
+//     text-align: center;
+//     color: coral;
+//     border-bottom: 1px solid;
+// `;
 
-const PriceText = styled.p`
-    font-family: 'Ubuntu', sans-serif;
-    padding: 5px;
-    margin: 10px;
-    font-size: 1.5 em;
-    text-align: center;
-    color: grey;
-    border:none;
-    width: 30%;
-    float:right;
+// const PriceText = styled.p`
+//     font-family: 'Ubuntu', sans-serif;
+//     padding: 5px;
+//     margin: 10px;
+//     font-size: 1.5 em;
+//     text-align: center;
+//     color: grey;
+//     border:none;
+//     width: 30%;
+//     float:right;
 
 
-`;
+// `;
 
-const ProductDivText = Text.extend`
-    border:none;
-    text-align: center;
-    color: grey;
-    border:none;
-    width:50%;
-    height: 100%;
-    margin: 5px;
-`;
+// const ProductDivText = Text.extend`
+//     border:none;
+//     text-align: center;
+//     color: grey;
+//     border:none;
+//     width:50%;
+//     height: 100%;
+//     margin: 5px;
+// `;
 
-const ProductPriceText = ProductDivText.extend`
-    padding: 11px;
-    margin: auto;
-    height: 100%;
+// const ProductPriceText = ProductDivText.extend`
+//     padding: 11px;
+//     margin: auto;
+//     height: 100%;
     
-`;
+// `;
 
 
-const LabelText = Text.extend`
-    float:left;
-    text-align:left;    
-    border:none;
-`;
+// const LabelText = Text.extend`
+//     float:left;
+//     text-align:left;    
+//     border:none;
+// `;
 
-const CartTitleText = Text.extend`
-    border-bottom: dashed;
-    border-width: 1px;
-`;
+// const CartTitleText = Text.extend`
+//     border-bottom: dashed;
+//     border-width: 1px;
+// `;
 
 
-const PriceLabel = LabelText.extend`
-    width: 50%;
-`;
+// const PriceLabel = LabelText.extend`
+//     width: 50%;
+// `;
 
-const Form = styled.form`
-    font-family: 'Ubuntu', sans-serif;
-    padding: auto;
-    color: oldlace;
-    margin:0px
-    max-width:100%;
-    max-height: 100%;
-    display: inline;
-`;
+// const Form = styled.form`
+//     font-family: 'Ubuntu', sans-serif;
+//     padding: auto;
+//     color: oldlace;
+//     margin:0px
+//     max-width:100%;
+//     max-height: 100%;
+//     display: inline;
+// `;
 
-const Input = styled.input`
-    padding: 0.5em;
-    margin: 0.5em;
-    color: coral;
-    background: white;
-    border: solid;
-    border-width: 2px;
-    max-height: 50px;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    float:center;
-    width: 60%;
-`;
-const QuantityInput = styled.input`
-    padding: 0.5em;
-    margin-left: 42%;
-    color: coral;
-    background: white;
-    border: solid;
-    border-width: 2px;
-    max-height: 50px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    width: 10%;
-    text-align: center;
+// const Input = styled.input`
+//     padding: 0.5em;
+//     margin: 0.5em;
+//     color: coral;
+//     background: white;
+//     border: solid;
+//     border-width: 2px;
+//     max-height: 50px;
+//     -webkit-border-radius: 50px;
+//     -moz-border-radius: 50px;
+//     border-radius: 50px;
+//     float:center;
+//     width: 60%;
+// `;
+// const QuantityInput = styled.input`
+//     padding: 0.5em;
+//     margin-left: 42%;
+//     color: coral;
+//     background: white;
+//     border: solid;
+//     border-width: 2px;
+//     max-height: 50px;
+//     -webkit-border-radius: 20px;
+//     -moz-border-radius: 20px;
+//     border-radius: 20px;
+//     width: 10%;
+//     text-align: center;
     
  
-`;
+// `;
 
-const SubmitInput = styled.input`
-    padding: 1.0em;
-    margin: auto;
-    color: oldlace;
-    background: coral;
-    border: solid;
-    border-width: 2px;
-    max-height: 50px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
-    font-size: 1.5 em;
-    float: right;
-`;
+// const SubmitInput = styled.input`
+//     padding: 1.0em;
+//     margin: auto;
+//     color: oldlace;
+//     background: coral;
+//     border: solid;
+//     border-width: 2px;
+//     max-height: 50px;
+//     -webkit-border-radius: 30px;
+//     -moz-border-radius: 30px;
+//     border-radius: 30px;
+//     font-size: 1.5 em;
+//     float: right;
+// `;
 
-const RemoveButton = styled.button`
-    color: oldlace;
-    background: coral;
-    border: solid;
-    border-width: 1px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    font-size: 1.5 em;
-    float: right;
-    padding: 8px;
-    width: auto;
-    height: 100%;
-`;
+// const RemoveButton = styled.button`
+//     color: oldlace;
+//     background: coral;
+//     border: solid;
+//     border-width: 1px;
+//     -webkit-border-radius: 20px;
+//     -moz-border-radius: 20px;
+//     border-radius: 20px;
+//     font-size: 1.5 em;
+//     float: right;
+//     padding: 8px;
+//     width: auto;
+//     height: 100%;
+// `;
 
-const ProductImg = styled.img`
-    width: 15%;
-    padding: 0.25em 1em;
-    border: none;
-    max-width:100%;
-    max-height:100%;
-`;
+// const ProductImg = styled.img`
+//     width: 15%;
+//     padding: 0.25em 1em;
+//     border: none;
+//     max-width:100%;
+//     max-height:100%;
+// `;
 
-const ProductName = styled.p`
-    font-family: 'Ubuntu', sans-serif;
-    padding: 5px;
-    margin: 10px;
-    font-size: 1.5 em;
-    text-align: center;
-    color: grey;
-    border:none;
-    width: 30%;
-`;
+// const ProductName = styled.p`
+//     font-family: 'Ubuntu', sans-serif;
+//     padding: 5px;
+//     margin: 10px;
+//     font-size: 1.5 em;
+//     text-align: center;
+//     color: grey;
+//     border:none;
+//     width: 30%;
+// `;
 
-const ProductDetails = ProductDivText.extend`
-    color: silver;
-    height: 100%;
+// const ProductDetails = ProductDivText.extend`
+//     color: silver;
+//     height: 100%;
 
 
-`;
+// `;
 
 
 class Cart extends Component {
@@ -363,7 +366,7 @@ class Cart extends Component {
  
     return (
         <div>
-            <TopDiv>
+            {/* <TopDiv>
                 <TopLeftDiv>
                     <Title>Carrinho</Title>
                 </TopLeftDiv>
@@ -423,22 +426,6 @@ class Cart extends Component {
 
                     </CartColumnDiv>
 
-                    {/* <ProductDiv>
-                        <ProductDivText>Iphone X</ProductDivText>
-                        <ProductDivText>1</ProductDivText>
-                        <ProductDivText>20,00</ProductDivText>
-                    </ProductDiv>
-                    <ProductDiv>
-                    </ProductDiv>
-                    <ProductDiv>
-                    </ProductDiv> */}
-                    {/* {product}
-                    {product}
-                    {product}
-                    {product}
-                    {product}
-                    {product} */}
-
                 </MiddleLeftDiv>
                 <MiddleRightDiv>
                     <DeliveryDiv>
@@ -471,7 +458,7 @@ class Cart extends Component {
 
                 </MiddleRightDiv>
 
-            </MiddleDiv>
+            </MiddleDiv> */}
         </div>
 
     );

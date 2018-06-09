@@ -11,7 +11,9 @@ const PageDiv = styled.div`
     width:100%;
     margin:0;
     padding:0;
-    min-height:100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;
 
 
@@ -28,9 +30,9 @@ class App extends Component {
     render() {
 	return (
 	    <PageDiv className="App" >
-              <Header status={this.state.isLoggedIn}/>
-               <Main />
-              <Footer/>
+            <Header status={this.state.isLoggedIn}/>
+            <Main />
+            <Footer/>
 	    </PageDiv>
 	);
     }

@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
+import {Navbar, Nav, NavItem, NavLink, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
+import "../Footer.css";
 
 const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
-    padding: 20px;
+    padding: 10px;
     font-size: 1.0  em;
     text-align: center;
     color: coral;
     max-height: 50px;
     margin:auto;
     position:absolute;
-    left:43%;
-    `;
+    height:100%;
+  `;
 
 const FooterDiv = styled.div`
     background-color: whitesmoke;
@@ -23,38 +25,30 @@ const FooterDiv = styled.div`
     border-top-style: outset;
     border-width: 2px;
     border-color: coral;
-    // position: fixed;
-    // left: 0;
-    // bottom: 0;
     width: 100%;
-    z-index: -1;
+    flex-shrink: 0;
+
     
 `;
 
-const ContactButton = styled(Link)`
-  font-family: 'Ubuntu', sans-serif;
-  padding: 5px;
-  margin: 20px;
-  font-size: 1.0  em;
-  text-align: left;
-  color: coral;
-  max-height: 50px;
-  float:left;
-
-`;
 
 class Footer extends Component {
 
   render() {
     return (
       <FooterDiv className="Footer">
-        <header className="Header">
-          <ContactButton to='/Contato'>Fale Conosco!</ContactButton>
-          <Text>&copy; 2018 - Grupo SAC - MC851/MC857 </Text>
-        </header>
+        <Row className="Row">
+          <Col>
+          <Button className="col-12 col-sm-12 col-md-3 col-lg-3 offset-lg-2 col-xl-4 offset-xl-2" color="link"><Link className="link" to='/Contato'>Fale Conosco!</Link></Button>
+          </Col>
+          <Col>
+            <Text className="col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">&copy; Grupo SAC - MC851/MC857</Text>
+          </Col>
+        </Row>
       </FooterDiv>
     );
   }
 }
 
 export default Footer;
+//  <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Cadastrar</Button>

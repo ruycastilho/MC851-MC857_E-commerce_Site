@@ -9,13 +9,14 @@ import { Switch, Route } from 'react-router-dom'
 import styled from 'styled-components';
 
 const MainDiv = styled.main`
-    border:none;
     float:left;
     width:100%;
     margin:0;
     margin-top:3%;  
     padding:0;
-    min-height:100%;
+    // min-height:100%;
+    // height:100%;
+    flex: 1 0 auto;
 `;
 
 

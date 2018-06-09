@@ -1,0 +1,18 @@
+.Footer button {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.0  em;
+    color: coral;
+    max-height: 50px;
+    height: 100%;
+}
+
+.Row {
+    padding: 1px;
+}
+.link {
+    font-family: 'Ubuntu', sans-serif;
+    color: coral;
+    margin-top: 1%;
+    text-align: center;
+
+}
