@@ -37,8 +37,10 @@ class Footer extends Component {
     return (
       <FooterDiv className="Footer">
         <Row className="Row">
-          <Col>
-          <Button className="col-12 col-sm-12 col-md-3 col-lg-3 offset-lg-2 col-xl-4 offset-xl-2" color="link"><Link className="link" to='/Contato'>Fale Conosco!</Link></Button>
+          <Col >
+            <div class="centerBlock " >
+              <Link class="btn btn-link" className="col-12 col-sm-12 col-md-3 col-lg-3 offset-lg-2 col-xl-4 offset-xl-2" className="link" to='/Contato'>Fale Conosco!</Link>
+            </div>    
           </Col>
           <Col>
             <Text className="col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">&copy; Grupo SAC - MC851/MC857</Text>

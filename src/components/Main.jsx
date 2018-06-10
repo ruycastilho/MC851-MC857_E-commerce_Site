@@ -4,7 +4,7 @@ import Signup from './Signup';
 import Payment from './Payment';
 import User from './User';
 import Cart from './Cart';
-import Contact from './Contact.jsx';
+import Tickets from './Contact.jsx';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -31,7 +31,7 @@ class Main extends Component {
             <Route path='/Pagamento' component={Payment}/>
             <Route path='/User' component={User}/>
             <Route path='/Carrinho' component={Cart}/>
-            <Route path='/Contato' component={Contact}/>
+            <Route path='/Contato' component={Tickets}/>
         </Switch>
     </MainDiv>
     );
