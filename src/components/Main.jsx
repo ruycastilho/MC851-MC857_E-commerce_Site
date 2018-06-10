@@ -31,7 +31,7 @@ class Main extends Component {
             <Route path='/Pagamento' component={Payment}/>
             <Route path='/User' component={User}/>
             <Route path='/Carrinho' component={Cart}/>
-            <Route path='/Contato' component={Tickets}/>
+            <Route path='/Contato' component={Contact}/>
         </Switch>
     </MainDiv>
     );

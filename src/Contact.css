@@ -10,3 +10,11 @@
 #form .btn-group2 {
     padding: 0 0.75rem !important;
 }
+.centerBlock {
+    display: table;
+    margin: auto;
+    padding: 3px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+ }
