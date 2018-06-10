@@ -114,8 +114,12 @@ class Payment extends Component {
                     <Input name="cod" id="cod" placeholder="Digite o código de segurança" />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="data">Data de Validade</Label>
-                    <Input name="data" id="data" placeholder="Digite a data de validade do cartão" />
+                    <Label for="data">Mês de Validade</Label>
+                    <Input name="data" id="data" placeholder="Digite a mês de validade do cartão" />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="data">Ano de Validade</Label>
+                    <Input name="data" id="data" placeholder="Digite o ano de validade do cartão" />
                 </FormGroup>
                 <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Finalizar</Button>
             </Form>
