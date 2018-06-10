@@ -1,18 +1,23 @@
-/* .btn-group2 {
-    max-width: 100% !important;
-    width: 100%;
-    display: block;
-    padding: 0 !important;
-    margin: 0 !important;
+.centerBlock {
+    display: table;
+    margin: auto;
+    padding: 3px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+
+.centerBlock button {
+    margin: 10px;
 }
 
-.nav-item2 {
-    width: 100%;
-}
+/* .img-col {
+    padding: 0;
+    max-height: 20px;
 
-.btn-group2 button {
-    background-color: coral;
-    border: 2px solid coral;
-    border-radius: 0;
-    width: calc(100%/8);
 } */
+
+.img {
+    max-height: 200px;
+    width: auto;
+
+}
