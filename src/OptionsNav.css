@@ -16,3 +16,10 @@
     border-radius: 0;
     width: calc(100%/8);
 }
+
+.btn-group2 .disabled {
+    opacity: 1 !important;
+    background-color: coral !important;
+    border: 2px solid coral !important;
+    border-bottom: 1px solid white !important;
+}

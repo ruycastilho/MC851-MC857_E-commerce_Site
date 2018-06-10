@@ -19,7 +19,7 @@ const Text = styled.p`
 const FooterDiv = styled.div`
     background-color: whitesmoke;
     padding:0;
-    height:60px;
+    min-height:60px;
     overflow:hidden;
     float:left;
     border-top-style: outset;

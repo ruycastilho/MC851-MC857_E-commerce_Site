@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'loginSystem',
-    'cart'
+    'cart',
+    'products'
 ]
 
 # Adicionado

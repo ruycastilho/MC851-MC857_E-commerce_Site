@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Home from './Home';
+import Home from './Home.jsx';
 import Signup from './Signup';
 import Payment from './Payment';
 import User from './User';
 import Cart from './Cart';
-import Contact from './Contact';
-import { Switch, Route } from 'react-router-dom'
+import Contact from './Contact.jsx';
+import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MainDiv = styled.main`
