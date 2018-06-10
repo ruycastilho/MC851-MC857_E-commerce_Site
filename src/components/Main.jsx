@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Home from './Home.jsx';
-import Signup from './Signup';
+import Signup from './Signup.jsx';
 import Payment from './Payment';
 import User from './User';
-import Cart from './Cart';
-import Tickets from './Contact.jsx';
+import Cart from './Cart.jsx';
+import Contact from './Contact.jsx';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Button, Row, Col, Container,Form, FormGroup, Label, Input } from 'reactstrap';
 import "../OptionsNav.css";
 import "../Contact.css";
-
+import AccordionItem from "./Accordion";
 
 class Tickets extends Component {
     constructor() {
@@ -14,7 +14,7 @@ class Tickets extends Component {
         this.state = {
             ticket: [],
             typeOfTicket: "Default",
-	    nav_active: 0,
+	    nav_active: 1,
         };
     }
 
@@ -110,7 +110,22 @@ class Tickets extends Component {
 		  </FormGroup>
 		 
 		</Form>
-	) : null;
+	) : (
+	    <div>
+	    <AccordionItem
+	      data={"06/06/2006"}
+	      msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
+	      id={2489294}
+	      status={"Aberto"}
+	      name={"Este é o nome de um ticket"}/>
+	    <AccordionItem
+	      data={"02/03/1998"}
+	      msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
+	      id={123454321}
+	      status={"Fechado"}
+	      name={"Este é um outro ticket"}/>
+	    </div>
+	);
 
 	return (
 	    <div>
