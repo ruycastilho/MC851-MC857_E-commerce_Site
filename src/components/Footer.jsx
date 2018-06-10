@@ -31,7 +31,6 @@ const FooterDiv = styled.div`
     
 `;
 
-
 class Footer extends Component {
 
   render() {
@@ -51,4 +50,3 @@ class Footer extends Component {
 }
 
 export default Footer;
-//  <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Cadastrar</Button>
