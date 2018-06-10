@@ -1,4 +1,14 @@
-.form-group button {
+
+.centerBlock {
+    display: table;
+    margin: auto;
+    padding: 3px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+ }
+
+.centerBlock button {
     font-size: 2.0 em;
     color: oldlace;
     background: coral;
@@ -8,17 +18,9 @@
     text-align: center;
 }
 
+
 .form-group label {
     font-size: 2.0  em;
     margin: 0.5% !important;
 
 }
-
-.form-group .form-group {
-    margin-left: 0.7% !important;
-    margin-right: 0.7% !important;
-    margin-top: 0.3% !important;
-    border-width: 3px;
-    border-color: gray;
-}
-

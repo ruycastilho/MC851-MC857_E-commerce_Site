@@ -143,14 +143,19 @@ class Header extends Component {
 	const shownElement = isLoggedIn ? (
 
 	    <Nav className="ml-auto" right navbar >
-	      <NavItem>
-		<h1>Boas vindas, {this.state.username}!</h1>
-	      </NavItem>
-	      <NavItem>
-		<Form>
-		  <Button type="button" onClick={this.handleLogout}>Sair</Button>
-		</Form>
-	      </NavItem>
+	     	<NavItem>
+				<h1>Boas vindas, {this.state.username}!</h1>
+	     	</NavItem>
+			 
+			<Link to='/Conta' id="link">
+				<img type="image" src={user} id="userimage"></img>
+			</Link>
+			
+			<NavItem>
+				<Form>
+				<Button type="button" onClick={this.handleLogout}>Sair</Button>
+				</Form>
+			</NavItem>
 	    </Nav>
 
 	) : (

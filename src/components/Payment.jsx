@@ -61,18 +61,6 @@ const LabelText = Text.extend`
 
 `;
 
-const SelectDiv = styled.div`
-    background-color: transparent;
-    border:none;
-    overflow:hidden;
-    padding:5px;
-    height: 10%;
-    float:left;
-    width:100%;
-    display: flex;
-    justify-content: left;
-`;
-
 class Payment extends Component {
 
   constructor() {

@@ -29,7 +29,7 @@ class Main extends Component {
             <Route exact path='/' component={Home}/>
             <Route path='/Cadastro' component={Signup}/>
             <Route path='/Pagamento' component={Payment}/>
-            <Route path='/User' component={User}/>
+            <Route path='/Conta' component={User}/>
             <Route path='/Carrinho' component={Cart}/>
             <Route path='/Contato' component={Contact}/>
         </Switch>
