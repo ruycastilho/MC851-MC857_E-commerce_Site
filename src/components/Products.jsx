@@ -65,7 +65,7 @@ const subLegends =[
 function retCols(){
     var ret = [];
     var number;
-    if(imgSrcs.length == legends.length && legends.length == subLegends.length)
+    if(imgSrcs.length == legends.length && legends.length === subLegends.length)
 	number = subLegends.length;
     else
 	number = 0;

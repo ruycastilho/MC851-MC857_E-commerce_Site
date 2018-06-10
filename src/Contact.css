@@ -1,0 +1,12 @@
+#form .form-check{
+    margin: 0 0 0 0 !important;
+    padding: 0 15px !important;
+}
+
+#form {
+    margin: 10% 0;
+}
+
+#form .btn-group2 {
+    padding: 0 0.75rem !important;
+}

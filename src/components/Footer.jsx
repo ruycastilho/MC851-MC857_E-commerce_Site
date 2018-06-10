@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Text = styled.p`
     font-family: 'Ubuntu', sans-serif;
@@ -17,13 +17,13 @@ const Text = styled.p`
 const FooterDiv = styled.div`
     background-color: whitesmoke;
     padding:0;
-    height:60px;
+    min-height:60px;
     overflow:hidden;
     float:left;
     border-top-style: outset;
     border-width: 2px;
     border-color: coral;
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
