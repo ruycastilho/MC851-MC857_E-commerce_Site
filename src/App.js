@@ -27,6 +27,7 @@ class App extends Component {
         var user = localStorage.getItem('user');
 
         if (user != null) {
+            this.props.setStatus(true);
             this.props.setUser(user);
         
         }
@@ -45,7 +46,26 @@ class App extends Component {
             <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
         ) : (
             <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
-        )
+        );
+
+        return (
+            <PageDiv className="App" >
+                <Header />
+                {finalize}
+                <Main />
+                <Footer />
+            </PageDiv>
+        );
+    }
+}
+
+// export default App;
+
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
     }
 }
 const mapDispatchToProps = (dispatch) => {
