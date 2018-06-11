@@ -5,6 +5,9 @@ import cart from '../cart.svg';
 import user from '../user.svg';
 import { Link } from 'react-router-dom';
 import {
+	Col,
+	Row,
+	Container,
     Button,
     Collapse,
     Form,
@@ -51,9 +54,6 @@ const PageLink = styled(Link)`
    border: solid;
    border-width: 1px;
    border-color: coral;
-   -webkit-border-radius: 50px;
-   -moz-border-radius: 50px;
-   border-radius: 50px;
    max-width:100%;
    max-height:100%;
    float:right;
@@ -185,28 +185,29 @@ class Header extends Component {
 	
 	return (
 	    <div>
-	      <Navbar light expand="md" className="navbar2">
-		<Logo src={logo} className="Title-Logo"/>
-		<NavbarBrand href="/" className="navbar-brand2"> SAColão E-commerce </NavbarBrand>
-		<NavbarToggler onClick={this.toggle} />
-		<Collapse isOpen={this.state.isOpen} navbar id="loginForm" onSubmit={this.handleLogin} method="post">
-		  {shownElement}
-		  <Link to='/Carrinho' id="link"><img type="image" src={cart} id="carrinho"></img></Link>
-		</Collapse>
-	      </Navbar>
-	      <Nav className="search-nav">
-		<Form >		 
-		  <InputGroup >
-		    <Input placeholder="O que você procura?"/>
-		    <InputGroupAddon addonType="prepend" >
-		      <Button color="coral" className="search-bar-button">
-			<FA.FaSearch />
-		      </Button>
-		    </InputGroupAddon>
-		  </InputGroup>
-		</Form>
-	      </Nav>
-	      {error}
+		<Navbar light expand="md" className="navbar2">
+			<Logo src={logo} className="Title-Logo"/>
+			<NavbarBrand href="/" className="navbar-brand2"> SAColão E-commerce </NavbarBrand>
+			
+			<NavbarToggler onClick={this.toggle} />
+				<Collapse isOpen={this.state.isOpen} navbar id="loginForm" onSubmit={this.handleLogin} method="post">
+					{shownElement}
+					<Link to='/Carrinho' id="link"><img type="image" src={cart} id="carrinho"></img></Link>
+				</Collapse>
+		</Navbar>
+		<Nav className="search-nav">
+			<Form >		 
+			<InputGroup >
+				<Input placeholder="O que você procura?"/>
+				<InputGroupAddon addonType="prepend" >
+				<Button color="coral" className="search-bar-button">
+					<FA.FaSearch />
+				</Button>
+				</InputGroupAddon>
+			</InputGroup>
+			</Form>
+		</Nav>
+		{error}
 	    </div>
 	);
     }
