@@ -21,21 +21,29 @@ const MainDiv = styled.main`
 
 
 class Main extends Component {
+    constructor(props) {
+	    super(props);
+        this.state = {
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
+        };
 
-  render() {
-    return (
-    <MainDiv>
-        <Switch>
-            <Route exact path='/' component={Home}/>
-            <Route path='/Cadastro' component={Signup}/>
-            <Route path='/Pagamento' component={Payment}/>
-            <Route path='/Conta' component={User}/>
-            <Route path='/Carrinho' component={Cart}/>
-            <Route path='/Contato' component={Contact}/>
-        </Switch>
-    </MainDiv>
-    );
-  }
+    }
+
+    render() {
+        return (
+        <MainDiv>
+            <Switch>
+                <Route exact path='/' component={Home}/>
+                <Route path='/Cadastro' component={Signup}/>
+                <Route path='/Pagamento' component={Payment}/>
+                <Route path='/Conta' component={User}/>
+                <Route path='/Carrinho' component={Cart}/>
+                <Route path='/Contato' component={Contact}/>
+            </Switch>
+        </MainDiv>
+        );
+    }
 }
 
 export default Main;

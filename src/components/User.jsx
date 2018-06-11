@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {connect} from 'react-redux';
 
 import Order from "./Orders";
 import "../User.css";
@@ -53,10 +54,10 @@ const Title = styled.h1`
 
 
 class User extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-	    nav_active: 1,
+            nav_active: 1,
         };
     }
 
@@ -140,4 +141,31 @@ class User extends Component {
     }
 }
 
-export default User;
+// export default User;
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (User);
+
+// color:#9e1847;

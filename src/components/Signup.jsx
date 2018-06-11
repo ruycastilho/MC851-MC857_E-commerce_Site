@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import AlertMsg from './Alert';
 import "../Signup.css";
+import {connect} from 'react-redux';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -113,7 +114,6 @@ class Signup extends Component {
             wasSuccess : false,
         };
 
-        // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
@@ -177,4 +177,31 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+// export default Signup;
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (Signup);
+
+// color:#9e1847;

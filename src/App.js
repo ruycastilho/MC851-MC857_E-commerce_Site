@@ -3,7 +3,11 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Main from './components/Main.jsx';
 import styled from 'styled-components';
-
+import AlertMsg from './components/Alert';
+import axios from 'axios';
+import $ from 'jquery';
+import {connect} from 'react-redux';
+import { withRouter } from 'react-router'
 
 const PageDiv = styled.div`
     border:none;
@@ -18,26 +22,69 @@ const PageDiv = styled.div`
 
 
 class App extends Component {
-    constructor() {
-	super();
-	this.state = {
-	    isLoggedIn: false,
 
-	};
+    componentDidMount() {
+        var user = localStorage.getItem('user');
 
-
+        if (user != null) {
+            this.props.setStatus(true);
+            this.props.setUser(user);
+        
+        }
+        else {
+            this.props.setStatus(false);
+            this.props.setUser("");
+        
+        }
     }
+    
     render() {
-	return (
-	    <PageDiv className="App" >
-            <Header status={this.state.isLoggedIn}/>
-            <Main />
-            <Footer/>
-	    </PageDiv>
-	);
+        const isLoggedIn = this.props.isLoggedIn;
+
+
+        const finalize = isLoggedIn ? (
+            <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
+        ) : (
+            <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
+        );
+
+        return (
+            <PageDiv className="App" >
+                <Header />
+                {finalize}
+                <Main />
+                <Footer />
+            </PageDiv>
+        );
     }
 }
 
-export default App;
+// export default App;
+
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (App));
 
 // color:#9e1847;

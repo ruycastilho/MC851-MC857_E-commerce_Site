@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import producttest from '../producttest.jpg';
 import {Media, Input, InputGroup, Form, FormGroup, InputGroupText, InputGroupAddon, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
 import "../Cart.css";
 import AlertMsg from './Alert';
+import { connect } from 'react-redux';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -92,8 +93,16 @@ const PriceText = styled.p`
 
 `;
 
-
 class Cart extends Component {
+    constructor(props) {
+        super(props);
+        this.handleBuy = this.handleBuy.bind(this);
+
+    }
+
+    handleBuy(event) {
+        event.preventDefault();
+    }
   render() {
     
     const product = (
@@ -132,12 +141,12 @@ class Cart extends Component {
         </Row>
     );
  
-    const finalize = null;
-    // const finalize = this.state.isLoggedIn ? (
-//      <Button color="danger">Finalizar Compra</Button>{' '}
-    // ) : (
-        {/* <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" /> */}
-    // );
+
+    const finalize = this.props.isLoggedIn ? (
+        <Button onClick={this.handleBuy} color="danger">Finalizar Compra</Button>
+    ) : (
+        <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+    );
 
     return (
         <div>
@@ -191,9 +200,9 @@ class Cart extends Component {
                             <Col className="col-12" >
                                 <div className="text-center ">
                                     {/* <Button color="danger">Finalizar Compra</Button> */}
-                                    <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+                                    {/* <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" /> */}
 
-                                    {/* {finalize} */}
+                                    {finalize}
                                 
                                 </div>   
 
@@ -209,4 +218,30 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+// export default Cart;
+
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Cart));

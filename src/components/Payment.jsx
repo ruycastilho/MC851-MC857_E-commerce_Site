@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {connect} from 'react-redux';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -63,19 +64,19 @@ const LabelText = Text.extend`
 
 class Payment extends Component {
 
-  constructor() {
-      super();
-      this.handleChange = this.handleChange.bind(this);
-      this.handleClick = this.handleClick.bind(this);
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
-      this.state = {
-          typeOfPayment: "creditCard",
-      }
-  }
+        this.state = {
+            typeOfPayment: "creditCard",
+        }
+    }
 
-  handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-  }
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
 
   handleClick() {
     // do something
@@ -168,4 +169,31 @@ class Payment extends Component {
   }
 }
 
-export default Payment;
+// export default Payment;
+
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (Payment);
+
+// color:#9e1847;

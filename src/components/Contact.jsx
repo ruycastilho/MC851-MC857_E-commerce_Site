@@ -4,17 +4,18 @@ import {Button, Row, Col, Container,Form, FormGroup, Label, Input } from 'reacts
 import "../OptionsNav.css";
 import "../Contact.css";
 import AccordionItem from "./Accordion";
+import { connect } from 'react-redux';
 
 class Contact extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
             ticket: [],
             typeOfTicket: "Default",
-	    nav_active: 1,
+			nav_active: 1,
         };
     }
 
@@ -142,4 +143,30 @@ class Contact extends Component {
     }
 }
 
-export default Contact;
+const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+        isLoggedIn: state.isLoggedIn
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+        }    ,    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (Contact);
+
+
+// color:#9e1847;
