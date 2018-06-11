@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import Item from "./Orders";
+
+import Order from "./Orders";
 import "../User.css";
 
 const MiddleDiv = styled.div`
@@ -49,6 +50,8 @@ const Title = styled.h1`
     text-decoration: none;
 `;
 
+
+
 class User extends Component {
     constructor() {
         super();
@@ -85,29 +88,31 @@ class User extends Component {
             </Container>
 	) : (
 	    <div>
-              <Item
-                data={"06/06/2006"}
-                id={2489294}
-                status_ent={"Entregue"}
-		status_pag={"Confirmado"}
-		name={"Este é um Pedido"}
-		src={"https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg"}
-		valor={"R$66,60"}
-		qtdade={"7"}
-		total={"R$466,20"}
+	      <Order
+		data={"06/06/2006"}
+		id_order={2489294}
+		id_prods={[3435203423,2403549]}
+		name={["The Name of the Wind - Patrick Rothfuss","Gotham"]}
+		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1"]}
+		valor={["R$66,60","R$49,99"]}
+		qtdade={[8,4]}
 		adress={"Rua dos bobos, número zero"}
+		status_pag={"Aceito"}
+		status_ent={"Entregue"}
+		total={"R$732,76"}
 		/>
-              <Item
-		data={"10/06/2018"}
-                id={2489294839}
-                status_ent={"Ainda em estoque"}
-		status_pag={"Pendente"}
-		name={"Este é um outro Pedido"}
-		src={"https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg"}
-		valor={"R$66,60"}
-		qtdade={"7"}
-		total={"R$466,20"}
-		adress={"Av. dos bobos, número zero"}
+	      <Order
+		data={"08/06/2018"}
+		id_order={4738392749}
+		id_prods={[3435203423,2403549,374902]}
+		name={["The Name of the Wind - Patrick Rothfuss","Gotham","A Revolução das Mulheres"]}
+		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9426525&qld=90&l=430&a=-1"]}
+		valor={["R$66,60","R$49,99","R$60,00"]}
+		qtdade={[8,4,1]}
+		adress={"Rua dos bobos, número zero"}
+		status_pag={"Processando"}
+		status_ent={"Ainda em estoque"}
+		total={"R$792,76"}
 		/>
 	    </div>
 	);
