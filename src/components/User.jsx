@@ -53,13 +53,21 @@ const Title = styled.h1`
 
 
 class User extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-	    nav_active: 1,
+            nav_active: 1,
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
         };
     }
 
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+    }
 
     navIsActive(x) {
     	return this.state.nav_active == x ? true : false;

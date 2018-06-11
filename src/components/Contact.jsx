@@ -6,18 +6,29 @@ import "../Contact.css";
 import AccordionItem from "./Accordion";
 
 class Contact extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
             ticket: [],
             typeOfTicket: "Default",
-	    nav_active: 1,
+			nav_active: 1,
+			isLoggedIn: props.isLoggedIn,
+            username: props.username
         };
     }
 
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+	}
+    shouldComponentUpdate(nextProps) {
+        return this.state.isLoggedIn != nextProps.isLoggedIn;
+    }	
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
     }

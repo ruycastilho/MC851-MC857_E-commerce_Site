@@ -5,6 +5,7 @@ import producttest from '../producttest.jpg';
 import {Media, Input, InputGroup, Form, FormGroup, InputGroupText, InputGroupAddon, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
 import "../Cart.css";
 import AlertMsg from './Alert';
+import { observer } from 'mobx-react'
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -92,8 +93,21 @@ const PriceText = styled.p`
 
 `;
 
-
+@observer(['users'])
 class Cart extends Component {
+    constructor(props) {
+        super(props);
+        this.handleBuy = this.handleBuy.bind(this);
+        this.state = {
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
+        };
+
+    }
+
+    handleBuy(event) {
+        event.preventDefault();
+    }
   render() {
     
     const product = (
@@ -132,12 +146,12 @@ class Cart extends Component {
         </Row>
     );
  
-    const finalize = null;
-    // const finalize = this.state.isLoggedIn ? (
-//      <Button color="danger">Finalizar Compra</Button>{' '}
-    // ) : (
-        {/* <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" /> */}
-    // );
+
+    const finalize = this.state.isLoggedIn ? (
+        <Button onClick={this.handleBuy} color="danger">Finalizar Compra</Button>
+    ) : (
+        <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+    );
 
     return (
         <div>
@@ -191,9 +205,9 @@ class Cart extends Component {
                             <Col className="col-12" >
                                 <div className="text-center ">
                                     {/* <Button color="danger">Finalizar Compra</Button> */}
-                                    <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+                                    {/* <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" /> */}
 
-                                    {/* {finalize} */}
+                                    {finalize}
                                 
                                 </div>   
 

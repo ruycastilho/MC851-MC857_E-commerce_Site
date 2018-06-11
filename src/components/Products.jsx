@@ -69,7 +69,18 @@ class Product extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
-        this.state = { collapse: false };
+        this.state = {
+            collapse: false,
+            isLoggedIn: props.isLoggedIn,
+            username: props.username
+        };
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
     }
 
     toggle() {

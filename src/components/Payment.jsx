@@ -63,19 +63,28 @@ const LabelText = Text.extend`
 
 class Payment extends Component {
 
-  constructor() {
-      super();
-      this.handleChange = this.handleChange.bind(this);
-      this.handleClick = this.handleClick.bind(this);
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
 
-      this.state = {
-          typeOfPayment: "creditCard",
-      }
-  }
+        this.state = {
+            typeOfPayment: "creditCard",
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
+        }
+    }
 
-  handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-  }
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+    }
 
   handleClick() {
     // do something

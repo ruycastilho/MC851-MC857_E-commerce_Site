@@ -21,21 +21,53 @@ const MainDiv = styled.main`
 
 
 class Main extends Component {
+    constructor(props) {
+	    super(props);
+        this.state = {
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
+        };
 
-  render() {
-    return (
-    <MainDiv>
-        <Switch>
-            <Route exact path='/' component={Home}/>
-            <Route path='/Cadastro' component={Signup}/>
-            <Route path='/Pagamento' component={Payment}/>
-            <Route path='/Conta' component={User}/>
-            <Route path='/Carrinho' component={Cart}/>
-            <Route path='/Contato' component={Contact}/>
-        </Switch>
-    </MainDiv>
-    );
-  }
+    }
+
+
+    static getDerivedStateFromProps(props, state) {
+        // Any time the current user changes,
+        // Reset any parts of state that are tied to that user.
+        // In this simple example, that's just the email.
+
+        if (props.isLoggedIn) {
+            alert("main prop true")
+        }
+        else {
+            alert("main prop false")
+
+        }
+
+        if (props.isLoggedIn !== state.isLoggedIn) {
+          alert("mudando na main");
+          return {
+            isLoggedIn: props.isLoggedIn,
+            username: props.username
+          };
+        }
+        return null;
+    }
+
+    render() {
+        return (
+        <MainDiv>
+            <Switch>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.state.isLoggedIn} username={this.state.username} exact path='/' component={Home}/>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.state.isLoggedIn} username={this.state.username} path='/Cadastro' component={Signup}/>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.state.isLoggedIn} username={this.state.username} path='/Pagamento' component={Payment}/>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.state.isLoggedIn} username={this.state.username} path='/Conta' component={User}/>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.props.isLoggedIn} username={this.props.username} path='/Carrinho' component={Cart}/>
+                <Route key={this.props.isLoggedIn} isLoggedIn={this.state.isLoggedIn} username={this.state.username} path='/Contato' component={Contact}/>
+            </Switch>
+        </MainDiv>
+        );
+    }
 }
 
 export default Main;

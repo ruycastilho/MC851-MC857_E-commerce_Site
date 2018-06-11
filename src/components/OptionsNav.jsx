@@ -6,13 +6,21 @@ import "../OptionsNav.css";
 
 class OptionsNav extends Component {
 
-    constructor(){
-	super();
-	this.state = {
-	    active: 7
-	};
+    constructor(props){
+		super(props);
+		this.state = {
+			active: 7,
+			isLoggedIn: props.isLoggedIn,
+			username: props.username,
+		};
     }
 
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+	}
 
     isActive(x) {
     	return this.state.active == x ? true : false;

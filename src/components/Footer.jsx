@@ -32,6 +32,21 @@ const FooterDiv = styled.div`
 `;
 
 class Footer extends Component {
+  constructor(props) {
+    super(props);
+      this.state = {
+          isLoggedIn: props.status,
+          username: props.username,
+      };
+
+  }
+
+  componentWillReceiveProps(newProps) {
+      this.state = {
+          isLoggedIn: newProps.isLoggedIn,
+          username: newProps.username,
+      };
+  }
 
   render() {
     return (

@@ -8,11 +8,29 @@ import Products from "./Products";
 // import styled from 'styled-components';
 
 class Home extends Component {
+
+    constructor(props) {
+	    super(props);
+        this.state = {
+            isLoggedIn: props.isLoggedIn,
+            username: props.username,
+        };
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+    }
+
+
     render() {
 	return (
         <div>
-            <OptionsNav />
-	        <Products/>
+            <OptionsNav status={this.state.isLoggedIn} username={this.state.username}/>
+	        <Products status={this.state.isLoggedIn} username={this.state.username}/>
         </div>
 	);
     }

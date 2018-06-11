@@ -111,15 +111,24 @@ class Signup extends Component {
         this.state = { 
             didSubmit : false,
             wasSuccess : false,
+            isLoggedIn: props.isLoggedIn,
+            username: props.username
         };
 
-        // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
         // ... mandar pra api
         this.setState({didSubmit : true})
     }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+    }
+
 
   render() {
 
