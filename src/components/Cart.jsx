@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import producttest from '../producttest.jpg';
 import {Media, Input, InputGroup, Form, FormGroup, InputGroupText, InputGroupAddon, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
 import "../Cart.css";
@@ -99,12 +99,12 @@ class Cart extends Component {
     const product = (
         <Row >
             <Col className="col-12 col-lg-3">
-                <div class="centerBlock " >
-                    <img class="img" src="https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg" alt="Generic placeholder image" />
+                <div className="centerBlock " >
+                    <img className="img" src="https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg" alt="Generic placeholder image" />
                 </div>
             </Col>
             <Col className="col-12 col-lg-3">
-                <div class="centerBlock text-center">
+                <div className="centerBlock text-center">
                     <Media body>
                         <Media heading>
                         Nome do Produto
@@ -115,7 +115,7 @@ class Cart extends Component {
                 
             </Col>
             <Col className="col-12 col-lg-3">
-                <div class="centerBlock text-center">
+                <div className="centerBlock text-center">
 
                     <InputGroup>
                         <Input placeholder="Quantidade" type="number" step="1" />
@@ -125,7 +125,7 @@ class Cart extends Component {
                 </div>
             </Col>
             <Col className="col-12 col-lg-3">
-                <div class="centerBlock text-center price-text">
+                <div className="centerBlock text-center price-text">
                     <PriceText>R$: XX,XX</PriceText>
                 </div>                                    
             </Col>             
@@ -189,7 +189,7 @@ class Cart extends Component {
                             </Col>
 
                             <Col className="col-12" >
-                                <div class="text-center ">
+                                <div className="text-center ">
                                     {/* <Button color="danger">Finalizar Compra</Button> */}
                                     <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import AccordionItem from "./Accordion";
+import Item from "./Orders";
 import "../User.css";
 
 const MiddleDiv = styled.div`
@@ -53,7 +53,7 @@ class User extends Component {
     constructor() {
         super();
         this.state = {
-	        nav_active: 1,
+	    nav_active: 1,
         };
     }
 
@@ -66,63 +66,73 @@ class User extends Component {
     	this.setState({nav_active: x});
     }
 
-     orderToggleValue(x) {
+    orderToggleValue(x) {
     	this.setState({typeOfTicket: x});
     }
 
     render() {
   	
 	const body = this.state.nav_active == 0 ? (
-        <Container>
-            <Form className="form-group" >
+            <Container>
+              <Form className="form-group" >
                 <FormGroup className="text-center" >
-                    <Label  or="email">Alterar e-mail</Label>
-                    <Input className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" type="email" name="email" id="email" placeholder="Digite o novo e-mail aqui" />
+                  <Label  or="email">Alterar e-mail</Label>
+                  <Input className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" type="email" name="email" id="email" placeholder="Digite o novo e-mail aqui" />
                 </FormGroup>
                 <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" onClick={this.handleClick}>Alterar</Button>
 
-            </Form>
-        </Container>
+              </Form>
+            </Container>
 	) : (
 	    <div>
-            <AccordionItem
+              <Item
                 data={"06/06/2006"}
-                msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
                 id={2489294}
-                status={"Aberto"}
-                name={"Este é o nome de um ticket"}
-            />
-            <AccordionItem
-                data={"02/03/1998"}
-                msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
-                id={123454321}
-                status={"Fechado"}
-                name={"Este é um outro ticket"}
-            />
+                status_ent={"Entregue"}
+		status_pag={"Confirmado"}
+		name={"Este é um Pedido"}
+		src={"https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg"}
+		valor={"R$66,60"}
+		qtdade={"7"}
+		total={"R$466,20"}
+		adress={"Rua dos bobos, número zero"}
+		/>
+              <Item
+		data={"10/06/2018"}
+                id={2489294839}
+                status_ent={"Ainda em estoque"}
+		status_pag={"Pendente"}
+		name={"Este é um outro Pedido"}
+		src={"https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg"}
+		valor={"R$66,60"}
+		qtdade={"7"}
+		total={"R$466,20"}
+		adress={"Av. dos bobos, número zero"}
+		/>
 	    </div>
 	);
 
-    return (
-        <div>
-            <TopDiv>
+	return (
+            <div>
+              <TopDiv>
                 <TopLeftDiv>
-                    <Title>Conta</Title>
+                  <Title>Conta</Title>
                 </TopLeftDiv>
-            </TopDiv>
-            <MiddleDiv>
-            <Container className="btn-group2">
-                <Row className="btn-group2 ">
+              </TopDiv>
+              <MiddleDiv>
+		<Container className="btn-group2">
+                  <Row className="btn-group2 ">
                     <Button onClick={() => this.navToggleActive(0)} active={this.navIsActive(0)} className="col-6"> Configurações </Button>
                     <Button onClick={() => this.navToggleActive(1)} active={this.navIsActive(1)} className="col-6"> Meus Pedidos </Button>
-                </Row>
-            </Container>
-            {body}
+                  </Row>
+		</Container>
+		{body}
 
-            </MiddleDiv>
-        </div>
+              </MiddleDiv>
+            </div>
 
-    );
-  }
+	);
+    }
 }
 
 export default User;

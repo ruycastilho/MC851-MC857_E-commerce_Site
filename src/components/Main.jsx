@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Home from './Home.jsx';
 import Signup from './Signup.jsx';
-import Payment from './Payment';
-import User from './User';
+import Payment from './Payment.jsx';
+import User from './User.jsx';
 import Cart from './Cart.jsx';
 import Contact from './Contact.jsx';
 import { Switch, Route } from 'react-router-dom';

@@ -23,7 +23,7 @@ import {
     DropdownItem,
     InputGroup,
     InputGroupAddon,
-    } from 'reactstrap';
+} from 'reactstrap';
 
 import '../header.css';
 import $ from 'jquery';
@@ -80,7 +80,7 @@ class Header extends Component {
 	this.handleLogin = this.handleLogin.bind(this);
 	this.handleLogout = this.handleLogout.bind(this);
 	this.state = {
-	    isLoggedIn: false,
+	    isLoggedIn: true,
 	    username: "Nome",
 	    isOpen: false,
 	    errorMsg: null,
@@ -143,19 +143,19 @@ class Header extends Component {
 	const shownElement = isLoggedIn ? (
 
 	    <Nav className="ml-auto" right navbar >
-	     	<NavItem>
-				<h1>Boas vindas, {this.state.username}!</h1>
-	     	</NavItem>
-			 
-			<Link to='/Conta' id="link">
-				<img type="image" src={user} id="userimage"></img>
-			</Link>
-			
-			<NavItem>
-				<Form>
-				<Button type="button" onClick={this.handleLogout}>Sair</Button>
-				</Form>
-			</NavItem>
+	      <NavItem>
+		<h1>Boas vindas, {this.state.username}!</h1>
+	      </NavItem>
+	      
+	      <Link to='/Conta' id="link" style={{"min-width":"40px","line-height":"3em"}}>
+		<FA.FaUser style={{"color":"coral", "font-size":"1.5em",}}/>
+	      </Link>
+	      
+	      <NavItem>
+		<Form>
+		  <Button type="button" onClick={this.handleLogout}>Sair</Button>
+		</Form>
+	      </NavItem>
 	    </Nav>
 
 	) : (
@@ -200,7 +200,7 @@ class Header extends Component {
 		    <Input placeholder="O que você procura?"/>
 		    <InputGroupAddon addonType="prepend" >
 		      <Button color="coral" className="search-bar-button">
-			<FA.FaSearch />
+			<FA.FaSearch color="white" style={{"font-size":"1.5em"}} />
 		      </Button>
 		    </InputGroupAddon>
 		  </InputGroup>
