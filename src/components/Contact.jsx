@@ -19,6 +19,15 @@ class Contact extends Component {
         };
     }
 
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+	}
+    shouldComponentUpdate(nextProps) {
+        return this.state.isLoggedIn != nextProps.isLoggedIn;
+    }	
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
     }

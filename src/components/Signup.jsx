@@ -112,6 +112,8 @@ class Signup extends Component {
         this.state = { 
             didSubmit : false,
             wasSuccess : false,
+            isLoggedIn: props.isLoggedIn,
+            username: props.username
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -120,6 +122,14 @@ class Signup extends Component {
         // ... mandar pra api
         this.setState({didSubmit : true})
     }
+
+    componentWillReceiveProps(newProps) {
+        this.state = {
+            isLoggedIn: newProps.isLoggedIn,
+            username: newProps.username,
+        };
+    }
+
 
   render() {
 
