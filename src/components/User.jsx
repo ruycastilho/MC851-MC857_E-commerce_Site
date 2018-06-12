@@ -61,13 +61,6 @@ class User extends Component {
         };
     }
 
-    componentWillReceiveProps(newProps) {
-        this.state = {
-            isLoggedIn: newProps.isLoggedIn,
-            username: newProps.username,
-        };
-    }
-
     navIsActive(x) {
     	return this.state.nav_active == x ? true : false;
     }

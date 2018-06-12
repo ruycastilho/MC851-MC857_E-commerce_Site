@@ -1,12 +1,16 @@
 import {
   CHANGE_USER,
   CHANGE_STATUS,
-
+  CHANGE_LOGIN_ERROR,
 } from '../actions'
+
+import ReduxThunk from 'redux-thunk'
 
 const initialState = {
   username: "",
   isLoggedIn: false,
+  loginErrorMsg: false,
+  code: 0,
 }
 
 const todos = (state = initialState, action) => {
@@ -23,6 +27,13 @@ const todos = (state = initialState, action) => {
         ...state,
         isLoggedIn: action.payload
     };
+    break;
+    case 'CHANGE_LOGIN_ERROR':
+    state = {
+      ...state,
+      loginErrorMsg: action.payload
+    };
+    break;
   }
   return state
 

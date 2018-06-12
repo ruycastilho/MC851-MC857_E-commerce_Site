@@ -4,6 +4,10 @@ import logo from '../logo.svg';
 import cart from '../cart.svg';
 import user from '../user.svg';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router'
+import ReduxThunk from 'redux-thunk'
+// import { post_login } from '../actions/index';
+
 import {
 	Col,
 	Row,
@@ -80,7 +84,6 @@ class Header extends Component {
 		super(props);
 		this.state = {
 			isOpen: false,
-			errorMsg: null,
 			loginAttempt: 0,
 		};
 		this.toggle = this.toggle.bind(this);
@@ -96,18 +99,14 @@ class Header extends Component {
 		console.log("tentativas de login: " + this.state.loginAttempt);
     }
     
-    setErrorMsg(msg){
-		this.setState({errorMsg: msg});
-    }
-    
     toggle() {
 		this.setState({
 			isOpen: !this.state.isOpen
 		});
     }
 
-
-    handleLogin() {
+    handleLogin(event) {
+		event.preventDefault();
 		var login = document.getElementById("loginForm");
 		var id = $("#loginId").val();
 		var pwd = $("#loginPwd").val();
@@ -118,59 +117,61 @@ class Header extends Component {
 			password: pwd
 		}
 
-		try {
+		const payload = JSON.stringify(body);
 
-			axios.post('http://127.0.0.1:8000/website/login/',	JSON.stringify(body))
-			.then(function (response) {
-			})
-			.catch(function (error) {
-				alert(error);
-			  });		
-		
-			localStorage.setItem('user', id);
+		axios.post('http://127.0.0.1:8000/website/login/',	JSON.stringify(body))
+		.then(response => {
 
-		  } catch (error) {
-			alert('localStorage error: ' + error.message);
+			if (response.data.status == 200) {
+				// this.props.setLogin(response);
+				this.props.setLoginError(false);
+				this.props.setStatus(true);
+				this.props.setUser(id);
 			
-          }
+				localStorage.setItem('user', id);
+			}
+			else {
+				this.props.setLoginError(true);
 
-        // alert("in");
-        this.props.setStatus(true);
-		this.props.setUser(id);
+			}
 		
-		localStorage.setItem('user', id);
+		})
+		.catch(function (error) {
+			alert(error);
+		});	
+
     }
 
     handleLogout(event) {
+		event.preventDefault();
 
 		try {
 
 			axios.get('http://127.0.0.1:8000/website/logout/')
 			.then(function (response) {
+
 			})
 			.catch(function (error) {
 				alert(error);
-			  });		
+			});		
 		
-			localStorage.removeItem('user');
-	
 		} catch (error) {
 			alert('localStorage error: ' + error.message);
 			
-        }
+		}
+		
         this.props.setStatus(false);
         this.props.setUser("");
 	
 		var user = localStorage.removeItem('user');
 
-        // alert("out");
 	}
 	
     render() {
 		const isLoggedIn = this.props.isLoggedIn;
 
-		const error = (this.state.errorMsg)  ? (
-			<AlertMsg msg={this.state.errorMsg} type="error" />
+		const error = (this.props.loginErrorMsg)  ? (
+			<AlertMsg msg={"Falha no Login"} type="error" />
 		) : null;
 
 		const shownElement = isLoggedIn ? (
@@ -247,21 +248,20 @@ class Header extends Component {
 }
 
 
-
-
-
-// export default Header;
-
-
 const mapStateToProps = (state) => {
     return {
         username: state.username,
-        isLoggedIn: state.isLoggedIn
+		isLoggedIn: state.isLoggedIn,
+		loginErrorMsg: state.loginErrorMsg,
+		post_code: state.code
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        setUser: (username) => {
+		// setLogin: (payload) => {
+		// 	dispatch(post_login(payload))
+		// }	,
+		setUser: (username) => {
             dispatch({
                 type: "CHANGE_USER",
                 payload: username
@@ -272,8 +272,16 @@ const mapDispatchToProps = (dispatch) => {
                 type: "CHANGE_STATUS",
                 payload: status
             })
-        }    ,    }
+		}    ,
+		setLoginError: (status) => {
+            dispatch({
+                type: "CHANGE_LOGIN_ERROR",
+                payload: status
+            })
+        }    ,
+	
+	}
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps) (Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Header));

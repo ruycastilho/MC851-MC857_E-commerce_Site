@@ -8,6 +8,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
+import ReduxThunk from 'redux-thunk'
 
 const PageDiv = styled.div`
     border:none;
@@ -39,19 +40,10 @@ class App extends Component {
     }
     
     render() {
-        const isLoggedIn = this.props.isLoggedIn;
-
-
-        const finalize = isLoggedIn ? (
-            <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
-        ) : (
-            <AlertMsg msg={this.props.isLoggedIn ? "true" : "false"} type="error" />
-        );
 
         return (
             <PageDiv className="App" >
                 <Header />
-                {finalize}
                 <Main />
                 <Footer />
             </PageDiv>
@@ -62,12 +54,6 @@ class App extends Component {
 // export default App;
 
 
-const mapStateToProps = (state) => {
-    return {
-        username: state.username,
-        isLoggedIn: state.isLoggedIn
-    }
-}
 const mapDispatchToProps = (dispatch) => {
     return {
         setUser: (username) => {
@@ -85,6 +71,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps) (App));
+export default withRouter(connect(null, mapDispatchToProps) (App));
 
 // color:#9e1847;

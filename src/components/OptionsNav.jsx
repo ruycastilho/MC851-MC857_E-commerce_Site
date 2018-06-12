@@ -13,13 +13,6 @@ class OptionsNav extends Component {
 		};
     }
 
-    componentWillReceiveProps(newProps) {
-        this.state = {
-            isLoggedIn: newProps.isLoggedIn,
-            username: newProps.username,
-        };
-	}
-
     isActive(x) {
     	return this.state.active == x ? true : false;
     }

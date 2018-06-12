@@ -3,6 +3,9 @@ import { Button, Collapse, CardBody, Card, Container, Row, Col } from 'reactstra
 import styled from 'styled-components';
 import Item from "./OrdersItens";
 import AlertMsg from './Alert';
+import ReduxThunk from 'redux-thunk'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux';
 
 const orderstyle = {
     "margin-top": '1em',
@@ -96,7 +99,7 @@ class Order extends Component {
     }
 }
 
-export default Order;
+// export default Order;
 
  // 		  <Col xs="12">
  // 		    <Item
@@ -110,3 +113,30 @@ export default Order;
  // 		      adress={"Av. dos bobos, número zero"}
  // 		      />
  // 		  </Col>
+
+ const mapStateToProps = (state) => {
+    return {
+        username: state.username,
+		isLoggedIn: state.isLoggedIn,
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+		setUser: (username) => {
+            dispatch({
+                type: "CHANGE_USER",
+                payload: username
+            })
+        }    ,
+        setStatus: (status) => {
+            dispatch({
+                type: "CHANGE_STATUS",
+                payload: status
+            })
+		}    ,
+	
+	}
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Order));
