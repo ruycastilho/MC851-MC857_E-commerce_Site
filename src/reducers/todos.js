@@ -11,6 +11,9 @@ const initialState = {
   isLoggedIn: false,
   loginErrorMsg: false,
   code: 0,
+  category: "",
+  searchString: "",
+  products: ""
 }
 
 const todos = (state = initialState, action) => {
@@ -32,6 +35,24 @@ const todos = (state = initialState, action) => {
     state = {
       ...state,
       loginErrorMsg: action.payload
+    };
+    break;
+    case 'CHANGE_CATEGORY':
+    state = {
+      ...state,
+      category: action.payload
+    };
+    break;
+    case 'CHANGE_SEARCH':
+    state = {
+      ...state,
+      searchString: action.payload
+    };
+    break;
+    case 'CHANGE_PRODUCTS':
+    state = {
+      ...state,
+      products: action.products
     };
     break;
   }

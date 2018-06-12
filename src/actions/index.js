@@ -15,6 +15,22 @@ export const loginTodo = status => ({
     payload: status
 })
 
+export const categoryTodo = category => ({
+    type: 'CHANGE_CATEGORY',
+    payload: category
+})
+
+export const searchTodo = string => ({
+    type: 'CHANGE_SEARCH',
+    payload: string
+})
+export const productsTodo = products => ({
+    type: 'CHANGE_PRODUCTS',
+    payload: products
+})
+
+
+
 // export const response = code => ({
 //     type: 'RESPONSE',
 //     payload: code

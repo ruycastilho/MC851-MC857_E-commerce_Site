@@ -7,6 +7,7 @@ import Cart from './Cart.jsx';
 import Contact from './Contact.jsx';
 import { Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
+import Products from './Products';
 
 const MainDiv = styled.main`
     float:left;
@@ -26,7 +27,7 @@ class Main extends Component {
         return (
         <MainDiv>
             <Switch>
-                <Route exact path='/' component={Home}/>
+                <Route exact path='/' component={Products}/>
                 <Route path='/Cadastro' component={Signup}/>
                 <Route path='/Pagamento' component={Payment}/>
                 <Route path='/Conta' component={User}/>

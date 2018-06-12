@@ -6,7 +6,6 @@ import user from '../user.svg';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router'
 import ReduxThunk from 'redux-thunk'
-// import { post_login } from '../actions/index';
 
 import {
 	Col,
@@ -35,9 +34,9 @@ import {
 import '../header.css';
 import $ from 'jquery';
 import AlertMsg from './Alert';
-import * as FA from 'react-icons/lib/fa';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import * as FA from 'react-icons/lib/fa';
 
 const Text = styled.p`
      font-family: 'Ubuntu', sans-serif;
@@ -86,10 +85,10 @@ class Header extends Component {
 			isOpen: false,
 			loginAttempt: 0,
 		};
+
 		this.toggle = this.toggle.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
-
     }
 
     checkAttempt(){
@@ -127,7 +126,7 @@ class Header extends Component {
 				this.props.setLoginError(false);
 				this.props.setStatus(true);
 				this.props.setUser(id);
-			
+			this.handleSearch
 				localStorage.setItem('user', id);
 			}
 			else {
@@ -137,7 +136,9 @@ class Header extends Component {
 		
 		})
 		.catch(function (error) {
-			alert(error);
+			// alert(error);
+			this.props.setLoginError(true);
+
 		});	
 
     }
@@ -156,7 +157,6 @@ class Header extends Component {
 			});		
 		
 		} catch (error) {
-			alert('localStorage error: ' + error.message);
 			
 		}
 		
@@ -229,18 +229,6 @@ class Header extends Component {
 					<Link to='/Carrinho' id="link"><img type="image" src={cart} id="carrinho"></img></Link>
 				</Collapse>
 			</Navbar>
-			<Nav className="search-nav">
-			<Form >		 
-			<InputGroup >
-				<Input placeholder="O que você procura?"/>
-				<InputGroupAddon addonType="prepend" >
-				<Button color="coral" className="search-bar-button">
-				<FA.FaSearch color="white" style={{"font-size":"1.5em"}} />
-				</Button>
-				</InputGroupAddon>
-			</InputGroup>
-			</Form>
-			</Nav>
 			{error}
 			</div>
 		);
@@ -253,14 +241,16 @@ const mapStateToProps = (state) => {
         username: state.username,
 		isLoggedIn: state.isLoggedIn,
 		loginErrorMsg: state.loginErrorMsg,
-		post_code: state.code
+		searchString: state.searchString
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-		// setLogin: (payload) => {
-		// 	dispatch(post_login(payload))
-		// }	,
+		setSearch: (string) => {
+            dispatch({
+                type: "CHANGE_SEARCH",
+                payload: string
+            })		}	,
 		setUser: (username) => {
             dispatch({
                 type: "CHANGE_USER",

@@ -11,14 +11,17 @@ import { createStore, applyMiddleware } from 'redux'
 import todos from './reducers/todos';
 import ReduxThunk from 'redux-thunk';
 
+
 const initialState = {
     username: "",
     isLoggedIn: false,
     loginErrorMsg: false,
     code: 0,
-}
-
-
+    category: "",
+    searchString: "",
+    products: ""
+  }
+  
 const store = createStore(todos, initialState, applyMiddleware(ReduxThunk))
 
 

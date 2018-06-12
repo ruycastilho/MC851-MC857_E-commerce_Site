@@ -1,0 +1,177 @@
+API CALLS
+
+NAO ESQUECER DO     event.preventDefault();
+
+GET
+
+		axios.get('http://127.0.0.1:8000/completar')
+		.then(response => {
+
+            // response.data.content -> conteudo
+			switch (response.data.status) {
+
+                case 200: 
+                    break;
+                case 400:
+                    break;
+                case 404;
+                    break;
+            }
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+
+POST
+
+        const body =
+		{
+			username: id,
+			password: pwd
+		}
+
+		const payload = JSON.stringify(body);
+
+		axios.post('http://127.0.0.1:8000/completar',	JSON.stringify(body))
+		.then(response => {
+             // response.data.content -> conteudo
+			switch (response.data.status) {
+
+                case 200: 
+                    break;
+                case 400:
+                    break;
+                case 404;
+                    break;
+            }
+		})
+		.catch(function (error) {
+			// alert(error);
+			this.props.setLoginError(true);
+
+		});	
+
+
+PUT
+
+        const body =
+		{
+			username: id,
+			password: pwd
+		}
+
+		const payload = JSON.stringify(body);
+
+		axios.put('http://127.0.0.1:8000/completar',	JSON.stringify(body))
+		.then(response => {
+             // response.data.content -> conteudo
+			switch (response.data.status) {
+
+                case 200: 
+                    break;
+                case 400:
+                    break;
+                case 404;
+                    break;
+            }
+		})
+		.catch(function (error) {
+			// alert(error);
+			this.props.setLoginError(true);
+
+		});	
+
+DELETE
+
+		axios.delet('http://127.0.0.1:8000/completar')
+		.then(response => {
+
+            // response.data.content -> conteudo
+			switch (response.data.status) {
+
+                case 200: 
+                    break;
+                case 400:
+                    break;
+                case 404;
+                    break;
+            }
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+
+
+
+
+PRODUTOS
+
+get_products/
+get_products_by_category/<str:token>
+get_products_by_name/<str:token>
+get_products_by_name_or_category/<str:token>
+get_stock_id/<int:product_id>
+
+		axios.get('http://127.0.0.1:8000/produts/get_products/')
+		.then(response => {
+
+            // response.data.content -> conteudo
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+        axios.get('http://127.0.0.1:8000/produts/get_products_by_category/<str:token>')
+		.then(response => {
+
+            // response.data.content -> conteudo
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+
+        axios.get('http://127.0.0.1:8000/produts/get_products_by_name/<str:token>')
+		.then(response => {
+
+            // response.data.content -> conteudo
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+
+        axios.get('http://127.0.0.1:8000/produts/get_products_by_name_or_category/<str:token>')
+		.then(response => {
+
+            // response.data.content -> conteudo
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+
+
+        axios.get('http://127.0.0.1:8000/produts/get_stock_id/<int:product_id>')
+		.then(response => {
+
+            // response.data.content -> conteudo
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
