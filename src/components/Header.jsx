@@ -210,7 +210,7 @@ class Header extends Component {
 			<Button id="">Entrar</Button>
 			</NavItem>
 			<NavItem>
-			<Button id=""> Cadastrar </Button>
+			<Link to='/Cadastro' id="link"><Button id=""> Cadastrar </Button></Link>
 			</NavItem>
 			</Nav>
 			</Form>

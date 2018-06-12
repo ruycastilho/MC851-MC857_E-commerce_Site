@@ -4,6 +4,10 @@ import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } 
 import AlertMsg from './Alert';
 import "../Signup.css";
 import {connect} from 'react-redux';
+import axios from 'axios';
+import $ from 'jquery'
+import CPF from 'gerador-validador-cpf';
+import validator from 'validator';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -65,33 +69,6 @@ const LabelText = Text.extend`
 
 `;
 
-// const Form = styled.form`
-//     font-family: 'Ubuntu', sans-serif;
-//     padding: auto;
-//     color: oldlace;
-//     margin:0px
-//     max-width:30%;
-//     position:relative;
-//     top:5%;
-//     left:20%;
-//     max-height: 100%;
-//     display: flex;
-//     flex-direction: column;
-// `;
-
-// const Input = styled.input`
-//     padding: 0.5em;
-//     margin: 0.5em;
-//     color: coral;
-//     background: white;
-//     border: solid;
-//     border-width: 2px;
-//     max-height: 50px;
-//     -webkit-border-radius: 50px;
-//     -moz-border-radius: 50px;
-//     border-radius: 50px;
-// `;
-
 const SubmitInput = styled.input`
     padding: 1.0em;
     margin: auto;
@@ -112,13 +89,73 @@ class Signup extends Component {
         this.state = { 
             didSubmit : false,
             wasSuccess : false,
+            errorMsg: ""
         };
 
         this.handleClick = this.handleClick.bind(this);
     }
-    handleClick() {
-        // ... mandar pra api
+    handleClick(event) {
+		event.preventDefault();
+		var signup = document.getElementById("signupForm");
+		var name = $("#signupName").val();
+        var pwd = $("#signupPwd").val();
+        var email = $("#signupEmail").val();
+        var address = $("#signupAddr").val();
+        var cpf = $("#signupCpf").val();
+
         this.setState({didSubmit : true})
+
+        if (name == "" || pwd == "" || email == "" || address == "" || cpf == "" ) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "Não é permitido deixar campo vazio."});
+            return;
+        }
+
+        if (!validator.isEmail(email)) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "Email inválido."});
+            return;
+        }
+        
+        if (!CPF.validate(cpf)) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "CPF inválido."});
+            return;
+        }
+
+
+
+        const body =
+		{
+			username: name,
+            password: pwd,
+            email: email,
+            cpf: cpf,
+            address: address
+		}
+
+        // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
+		const payload = JSON.stringify(body);
+
+		axios.post('http://127.0.0.1:8000/website/createuser/',	JSON.stringify(body))
+		.then(response => {
+            // alert(response.data.status);
+			if (response.data.status == 200) {
+                this.setState({wasSuccess: true});
+
+			}
+			else {
+
+                this.setState({wasSuccess: false});
+                this.setState({errorMsg: "Falha no Cadastro. Informações inválidas ou já existe cadastro com esses dados."});
+
+			}
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
     }
 
   render() {
@@ -127,7 +164,7 @@ class Signup extends Component {
         (this.state.wasSuccess) ? (
             <AlertMsg msg="Cadastro realizado com sucesso!" type="success" />
         ) : (
-            <AlertMsg msg="Falha no cadastro!" type="error" />
+            <AlertMsg msg={this.state.errorMsg} type="error" />
         )
 	) : (
         null
@@ -143,28 +180,28 @@ class Signup extends Component {
 
             <MiddleDiv >
                 <Container>
-                    <Form className="form-group" >
+                    <Form id="signupForm" className="form-group" onSubmit={(e) => {this.handleClick(e)} } >
                         <FormGroup>
                             <Label for="name">Nome</Label>
-                            <Input type="name" name="name" id="name" placeholder="Digite seu nome aqui" />
+                            <Input id="signupName" type="name" name="name" placeholder="Digite seu nome aqui" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Password</Label>
-                            <Input type="password" name="password" id="password" placeholder="Digite sua senha aqui" />
+                            <Input id="signupPwd" type="password" name="password" placeholder="Digite sua senha aqui" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="email">Email</Label>
-                            <Input type="email" name="email" id="email" placeholder="Digite seu email aqui" />
+                            <Input id="signupEmail" type="email" name="email" placeholder="Digite seu email aqui" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="cpf">CPF</Label>
-                            <Input type="cpf" name="cpf" id="cpf" placeholder="Digite seu CPF aqui" />
+                            <Input id="signupCpf" type="cpf" name="cpf" placeholder="Digite seu CPF aqui" />
                         </FormGroup>
                         <FormGroup>
                             <Label for="address">Endereço</Label>
-                            <Input type="address" name="address" id="address" placeholder="Digite seu endereço aqui" />
+                            <Input id="signupAddr" type="address" name="address" placeholder="Digite seu endereço aqui" />
                         </FormGroup>
-                        <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Cadastrar</Button>
+                        <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Cadastrar</Button>
                     </Form>
 
                 </Container>
