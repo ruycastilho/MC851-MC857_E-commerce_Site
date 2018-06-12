@@ -116,7 +116,7 @@ class Signup extends Component {
             this.setState({errorMsg: "Email inválido."});
             return;
         }
-        
+
         if (!CPF.validate(cpf)) {
             this.setState({wasSuccess: false});
             this.setState({errorMsg: "CPF inválido."});
@@ -124,6 +124,7 @@ class Signup extends Component {
         }
 
 
+        CPF.format(cpf, 'digits');
 
         const body =
 		{
@@ -160,15 +161,17 @@ class Signup extends Component {
 
   render() {
 
-    const feedback = (this.state.didSubmit )  ? (
-        (this.state.wasSuccess) ? (
+    var feedback;
+    if (this.state.didSubmit ) {
+        feedback = this.state.wasSuccess ? (
             <AlertMsg msg="Cadastro realizado com sucesso!" type="success" />
         ) : (
             <AlertMsg msg={this.state.errorMsg} type="error" />
         )
-	) : (
-        null
-    );
+    } else {
+        feedback = null;
+
+    }
 
     return (
         <div>

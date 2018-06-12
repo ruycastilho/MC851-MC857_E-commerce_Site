@@ -3,18 +3,14 @@ import { Alert } from 'reactstrap';
 
 
 class AlertMsg extends React.Component {
-    constructor(props,msg) {
+    constructor(props) {
 	super(props);
 
 	this.state = {
 	    visible: true
 	};
 
-	this.onDismiss = this.onDismiss.bind(this);
-
-	this.message = this.setMessage(props.msg);
-
-	this.color = this.setColor(props.type);
+		this.onDismiss = this.onDismiss.bind(this);
 
     }
 
@@ -27,18 +23,15 @@ class AlertMsg extends React.Component {
 		return "success";
 	return type;
     }
-    setMessage(msg){
-	return msg;
-    }
 
     onDismiss() {
-	this.setState({ visible: false });
+		this.setState({ visible: false });
     }
 
     render() {
 	return(
-	    <Alert color={this.color} isOpen={this.state.visible} toggle={this.onDismiss}>
-	      {this.message}
+	    <Alert color={this.setColor(this.props.type)} isOpen={this.state.visible} toggle={this.onDismiss}>
+	      {this.props.msg}
 	    </Alert>
 	);
 
