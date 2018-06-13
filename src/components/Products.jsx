@@ -233,7 +233,6 @@ class Products extends Component {
             </MainDiv>
         </div>
         
-
 	);
     }
 } 
