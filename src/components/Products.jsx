@@ -160,7 +160,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} amount="10"/>
+                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -177,7 +177,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} amount="10"/>
+                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -195,7 +195,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} amount="10"/>
+                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
