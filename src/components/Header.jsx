@@ -72,7 +72,7 @@ class Header extends Component {
 			password: pwd
 		}
 
-		axios.post('http://177.220.71.167:8000/website/login/',	JSON.stringify(body))
+		axios.post('http://127.0.0.1:8000/website/login/',	JSON.stringify(body))
 		.then(response => {
 
 			if (response.data.status === 200) {
@@ -100,7 +100,7 @@ class Header extends Component {
 
 		try {
 
-			axios.get('http://177.220.71.167:8000/website/logout/')
+			axios.get('http://127.0.0.1:8000/website/logout/')
 			.then(function (response) {
 
 			})
