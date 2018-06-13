@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, Row, Col, Container,Form, FormGroup, Label, Input } from 'reactstrap';
+import {Button, Card, CardBody, Row, Col, Container,Form, FormGroup, Label, Input } from 'reactstrap';
 import "../OptionsNav.css";
 import "../Contact.css";
 import AccordionItem from "./Accordion";
@@ -33,7 +33,7 @@ class Contact extends Component {
         this.state = {
             ticket: [],
             typeOfTicket: "Default",
-			nav_active: 1,
+			nav_active: 0,
 			wasSubmitted: false,
 			wasSuccess: false,
 			errorMsg: "Erro ao enviar ticket.",
@@ -122,17 +122,32 @@ class Contact extends Component {
 			axios.get('http://127.0.0.1:8000/customer_support/get_all_tickets/')
 			.then(response => {
 				const tickets = response.data.content;
-    
+				// alert(JSON.stringify(response.data.content));
+
                 const Test = tickets.map(ticket => {
 					return  <AccordionItem
 								msg_amount={ticket.messageSize}
-								msgs={tickets.messageList}
+								msgs={ticket.messagesList.map( (x) => {
+										return <Card>
+												<CardBody>
+													<Col>
+														<Label >Data: {x.timestamp.replace("T", " ")}</Label>
+													</Col>
+													<Col>
+														<Label >Enviado por: {x.sender} </Label>
+													</Col>
+													<Col>
+														<Label >Mensagem: {x.message} </Label>
+													</Col>
+												</CardBody>
+											</Card>
+									})}
 								id={ticket.ticketId}
 								status={ticket.statusId}
 							/>
 				});
 				
-				this.setState({prod: Test});
+				this.setState({tickets: Test});
 	
 				if (response.data.status === 200) {
 					this.setState({wasSuccess: true});

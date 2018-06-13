@@ -23,7 +23,8 @@ class AccordionItem extends Component {
 	super(props);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			collapse: false
+			collapse: false,
+			messages: []
 		};
 		this.statusTransform = this.statusTransform.bind(this);
     }
@@ -43,28 +44,31 @@ class AccordionItem extends Component {
 	
     render() {
 
-	const cards = this.props.msgs.map( (x) => <Card>
-												<CardBody>
-													{x.timestamp} : 
-													{x.sender} : 
-													{x.message} 
-												</CardBody>
-											</Card>);
+	// const cards = this.props.msgs.map( (x) => <Card>
+	// 											<CardBody>
+	// 												{x.timestamp} : 
+	// 												{x.sender} : 
+	// 												{x.message} 
+	// 											</CardBody>
+	// 										</Card>);
 	
 	return (
 	    <div style={itemstyle}>
-              <Toggle  onClick={this.toggle} style={togglestyle} > {this.name} ({this.id})</Toggle>
+              <Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
               <Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
 		<Container>
 		  <Row>
-		    <Col xs="4">
+		    {/* <Col xs="4">
 		      Id: {this.props.id}
-		    </Col>
-		     <Col xs="4">
+		    </Col> */}
+		     <Col className="col-12">
 		       Status: {this.statusTransform(this.props.status)}
 		    </Col>
+			<Col className="col-12">
+		       Lista de Mensagens:
+		    </Col>
 		  </Row>
-		  {cards}
+		  {this.props.msgs}
 		  
 		</Container>
               </Collapse>
