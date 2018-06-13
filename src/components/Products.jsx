@@ -39,7 +39,7 @@ class Product extends Component {
 
     toggle(event) {
         event.preventDefault();
-        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
+        axios.get('http://179.159.21.150:8000/products/get_stock_id/'+this.props.id)
         .then(response => {
 
             const content = response.data.content;
@@ -136,7 +136,7 @@ class Products extends Component {
         var products_raw;
 
         if (string === "" && category === "") {
-            axios.get('http://127.0.0.1:8000/products/get_products/')
+            axios.get('http://179.159.21.150:8000/products/get_products/')
             .then(response => {
     
                 products_raw = response.data.content;
@@ -154,7 +154,7 @@ class Products extends Component {
         }
         else if (string === "" && category !== "") {
             // get by cat
-            axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
+            axios.get('http://179.159.21.150:8000/products/get_products_by_category/'+category)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -171,7 +171,7 @@ class Products extends Component {
         }
         else if (string !== "" && category === "") {
             // get by name
-            axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
+            axios.get('http://179.159.21.150:8000/products/get_products_by_name/' + string)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -189,7 +189,7 @@ class Products extends Component {
         }
         else {
             // get by name and cat using both
-            axios.get('http://127.0.0.1:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
+            axios.get('http://179.159.21.150:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
             .then(response => {
     
                 products_raw = response.data.content;
