@@ -48,7 +48,7 @@ class Product extends Component {
             "product_quantity" : number,
 		}
 
-        axios.post('http://127.0.0.1:8000/products/add_product/', JSON.stringify(body))
+        axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
         .then(response => {
 
             const content = response.data;
