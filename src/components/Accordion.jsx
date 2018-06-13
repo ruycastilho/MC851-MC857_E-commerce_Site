@@ -27,7 +27,6 @@ class AccordionItem extends Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			collapse: false,
-			type: this.props.compraId === null ? "Default" : "Order",
 			wasSubmitted: false,
 			msgs: this.props.msgs,
 			wasSuccess: false,
@@ -156,81 +155,137 @@ class AccordionItem extends Component {
 								errorMsg: "Erro ao adicionar mensagem."});
 
 			});	
-	}
+		}
 
-    render() {
+		render() {
 
-	var feedback;
-	if (this.state.wasSubmitted ) {
-		feedback = this.state.wasSuccess ? (
-			<AlertMsg msg={this.state.successMsg} type="success" />
-		) : (
-			<AlertMsg msg={this.state.errorMsg} type="error" />
-		)
-	} else {
-		feedback = null;
+		if (this.props.type === "Ticket") {
 
-	}
-
-	const add = this.state.status === 0 ? (
-		<div>
-			<Col className="col-12">
-				<Form className="container-fluid" id="addmsg" onSubmit={(e) => {this.handleSubmit(e)} }>
-					<FormGroup tag="fieldset" row>
-						<Col className="col-12">
-							<FormGroup >
-								<Label className="col-12">Adicionar mensagem</Label>
-								<Col >
-									<Input className="col-12" type="textarea" name="text" id={this.props.id} />
+			var feedback;
+			if (this.state.wasSubmitted ) {
+				feedback = this.state.wasSuccess ? (
+					<AlertMsg msg={this.state.successMsg} type="success" />
+				) : (
+					<AlertMsg msg={this.state.errorMsg} type="error" />
+				)
+			} else {
+				feedback = null;
+		
+			}
+		
+			const add = this.state.status === 0 ? (
+				<div>
+					<Col className="col-12">
+						<Form className="container-fluid" id="addmsg" onSubmit={(e) => {this.handleSubmit(e)} }>
+							<FormGroup tag="fieldset" row>
+								<Col className="col-12">
+									<FormGroup >
+										<Label className="col-12">Adicionar mensagem</Label>
+										<Col >
+											<Input className="col-12" type="textarea" name="text" id={this.props.id} />
+										</Col>
+									</FormGroup>
+								</Col>
+								<Col className="col-12" >
+									<div className="btn-group2" class="centerBlock text-center">
+										<Button type="submit" id="submit_ticket">Enviar </Button>
+									</div>
 								</Col>
 							</FormGroup>
-						</Col>
-						<Col className="col-12" >
-							<div className="btn-group2" class="centerBlock text-center">
-								<Button type="submit" id="submit_ticket">Enviar </Button>
-							</div>
-						</Col>
-					</FormGroup>
-				</Form>
-			</Col>
-			<Col className="col-12">
-				<div className="btn-group2" class="centerBlock text-center">
-					<Button onClick={(e) => {this.handleClosing(e)}} id="submit_ticket">Fechar Ticket </Button>
+						</Form>
+					</Col>
+					<Col className="col-12">
+						<div className="btn-group2" class="centerBlock text-center">
+							<Button onClick={(e) => {this.handleClosing(e)}} id="submit_ticket">Fechar Ticket </Button>
+						</div>
+					</Col>
 				</div>
-			</Col>
-		</div>
-	) : (
-		null
-	);
-	return (
-	    <div style={itemstyle}>
-			<Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
-			<Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
-				<Container>
-					<Row>
-						<Col className="col-12">
-							Status: {this.statusTransform(this.state.status)}
-						</Col>
-						<Col className="col-12">
-							Compra: {this.props.order === null ? (
-								"-"
-							) : (
-								this.props.order
-							)}
-						</Col>
-						<Col className="col-12">
-							Lista de Mensagens:
-						</Col>
-					</Row>
-					{this.state.msgs}
-					{add}
-					{feedback}
+			) : (
+				null
+			);
+			return (
+				<div style={itemstyle}>
+					<Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
+					<Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
+						<Container>
+							<Row>
+								<Col className="col-12">
+									Situação: {this.statusTransform(this.state.status)}
+								</Col>
+								<Col className="col-12">
+									Compra: {this.props.order === null ? (
+										"-"
+									) : (
+										this.props.order
+									)}
+								</Col>
+								<Col className="col-12">
+									Lista de Mensagens:
+								</Col>
+							</Row>
+							{this.state.msgs}
+							{add}
+							{feedback}
+		
+						</Container>
+					</Collapse>
+				</div>
+			);
 
-				</Container>
-			</Collapse>
-	    </div>
-	);
-    }
-}
 
-export default AccordionItem;
+
+			}
+			else if (this.props.type === "Order") {
+				// adicionar detalhes de pedido:
+				//     detalhes da compra: nome do item, o valor unitário, quantidade de itens comprados, valor total dos itens, valor total da compra e
+				//     endereço de entrega, datas de compras, de entrega, código de rastreio, situação de pagamento, situação de
+				//     entrega. ORDENADOS do mais novo pro mais antigo
+
+				return (
+					<div style={itemstyle}>
+						<Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
+						<Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
+							<Container>
+								<Row>
+									<Col className="col-12">
+										Tipo de Pagamento: {this.props.type_payment}						
+									</Col>
+									<Col className="col-12">
+										Data do Pagamento: {this.props.date_payment}						
+									</Col>
+									<Col className="col-12">
+										Data da Entrega: {this.props.date_deliver}	
+									</Col>
+									<Col className="col-12">
+										Situação do Pagamento: {this.props.status_payment}								
+									</Col>
+									<Col className="col-12">
+										Situação da Entrega: {this.props.status_deliver}
+									</Col>
+									<Col className="col-12">
+										Código de Rastreio: {this.props.code}
+									</Col>
+									<Col className="col-12">
+										Endereço de Entrega: {this.props.address}
+									</Col>
+									<Col className="col-12">
+										Preço Total: {this.props.price}
+									</Col>
+									<Col className="col-12">
+										Lista de Produtos:
+									</Col>
+								</Row>
+								<Row>
+									{this.props.orders}
+								</Row>
+			
+							</Container>
+						</Collapse>
+					</div>
+				);
+			}
+
+		}
+	}
+
+	export default AccordionItem;

@@ -108,6 +108,7 @@ class Contact extends Component {
                 const Test = tickets.map(ticket => {
 					return  <AccordionItem
 								msg_amount={ticket.messageSize}
+								type="Ticket"
 								order={ticket.compraId}
 								msgs={ticket.messagesList.map( (x) => {
 										return <Card>

@@ -1,69 +1,34 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Card, CardBody, Label, Container, Row, Col } from 'reactstrap';
 
-const imgstyle = {
-    "max-width":"100%",
-    "max-height": "250px",
-    padding: "1em",
-    "text-align": "center",
-};
-
-const itemstyle = {
-    "border-bottom": "1px solid coral"
-};
-
-// class Toggle extends Button{};
+import "../Orders.css";
 
 class Item extends Component {
-    constructor(props) {
-	super(props);
-	// this.toggle = this.toggle.bind(this);
-	this.state = { collapse: true };
-
-	this.valor = props.valor;
-	this.qtdade = props.qtdade;
-	this.total = props.total;
-	this.data = props.data;
-	this.name = props.name;
-	this.id = props.id;
-	this.status_pag = props.status_pag;
-	this.status_ent = props.status_ent;
-	this.src = props.src;
-	this.adress = props.adress;
-    }
-
-  //   toggle() {
-	// this.setState({ collapse: !this.state.collapse });
-  //   }
 
     render() {
 
-	return (
-	    <div style={itemstyle}>
-	      <Container>
-		<Row>
-		  <Col xs="12" sm="6" className="text-center" >
-		    <img style={imgstyle} src={this.src} alt="image" />
-		  </Col>
-		  <Col  xs="12" sm="6" style={{"padding":"1em 0"}}>
-		    <Col xs="12">
-		      Nome: {this.name}
-		    </Col>
-		    <Col xs="12">
-		      Id: {this.id}
-		    </Col>
-		    <Col xs="12">
-		      Valor: {this.valor}
-		    </Col>
-		    <Col xs="12">
-		      Quantidade: {this.qtdade}
-		    </Col>
-		  </Col>
-		</Row>
-		  
-		</Container>
-	    </div>
-	);
+				return (
+						<Col className="col-3">
+								<Card>
+										<CardBody>
+											<Col className="col-12">
+													<img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
+											</Col>
+											<Col className="col-12 text-center">
+												<Col>
+														<Label >{this.props.name} </Label>
+													</Col>
+													<Col>
+														<Label >Quantidade: {this.props.amount} </Label>
+													</Col>
+													<Col>
+														<Label >Preço Unitário: {this.props.price} </Label>
+													</Col>
+											</Col>
+									</CardBody>
+								</Card>
+						</Col>
+				);
     }
 }
 

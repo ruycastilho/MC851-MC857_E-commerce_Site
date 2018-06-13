@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { Card, CardBody, Row, Col, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
-
-import Order from "./Orders";
 import "../User.css";
 import axios from 'axios';
 import $ from 'jquery';
 import AlertMsg from './Alert';
+import Item from './OrdersItens';
+import AccordionItem from "./Accordion";
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -70,66 +70,37 @@ class User extends Component {
         };
     }
 
-    componentDidMount() {
-        var event = new Event('mount');
+    // componentDidMount() {
+    //     var event = new Event('mount');
 
-        	    {/* <div>
-	      <Order
-		data={"06/06/2006"}
-		id_order={2489294}
-		id_prods={[3435203423,2403549]}
-		name={["The Name of the Wind - Patrick Rothfuss","Gotham"]}
-		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1"]}
-		valor={["R$66,60","R$49,99"]}
-		qtdade={[8,4]}
-		adress={"Rua dos bobos, número zero"}
-		status_pag={"Aceito"}
-		status_ent={"Entregue"}
-		total={"R$732,76"}
-		/>
-	      <Order
-		data={"08/06/2018"}
-		id_order={4738392749}
-		id_prods={[3435203423,2403549,374902]}
-		name={["The Name of the Wind - Patrick Rothfuss","Gotham","A Revolução das Mulheres"]}
-		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9426525&qld=90&l=430&a=-1"]}
-		valor={["R$66,60","R$49,99","R$60,00"]}
-		qtdade={[8,4,1]}
-		adress={"Rua dos bobos, número zero"}
-		status_pag={"Processando"}
-		status_ent={"Ainda em estoque"}
-		total={"R$792,76"}
-		/>
-	    </div> */}
+    //     axios.get('http://127.0.0.1:8000/website/get_all_orders/')
+    //     .then(response => {
 
-        axios.get('http://127.0.0.1:8000/website/get_all_orders/')
-        .then(response => {
+    //         const content = response.data.content;
 
-            const content = response.data.content;
+    //         const Test = content.map(order => {
+    //             return <Order
+    //                 data={"08/06/2018"}
+    //                 id_order={order.orderid}
+    //                 products={order.products}
+    //                 address={order.delivery_address}
+    //                 status_pag={order.payment_status}
+    //                 status_ent={order.delivery_status}
+    //                 total={"R$792,76"}
+    //                 type_payment={order.type_payment}
+    //                 price={order.price}
+    //                 date_order={order.date_of_order}
+    //             />
+    //         });
+    //         this.setState({prod: Test});
+    //     })
+    //     .catch(function (error) {
+    //         // alert(error);
 
-            const Test = content.map(order => {
-                return <Order
-                    data={"08/06/2018"}
-                    id_order={order.orderid}
-                    products={order.products}
-                    address={order.delivery_address}
-                    status_pag={order.payment_status}
-                    status_ent={order.delivery_status}
-                    total={"R$792,76"}
-                    type_payment={order.type_payment}
-                    price={order.price}
-                    date_order={order.date_of_order}
-                />
-            });
-            this.setState({prod: Test});
-        })
-        .catch(function (error) {
-            // alert(error);
-
-        });	
-        this.handleInfo(event);
+    //     });	
+    //     this.handleInfo(event);
         
-    }
+    // }
 
     handleInfo(event) {
         event.preventDefault();
@@ -174,6 +145,57 @@ class User extends Component {
             });
         
         }
+        else {
+    
+            axios.get('http://127.0.0.1:8000/website/get_all_orders/')
+            .then(response => {
+                const orders = response.data.content;
+                // alert(JSON.stringify(orders));
+
+                const Test = orders.map(order => {
+                    return  <AccordionItem
+                                type="Order"
+                                id={order.order_id}
+                                type_payment={order.type_of_payment}
+                                date_payment={order.date_of_payment}
+                                date_deliver={order.date_of_order}
+                                status_payment={order.payment_status}
+                                status_deliver={order.delivery_status}
+                                code={order.delivery_code}
+                                address={order.address}
+                                price={order.price}
+                                orders={order.products.map( (x) => {
+                                        return <Item
+                                                name={x.nome}
+                                                src={x.url}
+                                                price={x.price}
+                                                amount={x.quantity}
+                                                />
+                                    })}
+                            />
+                    // return <AlertMsg msg="Test" type="error"/>
+                });
+
+                this.setState({orders: Test});
+                // if (response.data.status === 201) {
+                //     this.setState({wasSuccess: true});
+
+                // }
+                // else {
+                //     this.setState({wasSuccess: false});
+
+                // }
+                // this.setState({wasSubmitted: true});
+
+            })
+            .catch(function (error) {
+                // alert(error);
+                // this.setState({wasSuccess: false});
+                // this.setState({wasSubmitted: true});
+
+            });	
+
+        }
 
     }
 
@@ -205,7 +227,7 @@ class User extends Component {
         
         })
         .catch(function (error) {
-            // alert(error);
+            alert(error);
             this.setState({wasSuccess: false});
 
         });	
@@ -263,7 +285,9 @@ class User extends Component {
             </Container>
         </div>        
 	) : (
-        this.state.orders
+        <div>
+            {this.state.orders}
+        </div>
 	);
 
 
