@@ -8,6 +8,22 @@ import AlertMsg from './Alert';
 import axios from 'axios';
 import $ from 'jquery';
 
+		{/* <div>
+					<AccordionItem
+						data={"06/06/2006"}
+						msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
+						id={2489294}
+						status={"Aberto"}
+						name={"Este é o nome de um ticket"}/>
+					<AccordionItem
+						data={"02/03/1998"}
+						msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
+						id={123454321}
+						status={"Fechado"}
+						name={"Este é um outro ticket"}/>
+				</div> */}
+
+
 class Contact extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +37,7 @@ class Contact extends Component {
 			wasSubmitted: false,
 			wasSuccess: false,
 			errorMsg: "Erro ao enviar ticket.",
+			tickets: [],
         };
     }
 
@@ -98,7 +115,42 @@ class Contact extends Component {
     }
 
     navToggleActive(x) {
-    	this.setState({nav_active: x});
+		this.setState({nav_active: x});
+		
+		if (this.props.isLoggedIn && x === 1) {
+		
+			axios.get('http://127.0.0.1:8000/customer_support/get_all_tickets/')
+			.then(response => {
+				const tickets = response.data.content;
+    
+                const Test = tickets.map(ticket => {
+					return  <AccordionItem
+								msg_amount={ticket.messageSize}
+								msgs={tickets.messageList}
+								id={ticket.ticketId}
+								status={ticket.statusId}
+							/>
+				});
+				
+				this.setState({prod: Test});
+	
+				if (response.data.status === 200) {
+					this.setState({wasSuccess: true});
+
+				}
+				else {
+					this.setState({wasSuccess: false});
+
+				}
+			
+			})
+			.catch(function (error) {
+				// alert(error);
+				this.setState({wasSuccess: false});
+
+			});	
+
+		}
     }
 
      orderToggleValue(x) {
@@ -172,20 +224,7 @@ class Contact extends Component {
 				
 				</Form>
 			) : (
-				<div>
-					<AccordionItem
-						data={"06/06/2006"}
-						msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
-						id={2489294}
-						status={"Aberto"}
-						name={"Este é o nome de um ticket"}/>
-					<AccordionItem
-						data={"02/03/1998"}
-						msgs={["Esta é a primeira mensagem","Esta é a réplica","Esta é a tréplica"]}
-						id={123454321}
-						status={"Fechado"}
-						name={"Este é um outro ticket"}/>
-				</div>
+				this.state.tickets
 			)
 
 			

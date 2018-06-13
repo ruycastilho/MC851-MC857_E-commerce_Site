@@ -21,23 +21,35 @@ class Toggle extends Button{};
 class AccordionItem extends Component {
     constructor(props) {
 	super(props);
-	this.toggle = this.toggle.bind(this);
-	this.state = { collapse: false };
-
-	this.messages = props.msgs;
-	this.data = props.data;
-	this.name = props.name;
-	this.id = props.id;
-	this.status = props.status;
+		this.toggle = this.toggle.bind(this);
+		this.state = {
+			collapse: false
+		};
+		this.statusTransform = this.statusTransform.bind(this);
     }
 
     toggle() {
 	this.setState({ collapse: !this.state.collapse });
     }
 
+	statusTransform(x) {
+		if (x === 0) {
+			return "Aberto";
+		}
+		else {
+			return "Fechado";
+		}
+	}
+	
     render() {
 
-	const cards = this.messages.map( (x) => <Card><CardBody> {x} </CardBody></Card>);
+	const cards = this.props.msgs.map( (x) => <Card>
+												<CardBody>
+													{x.timestamp} : 
+													{x.sender} : 
+													{x.message} 
+												</CardBody>
+											</Card>);
 	
 	return (
 	    <div style={itemstyle}>
@@ -45,17 +57,11 @@ class AccordionItem extends Component {
               <Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
 		<Container>
 		  <Row>
-		    <Col xs="12">
-		      {this.name}
-		    </Col>
 		    <Col xs="4">
-		      {this.data}
-		    </Col>
-		    <Col xs="4">
-		      Id: {this.id}
+		      Id: {this.props.id}
 		    </Col>
 		     <Col xs="4">
-		       Status: {this.status}
+		       Status: {this.statusTransform(this.props.status)}
 		    </Col>
 		  </Row>
 		  {cards}

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Row, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardBody, Row, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
+import { withRouter } from 'react-router'
 
 import Order from "./Orders";
 import "../User.css";
+import axios from 'axios';
+import $ from 'jquery';
+import AlertMsg from './Alert';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -58,7 +62,38 @@ class User extends Component {
         super(props);
         this.state = {
             nav_active: 1,
+            didSubmit : false,
+            wasSuccess : false,
+            email: "",
+            address: "",
+            cpf: "",
         };
+    }
+
+    componentDidMount() {
+        var event = new Event('mount');
+        this.handleInfo(event);
+
+    }
+
+    handleInfo(event) {
+        event.preventDefault();
+
+        axios.get('http://127.0.0.1:8000/products/get_info/')
+        .then(response => {
+
+            const content = response.data.content;
+
+            this.setState({
+                email: content.email,
+                address: content.address,
+                cpf: content.cpf,
+            });
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });	
     }
 
     navIsActive(x) {
@@ -73,11 +108,52 @@ class User extends Component {
     	this.setState({typeOfTicket: x});
     }
 
+    handleEmail(event) {
+        event.preventDefault();
+        var email = $("#email").val();
+
+        const body =
+		{
+            "email": email,
+		}
+        this.setState({didSubmit : true})
+
+        axios.post('http://127.0.0.1:8000/website/change_email/', JSON.stringify(body))
+        .then(response => {
+
+            if (response.data.status === 200) {
+                this.setState({wasSuccess: true});
+
+            }
+            else {
+                this.setState({wasSuccess: false});
+
+            }
+        
+        })
+        .catch(function (error) {
+            // alert(error);
+            this.setState({wasSuccess: false});
+
+        });	
+
+        this.handleInfo(event);
+
+    }
+    
     render() {
   	
 	const body = this.state.nav_active === 0 ? (
             <Container>
-              <Form className="form-group" >
+            <Card>
+                <CardBody>
+                    {this.props.username} : 
+                    {this.state.email} : 
+                    {this.state.cpf} : 
+                    {this.state.address} 
+                </CardBody>
+            </Card>)
+              <Form onSubmit={(e)=> {this.handleEmail(e)}} className="form-group" >
                 <FormGroup className="text-center" >
                   <Label  or="email">Alterar e-mail</Label>
                   <Input className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" type="email" name="email" id="email" placeholder="Digite o novo e-mail aqui" />
@@ -117,24 +193,36 @@ class User extends Component {
 	    </div>
 	);
 
-	return (
-            <div>
-              <TopDiv>
-                <TopLeftDiv>
-                  <Title>Conta</Title>
-                </TopLeftDiv>
-              </TopDiv>
-              <MiddleDiv>
-		<Container className="btn-group2">
-                  <Row className="btn-group2 ">
-                    <Button onClick={() => this.navToggleActive(0)} active={this.navIsActive(0)} className="col-6"> Configurações </Button>
-                    <Button onClick={() => this.navToggleActive(1)} active={this.navIsActive(1)} className="col-6"> Meus Pedidos </Button>
-                  </Row>
-		</Container>
-		{body}
+    var feedback;
+    if (this.state.didSubmit ) {
+        feedback = this.state.wasSuccess ? (
+            <AlertMsg msg="Email alterado com sucesso!" type="success" />
+        ) : (
+            <AlertMsg msg="Falha na alteração do email" type="error" />
+        )
+    } else {
+        feedback = null;
 
-              </MiddleDiv>
-            </div>
+    }
+
+	return (
+        <div>
+            <TopDiv>
+                <TopLeftDiv>
+                    <Title>Conta</Title>
+                </TopLeftDiv>
+            </TopDiv>
+            <MiddleDiv>
+		        <Container className="btn-group2">
+                    <Row className="btn-group2 ">
+                        <Button onClick={() => this.navToggleActive(0)} active={this.navIsActive(0)} className="col-6"> Configurações </Button>
+                        <Button onClick={() => this.navToggleActive(1)} active={this.navIsActive(1)} className="col-6"> Meus Pedidos </Button>
+                    </Row>
+		        </Container>
+		        {body}
+            </MiddleDiv>
+            {feedback}
+        </div>
 
 	);
     }
@@ -148,23 +236,23 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.isLoggedIn
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setUser: (username) => {
-            dispatch({
-                type: "CHANGE_USER",
-                payload: username
-            })
-        }    ,
-        setStatus: (status) => {
-            dispatch({
-                type: "CHANGE_STATUS",
-                payload: status
-            })
-        }    ,    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         setUser: (username) => {
+//             dispatch({
+//                 type: "CHANGE_USER",
+//                 payload: username
+//             })
+//         }    ,
+//         setStatus: (status) => {
+//             dispatch({
+//                 type: "CHANGE_STATUS",
+//                 payload: status
+//             })
+//         }    ,    }
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps) (User);
+export default withRouter(connect(mapStateToProps, null) (User));
 
 // color:#9e1847;

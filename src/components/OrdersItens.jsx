@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 const imgstyle = {
     "max-width":"100%",
@@ -12,7 +12,7 @@ const itemstyle = {
     "border-bottom": "1px solid coral"
 };
 
-class Toggle extends Button{};
+// class Toggle extends Button{};
 
 class Item extends Component {
     constructor(props) {

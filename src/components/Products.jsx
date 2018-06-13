@@ -31,15 +31,55 @@ class Product extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.handleCart = this.handleCart.bind(this);
         this.state = {
             collapse: false,
             stock: 0,
         };
     }
 
+    handleCart(event) {
+        event.preventDefault();
+        var number = $("#numberCart").val();
+
+        const body =
+		{
+            "product_id": this.props.id,
+            "product_quantity" : number,
+		}
+
+        axios.post('http://127.0.0.1:8000/products/add_product/', JSON.stringify(body))
+        .then(response => {
+
+            const content = response.data;
+
+            if (content.status === 200 ) {
+                // this.setState({wasSucces: content});
+                axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
+                .then(response => {
+
+                    const content = response.data.content;
+
+                    this.setState({stock: content});
+                    this.setState({ collapse: !this.state.collapse });
+
+                })
+                .catch(function (error) {
+                    // alert(error);
+
+                });	
+            }
+
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });	
+        
+    }
     toggle(event) {
         event.preventDefault();
-        axios.get('http://179.159.21.150:8000/products/get_stock_id/'+this.props.id)
+        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
         .then(response => {
 
             const content = response.data.content;
@@ -57,10 +97,10 @@ class Product extends Component {
 
     render() {
         const cart = this.props.amount !== 0 ? (
-            <Form class=" text-center">
+            <Form class=" text-center" onSubmit={(e) => {this.handleCart(e)}}>
                 <FormGroup >
                     <div class="text-center">
-                        <Input type="number" name="number" id="exampleNumber" placeholder="Quantidade" />
+                        <Input type="number" min="0" max={this.state.stock} name="number" id="numberCart" placeholder="Quantidade" />
                     </div>
                 </FormGroup>
                     <div class="button-cart text-center">
@@ -136,7 +176,7 @@ class Products extends Component {
         var products_raw;
 
         if (string === "" && category === "") {
-            axios.get('http://179.159.21.150:8000/products/get_products/')
+            axios.get('http://127.0.0.1:8000/products/get_products/')
             .then(response => {
     
                 products_raw = response.data.content;
@@ -154,7 +194,7 @@ class Products extends Component {
         }
         else if (string === "" && category !== "") {
             // get by cat
-            axios.get('http://179.159.21.150:8000/products/get_products_by_category/'+category)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -171,7 +211,7 @@ class Products extends Component {
         }
         else if (string !== "" && category === "") {
             // get by name
-            axios.get('http://179.159.21.150:8000/products/get_products_by_name/' + string)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -189,7 +229,7 @@ class Products extends Component {
         }
         else {
             // get by name and cat using both
-            axios.get('http://179.159.21.150:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
             .then(response => {
     
                 products_raw = response.data.content;
