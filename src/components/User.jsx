@@ -60,7 +60,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nav_active: 1,
+            nav_active: 0,
             didSubmit : false,
             wasSuccess : false,
             email: "",
@@ -155,8 +155,26 @@ class User extends Component {
     	return this.state.nav_active === x ? true : false;
     }
 
-    navToggleActive(x) {
-    	this.setState({nav_active: x});
+    navToggleActive(event, x) {
+        event.preventDefault();
+        this.setState({nav_active: x});
+        
+        if (x === 0) {
+		
+			axios.get('http://127.0.0.1:8000/website/get_info/')
+			.then(response => {
+				const content = response.data.content;
+				// alert(JSON.stringify(response.data.content));
+
+                this.setState({
+                    email:  content.email,
+                    cpf:    content.cpf,
+                    address:content.address,
+                })
+            });
+        
+        }
+
     }
 
     orderToggleValue(x) {
@@ -178,7 +196,7 @@ class User extends Component {
 
             if (response.data.status === 200) {
                 this.setState({wasSuccess: true});
-
+                this.navToggleActive(event, 0);
             }
             else {
                 this.setState({wasSuccess: false});
@@ -197,44 +215,9 @@ class User extends Component {
     }
     
     render() {
-  	
-	const body = this.state.nav_active === 0 ? (
-            <Container>
-            <Card>
-                <CardBody>
-                    <Col>
-                    <Label >Nome: {this.props.username}</Label>
-
-                    </Col>
-                    <Col>
-                    <Label >Email: {this.state.email} : </Label>
-                    
-                    </Col>
-                    <Col>
-                    <Label >CPF: {this.state.cpf} : </Label>
-                    
-                    </Col>
-                    <Col>
-                    <Label >Endereço: {this.state.address} </Label>
-                    
-                    </Col>
-                </CardBody>
-            </Card>
-              <Form onSubmit={(e)=> {this.handleEmail(e)}} className="form-group" >
-                <FormGroup className="text-center" >
-                  <Label  or="email">Alterar e-mail</Label>
-                  <Input className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" type="email" name="email" id="email" placeholder="Digite o novo e-mail aqui" />
-                </FormGroup>
-                <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" onClick={this.handleClick}>Alterar</Button>
-
-              </Form>
-            </Container>
-	) : (
-        this.state.orders
-	);
-
+      
     var feedback;
-    if (this.state.didSubmit ) {
+    if ( this.state.nav_active === 0 && this.state.didSubmit ) {
         feedback = this.state.wasSuccess ? (
             <AlertMsg msg="Email alterado com sucesso!" type="success" />
         ) : (
@@ -244,6 +227,46 @@ class User extends Component {
         feedback = null;
 
     }
+
+	const body = this.state.nav_active === 0 ? (
+        <div>
+            <Container>
+                <Card>
+                    <CardBody>
+                        <Col>
+                        <Label >Nome: {this.props.username}</Label>
+
+                        </Col>
+                        <Col>
+                        <Label >Email: {this.state.email} </Label>
+                        
+                        </Col>
+                        <Col>
+                        <Label >CPF: {this.state.cpf} </Label>
+                        
+                        </Col>
+                        <Col>
+                        <Label >Endereço: {this.state.address} </Label>
+                        
+                        </Col>
+                    </CardBody>
+                </Card>
+                <Form onSubmit={(e)=> {this.handleEmail(e)}} className="form-group" >
+                    <FormGroup className="text-center" >
+                        <Label  or="email">Alterar e-mail</Label>
+                        <Input className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" type="email" name="email" id="email" placeholder="Digite o novo e-mail aqui" />
+                    </FormGroup>
+                    <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4" onClick={this.handleClick}>Alterar</Button>
+
+                </Form>
+                
+            </Container>
+        </div>        
+	) : (
+        this.state.orders
+	);
+
+
 
 	return (
         <div>
@@ -255,13 +278,13 @@ class User extends Component {
             <MiddleDiv>
 		        <Container className="btn-group2">
                     <Row className="btn-group2 ">
-                        <Button onClick={() => this.navToggleActive(0)} active={this.navIsActive(0)} className="col-6"> Configurações </Button>
-                        <Button onClick={() => this.navToggleActive(1)} active={this.navIsActive(1)} className="col-6"> Meus Pedidos </Button>
+                        <Button onClick={(e) => {this.navToggleActive(e, 0)}} active={this.navIsActive(0)} className="col-6"> Configurações </Button>
+                        <Button onClick={(e) => {this.navToggleActive(e, 1)}} active={this.navIsActive(1)} className="col-6"> Meus Pedidos </Button>
                     </Row>
 		        </Container>
 		        {body}
             </MiddleDiv>
-            {feedback}
+            {feedback}            
         </div>
 
 	);

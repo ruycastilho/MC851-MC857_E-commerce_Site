@@ -111,18 +111,18 @@ class Contact extends Component {
 								order={ticket.compraId}
 								msgs={ticket.messagesList.map( (x) => {
 										return <Card>
-												<CardBody>
-													<Col>
-														<Label >Data: {x.timestamp.replace("T", " ")}</Label>
-													</Col>
-													<Col>
-														<Label >Enviado por: {x.sender} </Label>
-													</Col>
-													<Col>
-														<Label >Mensagem: {x.message} </Label>
-													</Col>
-												</CardBody>
-											</Card>
+													<CardBody>
+														<Col>
+															<Label >Data: {x.timestamp.replace("T", " ")}</Label>
+														</Col>
+														<Col>
+															<Label >Enviado por: {x.sender} </Label>
+														</Col>
+														<Col>
+															<Label >Mensagem: {x.message} </Label>
+														</Col>
+													</CardBody>
+												</Card>
 									})}
 								id={ticket.ticketId}
 								status={ticket.statusId}
