@@ -31,14 +31,55 @@ class AccordionItem extends Component {
 			wasSubmitted: false,
 			msgs: this.props.msgs,
 			wasSuccess: false,
+			errorMsg: "",
+			successMsg: "",
+			status: this.props.status,
+
 		};
 		this.statusTransform = this.statusTransform.bind(this);
-
+		this.handleClosing = this.handleClosing.bind(this);
     }
 
     toggle() {
 	this.setState({ collapse: !this.state.collapse });
     }
+
+	handleClosing(event) {
+		event.preventDefault();
+		// alert(message);
+		
+			const body = {
+				message: "Ticket Fechado",
+			};	
+
+			axios.post('http://127.0.0.1:8000/customer_support/close_ticket/' + this.props.id,	JSON.stringify(body))
+			.then(response => {
+
+				this.setState({wasSubmitted: true});
+				this.updateMessages(event);
+
+				if (response.data.status === 200) {
+					this.setState({	wasSuccess: true,
+									successMsg: "Ticket fechado com sucesso!",
+									status: 1});
+					
+				}
+				else {
+					this.setState({	wasSuccess: true,
+									errorMsg: "Erro ao fechar ticket."});
+
+				}
+				
+			})
+			.catch(function (error) {
+				// alert(error);
+				this.setState({	wasSubmitted: true,
+								wasSuccess: false,
+								errorMsg: "Erro ao fechar ticket."});
+
+			});	
+
+	}
 
 	updateMessages(event) {
 		event.preventDefault();
@@ -64,7 +105,6 @@ class AccordionItem extends Component {
 					</Card>
 			});
 			this.setState({	msgs: Test});
-
 
 		})
 		.catch(function (error) {
@@ -92,71 +132,73 @@ class AccordionItem extends Component {
 				message: message,
 			};	
 
-			
 			axios.post('http://127.0.0.1:8000/customer_support/add_message_to_ticket/' + this.props.id,	JSON.stringify(body))
 			.then(response => {
 
+				this.setState({wasSubmitted: true});
+				this.updateMessages(event);
 				if (response.data.status === 200) {
-					this.setState({wasSuccess: true});
-
-					
+					this.setState({	wasSuccess: true,
+									successMsg: "Mensagem adicionada com sucesso."});
 
 				}
 				else {
-					this.setState({wasSuccess: false});
-
-		
+					this.setState({	wasSuccess: true,
+									errorMsg: "Erro ao adicionar mensagem."});
 
 				}
-				this.setState({wasSubmitted: true});
-				this.updateMessages(event);
 				
 			})
 			.catch(function (error) {
 				// alert(error);
 				this.setState({	wasSubmitted: true,
-								wasSuccess: false});
-
+								wasSuccess: false,
+								errorMsg: "Erro ao adicionar mensagem."});
 
 			});	
-
 	}
-
 
     render() {
 
 	var feedback;
 	if (this.state.wasSubmitted ) {
 		feedback = this.state.wasSuccess ? (
-			<AlertMsg msg="Mensagem adicionada com sucesso!" type="success" />
+			<AlertMsg msg={this.state.successMsg} type="success" />
 		) : (
-			<AlertMsg msg="Erro ao adicionar mensagem." type="error" />
+			<AlertMsg msg={this.state.errorMsg} type="error" />
 		)
 	} else {
 		feedback = null;
 
 	}
 
-	const add = this.props.status === 0 ? (
-		<Col className="col-12">
-			<Form className="container-fluid" id="addmsg" onSubmit={(e) => {this.handleSubmit(e)} }>
-				<FormGroup tag="fieldset" row>
-					<Col className="col-12">
-						<FormGroup >
-							<Label className="col-12">Adicionar mensagem</Label>
-							<Col >
-								<Input className="col-12" type="textarea" name="text" id={this.props.id} />
-							</Col>
-						</FormGroup>
-					</Col>
-					<Col className="col-12" >
-						<div className="btn-group2" class="centerBlock text-center">
-							<Button type="submit" id="submit_ticket">Enviar </Button>
-						</div>
-					</Col>
-				</FormGroup>
-			</Form>
-		</Col>
+	const add = this.state.status === 0 ? (
+		<div>
+			<Col className="col-12">
+				<Form className="container-fluid" id="addmsg" onSubmit={(e) => {this.handleSubmit(e)} }>
+					<FormGroup tag="fieldset" row>
+						<Col className="col-12">
+							<FormGroup >
+								<Label className="col-12">Adicionar mensagem</Label>
+								<Col >
+									<Input className="col-12" type="textarea" name="text" id={this.props.id} />
+								</Col>
+							</FormGroup>
+						</Col>
+						<Col className="col-12" >
+							<div className="btn-group2" class="centerBlock text-center">
+								<Button type="submit" id="submit_ticket">Enviar </Button>
+							</div>
+						</Col>
+					</FormGroup>
+				</Form>
+			</Col>
+			<Col className="col-12">
+				<div className="btn-group2" class="centerBlock text-center">
+					<Button onClick={(e) => {this.handleClosing(e)}} id="submit_ticket">Fechar Ticket </Button>
+				</div>
+			</Col>
+		</div>
 	) : (
 		null
 	);
@@ -167,7 +209,7 @@ class AccordionItem extends Component {
 				<Container>
 					<Row>
 						<Col className="col-12">
-							Status: {this.statusTransform(this.props.status)}
+							Status: {this.statusTransform(this.state.status)}
 						</Col>
 						<Col className="col-12">
 							Compra: {this.props.order === null ? (
