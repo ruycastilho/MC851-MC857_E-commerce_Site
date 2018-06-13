@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Card, CardBody, Row, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardBody, Row, Col, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
 
@@ -56,7 +56,6 @@ const Title = styled.h1`
 `;
 
 
-
 class User extends Component {
     constructor(props) {
         super(props);
@@ -67,19 +66,75 @@ class User extends Component {
             email: "",
             address: "",
             cpf: "",
+            orders: [],
         };
     }
 
     componentDidMount() {
         var event = new Event('mount');
-        this.handleInfo(event);
 
+        	    {/* <div>
+	      <Order
+		data={"06/06/2006"}
+		id_order={2489294}
+		id_prods={[3435203423,2403549]}
+		name={["The Name of the Wind - Patrick Rothfuss","Gotham"]}
+		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1"]}
+		valor={["R$66,60","R$49,99"]}
+		qtdade={[8,4]}
+		adress={"Rua dos bobos, número zero"}
+		status_pag={"Aceito"}
+		status_ent={"Entregue"}
+		total={"R$732,76"}
+		/>
+	      <Order
+		data={"08/06/2018"}
+		id_order={4738392749}
+		id_prods={[3435203423,2403549,374902]}
+		name={["The Name of the Wind - Patrick Rothfuss","Gotham","A Revolução das Mulheres"]}
+		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9426525&qld=90&l=430&a=-1"]}
+		valor={["R$66,60","R$49,99","R$60,00"]}
+		qtdade={[8,4,1]}
+		adress={"Rua dos bobos, número zero"}
+		status_pag={"Processando"}
+		status_ent={"Ainda em estoque"}
+		total={"R$792,76"}
+		/>
+	    </div> */}
+
+        axios.get('http://127.0.0.1:8000/website/get_all_orders/')
+        .then(response => {
+
+            const content = response.data.content;
+
+            const Test = content.map(order => {
+                return <Order
+                    data={"08/06/2018"}
+                    id_order={order.orderid}
+                    products={order.products}
+                    address={order.delivery_address}
+                    status_pag={order.payment_status}
+                    status_ent={order.delivery_status}
+                    total={"R$792,76"}
+                    type_payment={order.type_payment}
+                    price={order.price}
+                    date_order={order.date_of_order}
+                />
+            });
+            this.setState({prod: Test});
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });	
+        this.handleInfo(event);
+        
     }
 
     handleInfo(event) {
         event.preventDefault();
 
-        axios.get('http://127.0.0.1:8000/products/get_info/')
+        axios.get('http://127.0.0.1:8000/website/get_info/')
         .then(response => {
 
             const content = response.data.content;
@@ -147,12 +202,24 @@ class User extends Component {
             <Container>
             <Card>
                 <CardBody>
-                    {this.props.username} : 
-                    {this.state.email} : 
-                    {this.state.cpf} : 
-                    {this.state.address} 
+                    <Col>
+                    <Label >Nome: {this.props.username}</Label>
+
+                    </Col>
+                    <Col>
+                    <Label >Email: {this.state.email} : </Label>
+                    
+                    </Col>
+                    <Col>
+                    <Label >CPF: {this.state.cpf} : </Label>
+                    
+                    </Col>
+                    <Col>
+                    <Label >Endereço: {this.state.address} </Label>
+                    
+                    </Col>
                 </CardBody>
-            </Card>)
+            </Card>
               <Form onSubmit={(e)=> {this.handleEmail(e)}} className="form-group" >
                 <FormGroup className="text-center" >
                   <Label  or="email">Alterar e-mail</Label>
@@ -163,34 +230,7 @@ class User extends Component {
               </Form>
             </Container>
 	) : (
-	    <div>
-	      <Order
-		data={"06/06/2006"}
-		id_order={2489294}
-		id_prods={[3435203423,2403549]}
-		name={["The Name of the Wind - Patrick Rothfuss","Gotham"]}
-		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1"]}
-		valor={["R$66,60","R$49,99"]}
-		qtdade={[8,4]}
-		adress={"Rua dos bobos, número zero"}
-		status_pag={"Aceito"}
-		status_ent={"Entregue"}
-		total={"R$732,76"}
-		/>
-	      <Order
-		data={"08/06/2018"}
-		id_order={4738392749}
-		id_prods={[3435203423,2403549,374902]}
-		name={["The Name of the Wind - Patrick Rothfuss","Gotham","A Revolução das Mulheres"]}
-		src={["https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1","https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9426525&qld=90&l=430&a=-1"]}
-		valor={["R$66,60","R$49,99","R$60,00"]}
-		qtdade={[8,4,1]}
-		adress={"Rua dos bobos, número zero"}
-		status_pag={"Processando"}
-		status_ent={"Ainda em estoque"}
-		total={"R$792,76"}
-		/>
-	    </div>
+        this.state.orders
 	);
 
     var feedback;
