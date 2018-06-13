@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {     InputGroup, InputGroupAddon, Navbar,NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,Form, FormGroup, Input, Media, Collapse, Button, CardBody, Card, Container, Row, Col } from 'reactstrap';
-import producttest from '../producttest.jpg';
+import { InputGroup, InputGroupAddon, Form, FormGroup, Input, Nav, Media, Collapse, Button, CardBody, Card, Container, Row, Col } from 'reactstrap';
 import "../Products.css";
 import OptionsNav from "./OptionsNav.jsx";
 import { withRouter } from 'react-router'
@@ -9,21 +8,10 @@ import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
 import $ from 'jquery';
 import axios from 'axios';
-import AlertMsg from './Alert';
 
 const MainDiv = styled.div`
     width: 100%;
     margin: 2em auto;
-`;
-
-
-const ProdImgDiv = styled.div`
-    max-height: 100px;
-    padding: 10px;
-    width: auto;
-    padding-top: 133%;
-    background: white url(${props => props.src}) no-repeat top;
-    background-size: contain;
 `;
 
 const Legend = styled.p `
@@ -45,15 +33,30 @@ class Product extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             collapse: false,
+            stock: 0,
         };
     }
 
-    toggle() {
-        this.setState({ collapse: !this.state.collapse });
+    toggle(event) {
+        event.preventDefault();
+        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
+        .then(response => {
+
+            const content = response.data.content;
+
+            this.setState({stock: content});
+            this.setState({ collapse: !this.state.collapse });
+
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });	
+
     }
 
     render() {
-        const cart = this.props.amount != 0 ? (
+        const cart = this.props.amount !== 0 ? (
             <Form class=" text-center">
                 <FormGroup >
                     <div class="text-center">
@@ -72,26 +75,26 @@ class Product extends Component {
 
         return (
             <Col className="col-12 col-sm-4 col-lg-3">
-                <img className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
+                <img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
                 <Col className="col-12">
                     <div class="text-center">
                         <Media body>
                             <Media heading>
                                 <Legend>{this.props.legend}</Legend>
                             </Media>
-                            <SubLeg>{this.props.sublegend}</SubLeg>
+                            <SubLeg>{this.state.sublegend}</SubLeg>
                         </Media>
                     </div>
                 </Col>
                 <Col className="col-12">
                     <div class="text-center">
-                        <Button color="link" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Detalhes</Button>
+                        <Button color="link" onClick={(e) => {this.toggle(e)}} style={{ marginBottom: '1rem' }}>Detalhes</Button>
                     </div>
                     <Collapse isOpen={this.state.collapse}>
                         <Card>
                             <CardBody >
                                 <div class="text-center">
-                                    <Legend>Estoque:{this.props.amount} </Legend>
+                                    <Legend>Estoque:{this.state.stock} </Legend>
                                 </div>
                                 {cart}
                             </CardBody>
@@ -126,21 +129,20 @@ class Products extends Component {
 
     handleSearch(event, category) {
         event.preventDefault();
-		var search = document.getElementById("searchForm");
+		// var search = document.getElementById("searchForm");
 		var string = $("#searchInput").val();
-        // this.props.setSearch(string)
         
         // alert(string);
         var products_raw;
 
-        if (string == "" && category == "") {
+        if (string === "" && category === "") {
             axios.get('http://127.0.0.1:8000/products/get_products/')
             .then(response => {
     
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} amount="10"/>
+                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -150,7 +152,7 @@ class Products extends Component {
             });	
          
         }
-        else if (string == "" && category != "") {
+        else if (string === "" && category !== "") {
             // get by cat
             axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
             .then(response => {
@@ -167,7 +169,7 @@ class Products extends Component {
     
             });	
         }
-        else if (string != "" && category == "") {
+        else if (string !== "" && category === "") {
             // get by name
             axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
             .then(response => {

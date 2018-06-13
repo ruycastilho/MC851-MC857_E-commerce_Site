@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Collapse, CardBody, Card, Container, Row, Col } from 'reactstrap';
-import styled from 'styled-components';
+import { Container, Row, Col } from 'reactstrap';
 import Item from "./OrdersItens";
 import AlertMsg from './Alert';
-import ReduxThunk from 'redux-thunk'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
 
@@ -11,24 +9,6 @@ const orderstyle = {
     "margin-top": '1em',
     "background-color": "white",
 };
-
-
-const collapsiblestyle = {
-    "padding-bottom": "0.5em",
-    "border-bottom": "1px solid #f88379"
-};
-
-const imgstyle = {
-    "max-width":"100%",
-    "max-height": "250px",
-    padding: "1em",
-    "text-align": "center",
-};
-
-const itemstyle = {
-    "border-bottom": "1px solid coral"
-};
-
 
 class Order extends Component {
     constructor(props) {

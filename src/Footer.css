@@ -14,5 +14,8 @@
     color: coral;
     margin-top: 1%;
     text-align: center;
-
+    font-size: 1.0  em;
+    max-height: 50px;
+    height: 100%;
+    outline:none;
 }

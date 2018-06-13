@@ -1,10 +1,3 @@
-import {
-  CHANGE_USER,
-  CHANGE_STATUS,
-  CHANGE_LOGIN_ERROR,
-} from '../actions'
-
-import ReduxThunk from 'redux-thunk'
 
 const initialState = {
   username: "",
@@ -55,7 +48,10 @@ const todos = (state = initialState, action) => {
       products: action.products
     };
     break;
-  }
+    default:
+      break;
+  };
+
   return state
 
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Row, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
 
 import Order from "./Orders";
@@ -62,7 +62,7 @@ class User extends Component {
     }
 
     navIsActive(x) {
-    	return this.state.nav_active == x ? true : false;
+    	return this.state.nav_active === x ? true : false;
     }
 
     navToggleActive(x) {
@@ -75,7 +75,7 @@ class User extends Component {
 
     render() {
   	
-	const body = this.state.nav_active == 0 ? (
+	const body = this.state.nav_active === 0 ? (
             <Container>
               <Form className="form-group" >
                 <FormGroup className="text-center" >

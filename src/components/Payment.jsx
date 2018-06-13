@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Col, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
+import $ from 'jquery'
+import CPF from 'gerador-validador-cpf';
+import validator from 'validator';
+import AlertMsg from './Alert';
+import axios from 'axios';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -48,29 +53,21 @@ const Title = styled.h1`
     padding: 14px 16px;
     text-decoration: none;
 `;
-const Text = styled.p`
-    font-family: 'Ubuntu', sans-serif;
-    padding: 5px;
-    margin: 10px;
-    font-size: 1.1  em;
-    color: coral;
-    border-bottom: 1px solid;
-`;
-const LabelText = Text.extend`
-    text-align:left;    
-    border:none;
 
-`;
 
 class Payment extends Component {
 
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleSlip = this.handleSlip.bind(this);
+        this.handleCard = this.handleCard.bind(this);
 
         this.state = {
             typeOfPayment: "creditCard",
+            errorMsg: "",
+            didSubmit : false,
+            wasSuccess : false,
         }
     }
 
@@ -78,14 +75,176 @@ class Payment extends Component {
         this.setState({[event.target.name]: event.target.value});
     }
 
-  handleClick() {
-    // do something
+    handleCard(event) {
+		event.preventDefault();
+		// var payment = document.getElementById("payForm");
+		var name = $("#nome").val();
+        var number = $("#number").val();
+        var code = $("#cod").val();
+        var cep = $("#cep").val();
+        var cpf = $("#cpf").val();
+        var mes = $("#mes").val();
+        var ano = $("#ano").val();
+
+        this.setState({didSubmit : true})
+
+        if (name === "" || number === "" || code === "" || cep === "" || cpf === "" || mes === "" || ano === "" ) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "Não é permitido deixar campo vazio."});
+            return;
+        }
+
+        if (!CPF.validate(cpf)) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "CPF inválido."});
+            return;
+        }
+
+        if (!validator.isCreditCard(number)) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "Número de Cartão inválido."});
+            return;
+
+        }
+
+        CPF.format(cpf, 'digits');
+        var formatted_cep = cep;
+        formatted_cep.substring(1,5);
+        formatted_cep.concat("-");
+        formatted_cep.concat(cep.substring(6,8));
+        
+        
+        const body =
+		{
+            clientCardName: name,
+            cpf: cpf,            
+            cardNumber: number,
+            month: mes,
+            year: ano,
+            securityCode: code,
+            CEP: formatted_cep,
+            installments: 1,
+            tipoEntrega: "PAC",
+		}
+            //  "clientCardName": "",
+            //  "cpf": "18845601056",
+            //  "cardNumber": "7410852096307410",
+            //  "month":"02",
+            //  "year": "2020",
+            //  "securityCode":"190",
+            //  "value": "1000.00",
+            //  "instalments": "12",
+            //  "CEP": "13083-852",
+            //  "tipoEntrega": "PAC"
+
+        // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
+
+		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_card/',	JSON.stringify(body))
+		.then(response => {
+            // alert(response.data.status);
+			if (response.data.status === 200) {
+                this.setState({wasSuccess: true});
+
+			}
+			else {
+
+                this.setState({wasSuccess: false});
+                this.setState({errorMsg: "Falha no Pagamento."});
+
+			}
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
+    }
+
+
+    handleSlip(event) {
+		event.preventDefault();
+		// var payment = document.getElementById("slipForm");
+		var name = $("#nomeSlip").val();
+        var addr = $("#addressSlip").val();
+        var cep = $("#cepSlip").val();
+        var cpf = $("#cpfSlip").val();
+
+        this.setState({didSubmit : true})
+
+        if (name === "" || addr === "" || cep === "" || cpf === "" ) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "Não é permitido deixar campo vazio."});
+            return;
+        }
+
+        if (!CPF.validate(cpf)) {
+            this.setState({wasSuccess: false});
+            this.setState({errorMsg: "CPF inválido."});
+            return;
+        }
+
+        CPF.format(cpf, 'digits');
+        var formatted_cep = cep;
+        formatted_cep.substring(1,5);
+        formatted_cep.concat("-");
+        formatted_cep.concat(cep.substring(6,8));
+        
+        
+        const body =
+		{
+            clientName: name,
+            cpf: cpf,            
+            address: addr,
+            CEP: formatted_cep,
+            tipoEntrega: "PAC",
+		}
+        //  "clientName":"FULANO B SILVA",
+        //  "cpf":"18845601056",
+        //  "address":"",
+        //  "CEP":"13083852",
+        //  "value":"120.00",
+        //  "tipoEntrega" : "PAC"
+
+        // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
+
+		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_slip/',	JSON.stringify(body))
+		.then(response => {
+            // alert(response.data.status);
+			if (response.data.status === 200) {
+                this.setState({wasSuccess: true});
+
+			}
+			else {
+
+                this.setState({wasSuccess: false});
+                this.setState({errorMsg: "Falha no Pagamento."});
+
+			}
+		
+		})
+		.catch(function (error) {
+			// alert(error);
+
+		});	
     }
 
   render() {
+
+    var feedback;
+    if (this.state.didSubmit ) {
+        feedback = this.state.wasSuccess ? (
+            <AlertMsg msg="Pagamento realizado com sucesso!" type="success" />
+        ) : (
+            <AlertMsg msg={this.state.errorMsg} type="error" />
+        )
+    } else {
+        feedback = null;
+
+    }
+
     const paymentMethod = this.state.typeOfPayment === "creditCard" ? (
         <Container>
-            <Form className="form-group" >
+            <Form id="payForm" onSubmit={(e) => {this.handleCard(e)} } className="form-group" >
                 <FormGroup>
                     <Label for="name">Nome</Label>
                     <Input type="name" name="name" id="name" placeholder="Digite seu nome aqui" />
@@ -104,37 +263,41 @@ class Payment extends Component {
                 </FormGroup>
                 <FormGroup>
                     <Label for="data">Mês de Validade</Label>
-                    <Input name="data" id="data" placeholder="Digite a mês de validade do cartão" />
+                    <Input name="data" id="mes" placeholder="Digite a mês de validade do cartão" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="data">Ano de Validade</Label>
-                    <Input name="data" id="data" placeholder="Digite o ano de validade do cartão" />
+                    <Input name="data" id="ano" placeholder="Digite o ano de validade do cartão" />
                 </FormGroup>
-                <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Finalizar</Button>
+                <FormGroup>
+                    <Label for="data">CEP</Label>
+                    <Input name="data" id="cep" placeholder="Digite o CEP" />
+                </FormGroup>
+                <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Finalizar</Button>
             </Form>
 
         </Container>
     ) : (
 
         <Container>
-            <Form className="form-group" >
+            <Form id="slipForm" onSubmit={(e) => {this.handleSlip(e)} } className="form-group" >
                 <FormGroup>
                     <Label for="name">Nome</Label>
-                    <Input type="name" name="name" id="name" placeholder="Digite seu nome aqui" />
+                    <Input type="name" name="name" id="nameSlip" placeholder="Digite seu nome aqui" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="address">Endereço</Label>
-                    <Input type="address" name="address" id="address" placeholder="Digite seu endereço aqui" />
+                    <Input type="address" name="address" id="addressSlip" placeholder="Digite seu endereço aqui" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="cep">CEP</Label>
-                    <Input name="cep" id="cep" placeholder="Digite seu CEP aqui" />
+                    <Input name="cep" id="cepSlip" placeholder="Digite seu CEP aqui" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="cpf">CPF</Label>
-                    <Input name="cpf" id="cpf" placeholder="Digite seu CPF aqui" />
+                    <Input name="cpf" id="cpfSlip" placeholder="Digite seu CPF aqui" />
                 </FormGroup>
-                <Button className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" onClick={this.handleClick}>Finalizar</Button>
+                <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Finalizar</Button>
             </Form>
 
         </Container>
@@ -163,6 +326,8 @@ class Payment extends Component {
                 </Col>
 
             </MiddleDiv>
+            {feedback}
+
         </div>
 
     );

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Collapse, CardBody, Card, Container, Row, Col } from 'reactstrap';
-import styled from 'styled-components';
-
 
 const itemstyle = {
     "margin-top": '1em',

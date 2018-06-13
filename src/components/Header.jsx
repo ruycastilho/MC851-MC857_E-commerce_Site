@@ -2,33 +2,20 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import logo from '../logo.svg';
 import cart from '../cart.svg';
-import user from '../user.svg';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router'
-import ReduxThunk from 'redux-thunk'
 
 import {
-	Col,
-	Row,
-	Container,
     Button,
     Collapse,
     Form,
     FormGroup,
-    Label,
     Input,
     Navbar,
     NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    InputGroup,
-    InputGroupAddon,
 } from 'reactstrap';
 
 import '../header.css';
@@ -38,36 +25,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
 
-const Text = styled.p`
-     font-family: 'Ubuntu', sans-serif;
-     color: oldlace;
-     padding: auto;
-     font-size: 1.0  em;
-     text-align: left;
-     color: coral;
-     max-height: 50px;
-     float:right;
- `;
-
-const PageLink = styled(Link)`
-   font-size: 1.1em;
-   background: coral;
-   color: oldlace;
-   margin: 0.5em;
-   padding: 0.25em 1em;
-   border: solid;
-   border-width: 1px;
-   border-color: coral;
-   max-width:100%;
-   max-height:100%;
-   float:right;
-   font-family: 'Ubuntu', sans-serif;
-   text-decoration: none;
- `;
-
-
-
-
 const Logo = styled.img`
      float: left;
      max-height: 55px;
@@ -76,7 +33,6 @@ const Logo = styled.img`
      float:left;
  
  `;
-
 
 class Header extends Component {
     constructor(props) {
@@ -106,7 +62,7 @@ class Header extends Component {
 
     handleLogin(event) {
 		event.preventDefault();
-		var login = document.getElementById("loginForm");
+		// var login = document.getElementById("loginForm");
 		var id = $("#loginId").val();
 		var pwd = $("#loginPwd").val();
 
@@ -116,17 +72,13 @@ class Header extends Component {
 			password: pwd
 		}
 
-		const payload = JSON.stringify(body);
-
 		axios.post('http://127.0.0.1:8000/website/login/',	JSON.stringify(body))
 		.then(response => {
 
-			if (response.data.status == 200) {
-				// this.props.setLogin(response);
+			if (response.data.status === 200) {
 				this.props.setLoginError(false);
 				this.props.setStatus(true);
 				this.props.setUser(id);
-			this.handleSearch
 				localStorage.setItem('user', id);
 			}
 			else {
@@ -163,7 +115,7 @@ class Header extends Component {
         this.props.setStatus(false);
         this.props.setUser("");
 	
-		var user = localStorage.removeItem('user');
+		localStorage.removeItem('user');
 
 	}
 	
@@ -226,7 +178,7 @@ class Header extends Component {
 				<NavbarToggler onClick={this.toggle} />
 				<Collapse isOpen={this.state.isOpen} navbar id="loginForm"  >
 					{shownElement}
-					<Link to='/Carrinho' id="link"><img type="image" src={cart} id="carrinho"></img></Link>
+					<Link to='/Carrinho' id="link"><img alt="cart" src={cart} id="carrinho"></img></Link>
 				</Collapse>
 			</Navbar>
 			{error}

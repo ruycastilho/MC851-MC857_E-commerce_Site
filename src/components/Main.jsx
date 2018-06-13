@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Home from './Home.jsx';
 import Signup from './Signup.jsx';
 import Payment from './Payment.jsx';
 import User from './User.jsx';

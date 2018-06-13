@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Navbar, Nav, NavItem, NavLink, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
+import { Button, Row, Container } from 'reactstrap';
 import "../OptionsNav.css";
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 class OptionsNav extends Component {
 
     isActive(x) {
-    	return this.props.category == x ? true : false;
+    	return this.props.category === x ? true : false;
     }
 
     toggleActive(event, x) {
@@ -37,10 +37,6 @@ class OptionsNav extends Component {
 		);
     }
 }
-
-{/* export default OptionsNav; */}
-
-
 
 const mapStateToProps = (state) => {
     return {

@@ -3,12 +3,8 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Main from './components/Main.jsx';
 import styled from 'styled-components';
-import AlertMsg from './components/Alert';
-import axios from 'axios';
-import $ from 'jquery';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router'
-import ReduxThunk from 'redux-thunk'
 
 const PageDiv = styled.div`
     border:none;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link, withRouter } from 'react-router-dom';
-import producttest from '../producttest.jpg';
-import {Media, Input, InputGroup, Form, FormGroup, InputGroupText, InputGroupAddon, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
+import {Media, Input, InputGroup, InputGroupText, InputGroupAddon, Button, Row, Col } from 'reactstrap';
 import "../Cart.css";
 import AlertMsg from './Alert';
 import { connect } from 'react-redux';
@@ -109,7 +108,7 @@ class Cart extends Component {
         <Row >
             <Col className="col-12 col-lg-3">
                 <div className="centerBlock " >
-                    <img className="img" src="https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg" alt="Generic placeholder image" />
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg" alt="product image" />
                 </div>
             </Col>
             <Col className="col-12 col-lg-3">
@@ -143,6 +142,7 @@ class Cart extends Component {
  
 
     const finalize = this.props.isLoggedIn ? (
+        // this.state.cart.lenght for zero dar alerta
         <Button onClick={this.handleBuy} color="danger">Finalizar Compra</Button>
     ) : (
         <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />

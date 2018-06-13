@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Collapse, CardBody, Card, Container, Row, Col } from 'reactstrap';
-import styled from 'styled-components';
-
-
-
-const collapsiblestyle = {
-    "padding-bottom": "0.5em",
-    "border-bottom": "1px solid #f88379"
-};
+import { Button, Container, Row, Col } from 'reactstrap';
 
 const imgstyle = {
     "max-width":"100%",
@@ -25,7 +17,7 @@ class Toggle extends Button{};
 class Item extends Component {
     constructor(props) {
 	super(props);
-	this.toggle = this.toggle.bind(this);
+	// this.toggle = this.toggle.bind(this);
 	this.state = { collapse: true };
 
 	this.valor = props.valor;
@@ -40,9 +32,9 @@ class Item extends Component {
 	this.adress = props.adress;
     }
 
-    toggle() {
-	this.setState({ collapse: !this.state.collapse });
-    }
+  //   toggle() {
+	// this.setState({ collapse: !this.state.collapse });
+  //   }
 
     render() {
 
@@ -51,7 +43,7 @@ class Item extends Component {
 	      <Container>
 		<Row>
 		  <Col xs="12" sm="6" className="text-center" >
-		    <img style={imgstyle} src={this.src}  />
+		    <img style={imgstyle} src={this.src} alt="image" />
 		  </Col>
 		  <Col  xs="12" sm="6" style={{"padding":"1em 0"}}>
 		    <Col xs="12">

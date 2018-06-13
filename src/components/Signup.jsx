@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import AlertMsg from './Alert';
 import "../Signup.css";
 import {connect} from 'react-redux';
@@ -55,34 +55,6 @@ const Title = styled.h1`
     text-decoration: none;
 `;
 
-const Text = styled.p`
-    font-family: 'Ubuntu', sans-serif;
-    padding: 5px;
-    margin: 10px;
-    font-size: 1.5  em;
-    color: coral;
-    border-bottom: 1px solid;
-`;
-const LabelText = Text.extend`
-    text-align:left;    
-    border:none;
-
-`;
-
-const SubmitInput = styled.input`
-    padding: 1.0em;
-    margin: auto;
-    color: oldlace;
-    background: coral;
-    border: solid;
-    border-width: 2px;
-    max-height: 50px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
-    font-size: 1.5 em;
-`;
-
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -96,7 +68,7 @@ class Signup extends Component {
     }
     handleClick(event) {
 		event.preventDefault();
-		var signup = document.getElementById("signupForm");
+		// var signup = document.getElementById("signupForm");
 		var name = $("#signupName").val();
         var pwd = $("#signupPwd").val();
         var email = $("#signupEmail").val();
@@ -105,7 +77,7 @@ class Signup extends Component {
 
         this.setState({didSubmit : true})
 
-        if (name == "" || pwd == "" || email == "" || address == "" || cpf == "" ) {
+        if (name === "" || pwd === "" || email === "" || address === "" || cpf === "" ) {
             this.setState({wasSuccess: false});
             this.setState({errorMsg: "Não é permitido deixar campo vazio."});
             return;
@@ -136,12 +108,11 @@ class Signup extends Component {
 		}
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
-		const payload = JSON.stringify(body);
 
 		axios.post('http://127.0.0.1:8000/website/createuser/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
-			if (response.data.status == 200) {
+			if (response.data.status === 200) {
                 this.setState({wasSuccess: true});
 
 			}

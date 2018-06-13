@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'
-import {Navbar, Nav, NavItem, NavLink, ButtonGroup ,Button, Row, Col, Container } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import "../Footer.css";
 
 const Text = styled.p`
@@ -39,7 +39,7 @@ class Footer extends Component {
         <Row className="Row">
           <Col >
             <div class="centerBlock " >
-              <Link class="btn btn-link" className="col-12 col-sm-12 col-md-3 col-lg-3 offset-lg-2 col-xl-4 offset-xl-2" className="link" to='/Contato'>Fale Conosco!</Link>
+              <Link className=" btn link col-12 col-sm-12 col-md-3 col-lg-3 offset-lg-2 col-xl-4 offset-xl-2"  to='/Contato'>Fale Conosco!</Link>
             </div>    
           </Col>
           <Col>
