@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import {Media, Input, InputGroup, InputGroupText, InputGroupAddon, Button, Row, Col } from 'reactstrap';
+import { Form, Media, Input, InputGroup, InputGroupText, InputGroupAddon, Button, Row, Col } from 'reactstrap';
 import "../Cart.css";
 import AlertMsg from './Alert';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -92,58 +94,135 @@ const PriceText = styled.p`
 
 `;
 
+class Product extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
+
+    }
+
+    handleChange(event) {
+        // chamar api e mudar state
+        event.preventDefault();
+    }
+    handleRemove(event) {
+        // chamar funcao do cart pra atualizar ou remover do vetor <=
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <Row >
+                <Col className="col-12 col-lg-3">
+                    <div className="centerBlock " >
+                        <img src={this.props.src} alt="product image" />
+                    </div>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                    <div className="centerBlock text-center">
+                        <Media body>
+                            <Media heading>
+                            {this.props.name}
+                            </Media>
+                            {this.props.category}
+                        </Media>
+                    </div>
+                    
+                </Col>
+                <Col className="col-12 col-lg-3">
+                    <div className="centerBlock text-center">
+                        <Form onSubmit={(e) => {this.handleChange(e)}}>
+                            <InputGroup >
+                                <Row>
+                                    <Input placeholder="Quantidade" type="number" id="changeInput" step="1" />
+                                </Row>
+                            </InputGroup>
+                            <Button type="submit" color="success">Alterar</Button>{' '}
+                            <Button onClick={(e) => {this.handleRemove(e)}} color="danger">Remover</Button>{' '}
+                        </Form>
+                
+                    </div>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                    <div className="centerBlock text-center price-text">
+                        <PriceText>R$: XX,XX</PriceText>
+                    </div>                                    
+                </Col>             
+            </Row>
+
+        )
+  
+    }
+}
+
 class Cart extends Component {
     constructor(props) {
         super(props);
+        
         this.handleBuy = this.handleBuy.bind(this);
-
+        this.handleDelivery = this.handleDelivery.bind(this);
+        this.state = {
+            products: [],
+            deliveryCost: 0.0,
+            productsCost: 0.0,
+        };
     }
 
     handleBuy(event) {
         event.preventDefault();
     }
-  render() {
-    
-    const product = (
-        <Row >
-            <Col className="col-12 col-lg-3">
-                <div className="centerBlock " >
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/514LJcIGpfL._SX300_BO1,204,203,200_.jpg" alt="product image" />
-                </div>
-            </Col>
-            <Col className="col-12 col-lg-3">
-                <div className="centerBlock text-center">
-                    <Media body>
-                        <Media heading>
-                        Nome do Produto
-                        </Media>
-                        Descrição do Produto
-                    </Media>
-                </div>
-                
-            </Col>
-            <Col className="col-12 col-lg-3">
-                <div className="centerBlock text-center">
 
-                    <InputGroup>
-                        <Input placeholder="Quantidade" type="number" step="1" />
-                    </InputGroup>
-                    <Button color="danger">Remover</Button>{' '}
+    handleDelivery(event) {
+        event.preventDefault();
+
+    }
+
+    componentDidMount() {
+        // api
+
+        axios.get('http://127.0.0.1:8000/cart/get_all_orders/')
+        .then(response => {
+            const orders = response.data.content;
+            // alert(JSON.stringify(orders));
+
+            // const Test = orders.map(order => {
+            //     return  <AccordionItem
+            //                 type="Order"
+            //                 id={order.order_id}
+            //                 type_payment={order.type_of_payment}
+            //                 date_payment={order.date_of_payment}
+            //                 date_deliver={order.date_of_order}
+            //                 status_payment={order.payment_status}
+            //                 status_deliver={order.delivery_status}
+            //                 code={order.delivery_code}
+            //                 address={order.address}
+            //                 price={order.price}
+            //                 orders={order.products.map( (x) => {
+            //                         return <Item
+            //                                 name={x.nome}
+            //                                 src={x.url}
+            //                                 price={x.price}
+            //                                 amount={x.quantity}
+            //                                 />
+            //                     })}
+            //             />
+            // });
+
+            // this.setState({orders: Test});
+        })
+        .catch(function (error) {
+            // alert(error);
             
-                </div>
-            </Col>
-            <Col className="col-12 col-lg-3">
-                <div className="centerBlock text-center price-text">
-                    <PriceText>R$: XX,XX</PriceText>
-                </div>                                    
-            </Col>             
-        </Row>
-    );
- 
+        });	
+    }
+
+
+  render() {
 
     const finalize = this.props.isLoggedIn ? (
         // this.state.cart.lenght for zero dar alerta
-        <Button onClick={this.handleBuy} color="danger">Finalizar Compra</Button>
+        <Link to="/Pagamento"><Button color="danger">Finalizar Compra</Button></Link>
     ) : (
         <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
     );
@@ -160,47 +239,45 @@ class Cart extends Component {
                     <Col className="col-12 col-lg-8">
                         <MiddleLeftDiv>
                         
-                        {product}
-                        {product}
-                        {product}
+                        {/* {product} */}
+                        {this.state.products}
 
-
+                        {/* MUDAR O ID PRA CADA PRODUTO TER SEU PROPRIO INPUT */}
                         </MiddleLeftDiv>
                     </Col>
                     <Col className="col-12 col-lg-4">
                         <MiddleRightDiv>
                             
                             <Col className="col-12"  >
-                                <Text>Cálculo do Frete</Text>
-                                <InputGroup>
-                                    <InputGroupAddon addonType="prepend">
-                                    <InputGroupText color="link">CEP</InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input placeholder="Digite seu CEP" />
-                                    <InputGroupAddon addonType="append">
-                                        <Button color="info">Calcular</Button>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                 
+                                <Form onSubmit={(e) => {this.handleDelivery(e)}}>
+                                    <Text>Cálculo do Frete</Text>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="prepend">
+                                        <InputGroupText color="link">CEP</InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input placeholder="Digite seu CEP" />
+                                        <InputGroupAddon addonType="append">
+                                            <Button type="submit" color="info">Calcular</Button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
+                                </Form>
                             </Col>
 
                             <Col className="col-12" >
                                 <Text>Custo dos Produtos</Text>
-                                <PriceText>R$: XX,XX</PriceText>
+                                <PriceText>R$: {this.state.productsCost}</PriceText>
 
                                 <Text>Custo do Frete</Text>
-                                <PriceText>R$: XX,XX</PriceText>
+                                <PriceText>R$: {this.state.deliveryCost}</PriceText>
 
                                 <Text>Custo Total</Text>
-                                <PriceText>R$: XX,XX</PriceText>
+                                <PriceText>R$: {this.state.productsCost + this.state.deliveryCost}</PriceText>
 
 
                             </Col>
 
                             <Col className="col-12" >
                                 <div className="text-center ">
-                                    {/* <Button color="danger">Finalizar Compra</Button> */}
-                                    {/* <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" /> */}
 
                                     {finalize}
                                 

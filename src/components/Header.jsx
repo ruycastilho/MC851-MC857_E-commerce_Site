@@ -72,7 +72,7 @@ class Header extends Component {
 			password: pwd
 		}
 
-		axios.post('http://177.220.85.194:8000/website/login/',	JSON.stringify(body))
+		axios.post('http://https://safe-beyond-19805.herokuapp.com/website/login/',	JSON.stringify(body))
 		.then(response => {
 
 			if (response.data.status === 200) {
@@ -99,8 +99,8 @@ class Header extends Component {
 		event.preventDefault();
 
 		try {
+			axios.get('http://https://safe-beyond-19805.herokuapp.com/website/logout/')
 
-			axios.get('http://177.220.85.194:8000/website/logout/')
 			.then(function (response) {
 
 			})
