@@ -40,14 +40,15 @@ class Product extends Component {
 
     handleCart(event) {
         event.preventDefault();
-        var number = $("#numberCart").val();
+        var number = $("#"+this.props.product_id).val();
 
         const body =
 		{
-            "product_id": this.props.id,
+            "product_id": this.props.product_id,
             "product_quantity" : number,
 		}
 
+        alert(body);
         axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
         .then(response => {
 
@@ -55,13 +56,12 @@ class Product extends Component {
 
             if (content.status === 200 ) {
                 // this.setState({wasSucces: content});
-                axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
+                axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
                 .then(response => {
 
                     const content = response.data.content;
 
                     this.setState({stock: content});
-                    this.setState({ collapse: !this.state.collapse });
 
                 })
                 .catch(function (error) {
@@ -79,7 +79,7 @@ class Product extends Component {
     }
     toggle(event) {
         event.preventDefault();
-        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
+        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
         .then(response => {
 
             const content = response.data.content;
@@ -100,7 +100,7 @@ class Product extends Component {
             <Form class=" text-center" onSubmit={(e) => {this.handleCart(e)}}>
                 <FormGroup >
                     <div class="text-center">
-                        <Input type="number" min="0" max={this.state.stock} name="number" id="numberCart" placeholder="Quantidade" />
+                        <Input type="number" min="0" max={this.state.stock} name="number" id={this.props.product_id} placeholder="Quantidade" />
                     </div>
                 </FormGroup>
                     <div class="button-cart text-center">
@@ -180,9 +180,9 @@ class Products extends Component {
             .then(response => {
     
                 products_raw = response.data.content;
-    
+                // alert(JSON.stringify(products_raw[0]))
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -200,7 +200,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -217,7 +217,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    return <Product key={product.id} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })
@@ -235,7 +235,7 @@ class Products extends Component {
                 products_raw = response.data.content;
     
                 const Test = products_raw.map(product => {
-                    return <Product key={product.nome} id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });
                 this.setState({prod: Test});
             })

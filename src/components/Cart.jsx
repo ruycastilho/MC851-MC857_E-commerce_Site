@@ -7,6 +7,7 @@ import AlertMsg from './Alert';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import $ from 'jquery'
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -126,6 +127,7 @@ class Product extends Component {
                             {this.props.name}
                             </Media>
                             {this.props.category}
+                            Preço Unitário: {this.props.price}
                         </Media>
                     </div>
                     
@@ -135,7 +137,7 @@ class Product extends Component {
                         <Form onSubmit={(e) => {this.handleChange(e)}}>
                             <InputGroup >
                                 <Row>
-                                    <Input placeholder="Quantidade" type="number" id="changeInput" step="1" />
+                                    <Input placeholder={this.props.quantity} type="number" id="changeInput" step="1" />
                                 </Row>
                             </InputGroup>
                             <Button type="submit" color="success">Alterar</Button>{' '}
@@ -146,7 +148,8 @@ class Product extends Component {
                 </Col>
                 <Col className="col-12 col-lg-3">
                     <div className="centerBlock text-center price-text">
-                        <PriceText>R$: XX,XX</PriceText>
+                        <PriceText>Subtotal</PriceText>
+                    <PriceText>R${this.props.quantity*this.props.price}</PriceText>
                     </div>                                    
                 </Col>             
             </Row>
@@ -175,41 +178,55 @@ class Cart extends Component {
 
     handleDelivery(event) {
         event.preventDefault();
+		var cep = $("#cepForm").val();
+
+        const body =
+		{
+            "CEP": cep,
+            "tipoEntrega": "PAC",
+		}
+
+        // alert(body);
+        axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
+        .then(response => {
+
+            const value = response.data;
+
+            this.setState({ deliveryCost: value });
+
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });
+
 
     }
 
     componentDidMount() {
         // api
 
-        axios.get('http://127.0.0.1:8000/cart/get_all_orders/')
+        axios.get('http://127.0.0.1:8000/cart/show_cart/')
         .then(response => {
-            const orders = response.data.content;
-            // alert(JSON.stringify(orders));
+            const cart = response.data.content;
+            // alert(JSON.stringify(cart));
+            var prod_cost = 0;
 
-            // const Test = orders.map(order => {
-            //     return  <AccordionItem
-            //                 type="Order"
-            //                 id={order.order_id}
-            //                 type_payment={order.type_of_payment}
-            //                 date_payment={order.date_of_payment}
-            //                 date_deliver={order.date_of_order}
-            //                 status_payment={order.payment_status}
-            //                 status_deliver={order.delivery_status}
-            //                 code={order.delivery_code}
-            //                 address={order.address}
-            //                 price={order.price}
-            //                 orders={order.products.map( (x) => {
-            //                         return <Item
-            //                                 name={x.nome}
-            //                                 src={x.url}
-            //                                 price={x.price}
-            //                                 amount={x.quantity}
-            //                                 />
-            //                     })}
-            //             />
-            // });
+            const Test = cart.map(product => {
+                prod_cost += product.price*product.quantity;
 
-            // this.setState({orders: Test});
+                return  <Product
+                            id={product.product_id}
+                            name={product.nome}
+                            category={product.category}
+                            src={product.url}
+                            price={product.price}
+                            quantity={product.quantity}
+                        />
+            });
+            // alert(prod_cost);
+            this.setState({ products: Test,
+                            productsCost: prod_cost});
         })
         .catch(function (error) {
             // alert(error);
@@ -238,11 +255,7 @@ class Cart extends Component {
                 <Row>
                     <Col className="col-12 col-lg-8">
                         <MiddleLeftDiv>
-                        
-                        {/* {product} */}
-                        {this.state.products}
-
-                        {/* MUDAR O ID PRA CADA PRODUTO TER SEU PROPRIO INPUT */}
+                            {this.state.products}
                         </MiddleLeftDiv>
                     </Col>
                     <Col className="col-12 col-lg-4">
@@ -253,9 +266,9 @@ class Cart extends Component {
                                     <Text>Cálculo do Frete</Text>
                                     <InputGroup>
                                         <InputGroupAddon addonType="prepend">
-                                        <InputGroupText color="link">CEP</InputGroupText>
+                                            <InputGroupText color="link">CEP</InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="Digite seu CEP" />
+                                        <Input id="cepForm" placeholder="Digite seu CEP" />
                                         <InputGroupAddon addonType="append">
                                             <Button type="submit" color="info">Calcular</Button>
                                         </InputGroupAddon>

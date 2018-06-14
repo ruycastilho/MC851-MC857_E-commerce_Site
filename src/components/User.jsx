@@ -9,6 +9,7 @@ import $ from 'jquery';
 import AlertMsg from './Alert';
 import Item from './OrdersItens';
 import AccordionItem from "./Accordion";
+import CPF from 'gerador-validador-cpf';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -70,37 +71,12 @@ class User extends Component {
         };
     }
 
-    // componentDidMount() {
-    //     var event = new Event('mount');
+    componentDidMount() {
+        var event = new Event('mount');
 
-    //     axios.get('http://127.0.0.1:8000/website/get_all_orders/')
-    //     .then(response => {
-
-    //         const content = response.data.content;
-
-    //         const Test = content.map(order => {
-    //             return <Order
-    //                 data={"08/06/2018"}
-    //                 id_order={order.orderid}
-    //                 products={order.products}
-    //                 address={order.delivery_address}
-    //                 status_pag={order.payment_status}
-    //                 status_ent={order.delivery_status}
-    //                 total={"R$792,76"}
-    //                 type_payment={order.type_payment}
-    //                 price={order.price}
-    //                 date_order={order.date_of_order}
-    //             />
-    //         });
-    //         this.setState({prod: Test});
-    //     })
-    //     .catch(function (error) {
-    //         // alert(error);
-
-    //     });	
-    //     this.handleInfo(event);
+        this.handleInfo(event);
         
-    // }
+    }
 
     handleInfo(event) {
         event.preventDefault();
@@ -109,11 +85,11 @@ class User extends Component {
         .then(response => {
 
             const content = response.data.content;
-
+            const cpf = CPF.format(content.cpf);
             this.setState({
                 email: content.email,
                 address: content.address,
-                cpf: content.cpf,
+                cpf: cpf,
             });
         })
         .catch(function (error) {
@@ -131,18 +107,9 @@ class User extends Component {
         this.setState({nav_active: x});
         
         if (x === 0) {
-		
-			axios.get('http://127.0.0.1:8000/website/get_info/')
-			.then(response => {
-				const content = response.data.content;
-				// alert(JSON.stringify(response.data.content));
 
-                this.setState({
-                    email:  content.email,
-                    cpf:    content.cpf,
-                    address:content.address,
-                })
-            });
+            this.handleInfo(event);
+
         
         }
         else {
@@ -218,7 +185,8 @@ class User extends Component {
 
             if (response.data.status === 200) {
                 this.setState({wasSuccess: true});
-                this.navToggleActive(event, 0);
+                this.handleInfo(event);
+                
             }
             else {
                 this.setState({wasSuccess: false});
@@ -232,7 +200,6 @@ class User extends Component {
 
         });	
 
-        this.handleInfo(event);
 
     }
     
