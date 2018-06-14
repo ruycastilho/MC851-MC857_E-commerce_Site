@@ -5,9 +5,10 @@ import { Form, Media, Input, InputGroup, InputGroupText, InputGroupAddon, Button
 import "../Cart.css";
 import AlertMsg from './Alert';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import $ from 'jquery'
+import $ from 'jquery';
+import {url_backend} from "./Link";
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -108,44 +109,44 @@ class Product extends Component {
 
     handleChange(event) {
         event.preventDefault();
-		var number = $("#"+this.props.id).val();
+	var number = $("#"+this.props.id).val();
         const body =
-		{
-            "product_id": this.props.id,
-            "product_quantity": number,
-		}
+	    {
+		"product_id": this.props.id,
+		"product_quantity": number,
+	    };
 
         axios.post('http://127.0.0.1:8000/cart/update_product/', JSON.stringify(body))
-        .then(response => {
+            .then(response => {
 
-            // alert(JSON.stringify(response.data));
-            if ( response.data.status !== 200) {
-                this.setState({ shouldAlert: true})
-            }
+		// alert(JSON.stringify(response.data));
+		if ( response.data.status !== 200) {
+                    this.setState({ shouldAlert: true});
+		}
 
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });
+            });
 
 
     }
     handleRemove(event) {
         event.preventDefault();
         const body =
-		{
-            "product_id": this.props.id,
-		}
+	    {
+		"product_id": this.props.id,
+	    };
 
         axios.post('http://127.0.0.1:8000/cart/remove_product/', JSON.stringify(body))
-        .then(response => {
-        })
-        .catch(function (error) {
-            // alert(error);
+            .then(response => {
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });
+            });
 
     }
 
@@ -159,53 +160,53 @@ class Product extends Component {
 
         return (
             <div>
-                '<Row >
-                    <Col className="col-12 col-lg-3">
-                        <div className="centerBlock " >
-                            <img src={this.props.src} alt="product image" />
-                        </div>
-                    </Col>
-                    <Col className="col-12 col-lg-3">
-                        <div className="centerBlock text-center">
-                            <Media body>
-                                <Media heading>
-                                {this.props.name}
-                                </Media>
-                                {this.props.category}
-                                Preço Unitário: {this.props.price}
-                            </Media>
-                        </div>
-                        
-                    </Col>
-                    <Col className="col-12 col-lg-3">
-                        <div className="centerBlock text-center">
-                            <Form onSubmit={(e) => {this.handleChange(e)}}>
-                                <InputGroup >
-                                    <Row>
-                                        <Input placeholder={this.props.quantity} type="number" id={this.props.id} step="1" />
-                                    </Row>
-                                </InputGroup>
-                                <Button type="submit" color="success">Alterar</Button>{' '}
-                                <Button onClick={(e) => {this.handleRemove(e)}} color="danger">Remover</Button>{' '}
-                            </Form>
+              '<Row >
+                <Col className="col-12 col-lg-3">
+                  <div className="centerBlock " >
+                    <img src={this.props.src} alt="product image" />
+                  </div>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                  <div className="centerBlock text-center">
+                    <Media body>
+                      <Media heading>
+                        {this.props.name}
+                      </Media>
+                      {this.props.category}
+                      Preço Unitário: {this.props.price}
+                    </Media>
+                  </div>
+                  
+                </Col>
+                <Col className="col-12 col-lg-3">
+                  <div className="centerBlock text-center">
+                    <Form onSubmit={(e) => {this.handleChange(e)}}>
+                      <InputGroup >
+                        <Row>
+                          <Input placeholder={this.props.quantity} type="number" id={this.props.id} step="1" />
+                        </Row>
+                      </InputGroup>
+                      <Button type="submit" color="success">Alterar</Button>{' '}
+                      <Button onClick={(e) => {this.handleRemove(e)}} color="danger">Remover</Button>{' '}
+                    </Form>
                     
-                        </div>
-                    </Col>
-                    <Col className="col-12 col-lg-3">
-                        <div className="centerBlock text-center price-text">
-                            <PriceText>Subtotal</PriceText>
-                        <PriceText>R${this.props.quantity*this.props.price}</PriceText>
-                        </div>                                    
-                    </Col>      
-                </Row>
-                <Col>
-                    <div className="text-center " >
-                        {alert}     
-                    </div>
-                </Col>'
+                  </div>
+                </Col>
+                <Col className="col-12 col-lg-3">
+                  <div className="centerBlock text-center price-text">
+                    <PriceText>Subtotal</PriceText>
+                    <PriceText>R${this.props.quantity*this.props.price}</PriceText>
+                  </div>                                    
+                </Col>      
+              </Row>
+              <Col>
+                <div className="text-center " >
+                  {alert}     
+                </div>
+              </Col>'
             </div>
-        )
-  
+        );
+	
     }
 }
 
@@ -224,60 +225,62 @@ class Cart extends Component {
 
     handleLoad(event) {
         event.preventDefault();
-    
+	
         // var func = this.handleLoad;
 
         axios.get('http://127.0.0.1:8000/cart/show_cart/')
-        .then(response => {
-            const cart = response.data.content;
-            // alert(JSON.stringify(cart));
-            var prod_cost = 0;
+            .then(response => {
+		const cart = response.data.content;
+		// alert(JSON.stringify(cart));
+		var prod_cost = 0;
 
-            const Test = cart.map(product => {
-                prod_cost += product.price*product.quantity;
+		const Test = cart.map(product => {
+                    prod_cost += product.price*product.quantity;
 
-                return  <Product
-                            id={product.id}
-                            name={product.nome}
-                            category={product.category}
-                            src={product.url}
-                            price={product.price}
-                            quantity={product.quantity}
-                        />
-            });
-            // alert(prod_cost);
-            this.setState({ products: Test,
-                            productsCost: prod_cost});
-        })
-        .catch(function (error) {
-            // alert(error);
-            
-        });	
+                    return  (
+			<Product
+			  id={product.id}
+			  name={product.nome}
+			  category={product.category}
+			  src={product.url}
+			  price={product.price}
+			  quantity={product.quantity}
+                          />
+		    );
+		});
+		// alert(prod_cost);
+		this.setState({ products: Test,
+				productsCost: prod_cost});
+            })
+            .catch(function (error) {
+		// alert(error);
+		
+            });	
     }
 
     handleDelivery(event) {
         event.preventDefault();
-		var cep = $("#cepForm").val();
+	var cep = $("#cepForm").val();
 
         const body =
-		{
-            "CEP": cep,
-            "tipoEntrega": "PAC",
-		}
+	      {
+		  "CEP": cep,
+		  "tipoEntrega": "PAC",
+	      };
 
         axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
-        .then(response => {
+            .then(response => {
 
-            // const value = response.data;
-            // alert(JSON.stringify(response.data));
-            this.setState({ deliveryCost: response.data.content });
+		// const value = response.data;
+		// alert(JSON.stringify(response.data));
+		this.setState({ deliveryCost: response.data.content });
 
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });
+            });
 
 
     }
@@ -285,82 +288,82 @@ class Cart extends Component {
     componentDidMount() {
         // api
         var ev = new Event('refresh');
-        this.handleLoad(ev)
-       
+        this.handleLoad(ev);
+	
     }
 
 
-  render() {
+    render() {
 
-    const finalize = this.props.isLoggedIn ? (
-        // this.state.cart.lenght for zero dar alerta
-        <Link to="/Pagamento"><Button color="danger">Finalizar Compra</Button></Link>
-    ) : (
-        <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
-    );
+	const finalize = this.props.isLoggedIn ? (
+            // this.state.cart.lenght for zero dar alerta
+            <Link to="/Pagamento"><Button color="danger">Finalizar Compra</Button></Link>
+	) : (
+            <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+	);
 
-    return (
-        <div>
-            <TopDiv>
+	return (
+            <div>
+              <TopDiv>
                 <TopLeftDiv>
-                    <Title>Carrinho</Title>
+                  <Title>Carrinho </Title>
                 </TopLeftDiv>
-            </TopDiv>
-            <MiddleDiv>
+              </TopDiv>
+              <MiddleDiv>
                 <Row>
-                    <Col className="col-12 col-lg-8">
-                        <MiddleLeftDiv>
-                            {this.state.products}
-                        </MiddleLeftDiv>
-                    </Col>
-                    <Col className="col-12 col-lg-4">
-                        <MiddleRightDiv>
-                            
-                            <Col className="col-12"  >
-                                <Form onSubmit={(e) => {this.handleDelivery(e)}}>
-                                    <Text>Cálculo do Frete</Text>
-                                    <InputGroup>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText color="link">CEP</InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input id="cepForm" placeholder="Digite seu CEP" />
-                                        <InputGroupAddon addonType="append">
-                                            <Button type="submit" color="info">Calcular</Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                </Form>
-                            </Col>
+                  <Col className="col-12 col-lg-8">
+                    <MiddleLeftDiv>
+                      {this.state.products}
+                    </MiddleLeftDiv>
+                  </Col>
+                  <Col className="col-12 col-lg-4">
+                    <MiddleRightDiv>
+                      
+                      <Col className="col-12"  >
+                        <Form onSubmit={(e) => {this.handleDelivery(e)}}>
+                          <Text>Cálculo do Frete</Text>
+                          <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText color="link">CEP</InputGroupText>
+                            </InputGroupAddon>
+                            <Input id="cepForm" placeholder="Digite seu CEP" />
+                            <InputGroupAddon addonType="append">
+                              <Button type="submit" color="info">Calcular</Button>
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </Form>
+                      </Col>
 
-                            <Col className="col-12" >
-                                <Text>Custo dos Produtos</Text>
-                                <PriceText>R$: {this.state.productsCost}</PriceText>
+                      <Col className="col-12" >
+                        <Text>Custo dos Produtos</Text>
+                        <PriceText>R$: {this.state.productsCost}</PriceText>
 
-                                <Text>Custo do Frete</Text>
-                                <PriceText>R$: {this.state.deliveryCost}</PriceText>
+                        <Text>Custo do Frete</Text>
+                        <PriceText>R$: {this.state.deliveryCost}</PriceText>
 
-                                <Text>Custo Total</Text>
-                                <PriceText>R$: {this.state.productsCost + this.state.deliveryCost}</PriceText>
+                        <Text>Custo Total</Text>
+                        <PriceText>R$: {this.state.productsCost + this.state.deliveryCost}</PriceText>
 
 
-                            </Col>
+                      </Col>
 
-                            <Col className="col-12" >
-                                <div className="text-center ">
+                      <Col className="col-12" >
+                        <div className="text-center ">
 
-                                    {finalize}
-                                
-                                </div>   
+                          {finalize}
+                          
+                        </div>   
 
-                            </Col>
-                        </MiddleRightDiv>
-                    </Col>
+                      </Col>
+                    </MiddleRightDiv>
+                  </Col>
 
                 </Row>
-            </MiddleDiv>
-        </div>
+              </MiddleDiv>
+            </div>
 
-    );
-  }
+	);
+    }
 }
 
 // export default Cart;
@@ -378,15 +381,15 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: "CHANGE_USER",
                 payload: username
-            })
+            });
         }    ,
         setStatus: (status) => {
             dispatch({
                 type: "CHANGE_STATUS",
                 payload: status
-            })
-        }    ,    }
-}
+            });
+        }    ,    };
+};
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Cart));

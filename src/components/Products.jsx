@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { InputGroup, InputGroupAddon, Form, FormGroup, Input, Nav, Media, Collapse, Button, CardBody, Card, Container, Row, Col } from 'reactstrap';
 import "../Products.css";
 import OptionsNav from "./OptionsNav.jsx";
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
 import $ from 'jquery';
 import axios from 'axios';
+import {url_backend} from "./Link";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -46,17 +47,17 @@ class Product extends Component {
 	      {
 		  "product_id": this.props.product_id,
 		  "product_quantity" : number,
-	      }
+	      };
 
         // alert(body);
-        axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
+        axios.post( 'https://safe-beyond-19805.herokuapp.com/cart/add_product/', JSON.stringify(body))
             .then(response => {
 
 		const content = response.data;
 
 		if (content.status === 200 ) {
                     // this.setState({wasSucces: content});
-                    axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
+                    axios.get('https://safe-beyond-19805.herokuapp.com/products/get_stock_id/' + this.props.product_id)
 			.then(response => {
 
 			    const content = response.data.content;
@@ -79,7 +80,7 @@ class Product extends Component {
     }
     toggle(event) {
         event.preventDefault();
-        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
+        axios.get( {url_backend} + '/products/get_stock_id/'+this.props.product_id)
             .then(response => {
 
 		const content = response.data.content;
@@ -97,18 +98,18 @@ class Product extends Component {
 
     render() {
         const cart = this.props.amount !== 0 ? (
-            <Form class=" text-center" onSubmit={(e) => {this.handleCart(e)}}>
+            <Form className=" text-center" onSubmit={(e) => {this.handleCart(e)}}>
               <FormGroup >
-                <div class="text-center">
+                <div className="text-center">
                   <Input type="number" min="0" max={this.state.stock} name="number" id={this.props.product_id} placeholder="Quantidade" />
                 </div>
               </FormGroup>
-              <div class="button-cart text-center">
+              <div className="button-cart text-center">
                 <Button color="danger">Adicionar</Button>
               </div>
             </Form>
         ) : (
-            <div class="text-center">
+            <div className="text-center">
               <SubLeg>Produto Indisponível</SubLeg>
             </div>
         );
@@ -117,7 +118,7 @@ class Product extends Component {
             <Col className="col-12 col-sm-4 col-lg-3">
               <img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
               <Col className="col-12">
-                <div class="text-center">
+                <div className="text-center">
                   <Media body>
                     <Media heading>
                       <Legend>{this.props.legend}</Legend>
@@ -127,13 +128,13 @@ class Product extends Component {
                 </div>
               </Col>
               <Col className="col-12">
-                <div class="text-center">
+                <div className="text-center">
                   <Button color="link" onClick={(e) => {this.toggle(e)}} style={{ marginBottom: '1rem' }}>Detalhes</Button>
                 </div>
                 <Collapse isOpen={this.state.collapse}>
                   <Card>
                     <CardBody >
-                      <div class="text-center">
+                      <div className="text-center">
                         <Legend>Estoque:{this.state.stock} </Legend>
                       </div>
                       {cart}
@@ -143,7 +144,7 @@ class Product extends Component {
               </Col>
             </Col>
 
-        )
+        );
     }
 }
 
@@ -176,7 +177,7 @@ class Products extends Component {
         var products_raw;
 
         if (string === "" && category === "") {
-            axios.get('http://127.0.0.1:8000/products/get_products/')
+            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products/')
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -194,7 +195,7 @@ class Products extends Component {
         }
         else if (string === "" && category !== "") {
             // get by cat
-            axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
+            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_category/'+category)
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -212,7 +213,7 @@ class Products extends Component {
         }
         else if (string !== "" && category === "") {
             // get by name
-            axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
+            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name/' + string)
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -230,7 +231,7 @@ class Products extends Component {
         }
         else {
             // get by name and cat using both
-            axios.get('http://127.0.0.1:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
+            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name_or_category/'+ category + "/" +string)
 		.then(response => {
 		    
                     products_raw = response.data.content;
