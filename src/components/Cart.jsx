@@ -181,7 +181,7 @@ class Cart extends Component {
     componentDidMount() {
         // api
 
-        axios.get('https://safe-beyond-19805.herokuapp.com/cart/get_all_orders/')
+        axios.get('http://127.0.0.1:8000/cart/get_all_orders/')
         .then(response => {
             const orders = response.data.content;
             // alert(JSON.stringify(orders));

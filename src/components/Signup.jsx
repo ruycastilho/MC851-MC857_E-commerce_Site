@@ -96,7 +96,7 @@ class Signup extends Component {
         }
 
 
-        CPF.format(cpf, 'digits');
+        cpf = CPF.format(cpf, 'digits');
 
         const body =
 		{

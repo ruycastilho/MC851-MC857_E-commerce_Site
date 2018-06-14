@@ -51,7 +51,7 @@ class AccordionItem extends Component {
 				message: "Ticket Fechado",
 			};	
 
-			axios.post('https://safe-beyond-19805.herokuapp.com/customer_support/close_ticket/' + this.props.id,	JSON.stringify(body))
+			axios.post('http://127.0.0.1:8000/customer_support/close_ticket/' + this.props.id,	JSON.stringify(body))
 			.then(response => {
 
 				this.setState({wasSubmitted: true});
@@ -83,7 +83,7 @@ class AccordionItem extends Component {
 	updateMessages(event) {
 		event.preventDefault();
 
-		axios.get('https://safe-beyond-19805.herokuapp.com/customer_support/get_message_by_number/' + this.props.id)
+		axios.get('http://127.0.0.1:8000/customer_support/get_message_by_number/' + this.props.id)
 		.then(response => {
 			const messages = response.data.content;
 			// alert(JSON.stringify(response.data.content));
@@ -131,7 +131,7 @@ class AccordionItem extends Component {
 				message: message,
 			};	
 
-			axios.post('https://safe-beyond-19805.herokuapp.com/customer_support/add_message_to_ticket/' + this.props.id,	JSON.stringify(body))
+			axios.post('http://127.0.0.1:8000/customer_support/add_message_to_ticket/' + this.props.id,	JSON.stringify(body))
 			.then(response => {
 
 				this.setState({wasSubmitted: true});

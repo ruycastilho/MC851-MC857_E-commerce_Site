@@ -48,14 +48,14 @@ class Product extends Component {
             "product_quantity" : number,
 		}
 
-        axios.post('https://safe-beyond-19805.herokuapp.com/cart/add_product/', JSON.stringify(body))
+        axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
         .then(response => {
 
             const content = response.data;
 
             if (content.status === 200 ) {
                 // this.setState({wasSucces: content});
-                axios.get('https://safe-beyond-19805.herokuapp.com/products/get_stock_id/'+this.props.id)
+                axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
                 .then(response => {
 
                     const content = response.data.content;
@@ -79,7 +79,7 @@ class Product extends Component {
     }
     toggle(event) {
         event.preventDefault();
-        axios.get('https://safe-beyond-19805.herokuapp.com/products/get_stock_id/'+this.props.id)
+        axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.id)
         .then(response => {
 
             const content = response.data.content;
@@ -176,7 +176,7 @@ class Products extends Component {
         var products_raw;
 
         if (string === "" && category === "") {
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products/')
+            axios.get('http://127.0.0.1:8000/products/get_products/')
             .then(response => {
     
                 products_raw = response.data.content;
@@ -194,7 +194,7 @@ class Products extends Component {
         }
         else if (string === "" && category !== "") {
             // get by cat
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_category/'+category)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -211,7 +211,7 @@ class Products extends Component {
         }
         else if (string !== "" && category === "") {
             // get by name
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name/' + string)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
             .then(response => {
     
                 products_raw = response.data.content;
@@ -229,7 +229,7 @@ class Products extends Component {
         }
         else {
             // get by name and cat using both
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name_or_category/'+ category + "/" +string)
+            axios.get('http://127.0.0.1:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
             .then(response => {
     
                 products_raw = response.data.content;

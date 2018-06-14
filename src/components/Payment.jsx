@@ -139,7 +139,7 @@ class Payment extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post('https://safe-beyond-19805.herokuapp.com/payment/pay_by_credit_card/',	JSON.stringify(body))
+		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_card/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {
@@ -207,7 +207,7 @@ class Payment extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post('https://safe-beyond-19805.herokuapp.com/payment/pay_by_credit_slip/',	JSON.stringify(body))
+		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_slip/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {
