@@ -4,7 +4,6 @@ import logo from '../logo.svg';
 import cart from '../cart.svg';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router'
-
 import {
     Button,
     Collapse,
@@ -24,7 +23,7 @@ import AlertMsg from './Alert';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 const Logo = styled.img`
      float: left;
