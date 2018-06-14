@@ -100,99 +100,29 @@ class Product extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
-
-    }
-
-    handleChange(event) {
-        // chamar api e mudar state
-        event.preventDefault();
-    }
-    handleRemove(event) {
-        // chamar funcao do cart pra atualizar ou remover do vetor <=
-        event.preventDefault();
-    }
-
-    render() {
-        return (
-            <Row >
-                <Col className="col-12 col-lg-3">
-                    <div className="centerBlock " >
-                        <img src={this.props.src} alt="product image" />
-                    </div>
-                </Col>
-                <Col className="col-12 col-lg-3">
-                    <div className="centerBlock text-center">
-                        <Media body>
-                            <Media heading>
-                            {this.props.name}
-                            </Media>
-                            {this.props.category}
-                            Preço Unitário: {this.props.price}
-                        </Media>
-                    </div>
-                    
-                </Col>
-                <Col className="col-12 col-lg-3">
-                    <div className="centerBlock text-center">
-                        <Form onSubmit={(e) => {this.handleChange(e)}}>
-                            <InputGroup >
-                                <Row>
-                                    <Input placeholder={this.props.quantity} type="number" id="changeInput" step="1" />
-                                </Row>
-                            </InputGroup>
-                            <Button type="submit" color="success">Alterar</Button>{' '}
-                            <Button onClick={(e) => {this.handleRemove(e)}} color="danger">Remover</Button>{' '}
-                        </Form>
-                
-                    </div>
-                </Col>
-                <Col className="col-12 col-lg-3">
-                    <div className="centerBlock text-center price-text">
-                        <PriceText>Subtotal</PriceText>
-                    <PriceText>R${this.props.quantity*this.props.price}</PriceText>
-                    </div>                                    
-                </Col>             
-            </Row>
-
-        )
-  
-    }
-}
-
-class Cart extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.handleBuy = this.handleBuy.bind(this);
-        this.handleDelivery = this.handleDelivery.bind(this);
         this.state = {
-            products: [],
-            deliveryCost: 0.0,
-            productsCost: 0.0,
+            quantity: this.state,
+            shouldAlert: false,
         };
     }
 
-    handleBuy(event) {
+    handleChange(event) {
         event.preventDefault();
-    }
-
-    handleDelivery(event) {
-        event.preventDefault();
-		var cep = $("#cepForm").val();
-
+		var number = $("#"+this.props.id).val();
         const body =
 		{
-            "CEP": cep,
-            "tipoEntrega": "PAC",
+            "product_id": this.props.id,
+            "product_quantity": number,
 		}
 
-        // alert(body);
-        axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
+        axios.post('http://127.0.0.1:8000/cart/update_product/', JSON.stringify(body))
         .then(response => {
 
-            const value = response.data;
+            // alert(JSON.stringify(response.data));
+            if ( response.data.status !== 200) {
+                this.setState({ shouldAlert: true})
+            }
 
-            this.setState({ deliveryCost: value });
 
         })
         .catch(function (error) {
@@ -202,9 +132,100 @@ class Cart extends Component {
 
 
     }
+    handleRemove(event) {
+        event.preventDefault();
+        const body =
+		{
+            "product_id": this.props.id,
+		}
 
-    componentDidMount() {
-        // api
+        axios.post('http://127.0.0.1:8000/cart/remove_product/', JSON.stringify(body))
+        .then(response => {
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });
+
+    }
+
+    render() {
+
+        const alert = this.state.shouldAlert ? (
+            <AlertMsg type="error" msg="Não há estoque suficiente!" />
+        ) : (
+            null
+        );
+
+        return (
+            <div>
+                '<Row >
+                    <Col className="col-12 col-lg-3">
+                        <div className="centerBlock " >
+                            <img src={this.props.src} alt="product image" />
+                        </div>
+                    </Col>
+                    <Col className="col-12 col-lg-3">
+                        <div className="centerBlock text-center">
+                            <Media body>
+                                <Media heading>
+                                {this.props.name}
+                                </Media>
+                                {this.props.category}
+                                Preço Unitário: {this.props.price}
+                            </Media>
+                        </div>
+                        
+                    </Col>
+                    <Col className="col-12 col-lg-3">
+                        <div className="centerBlock text-center">
+                            <Form onSubmit={(e) => {this.handleChange(e)}}>
+                                <InputGroup >
+                                    <Row>
+                                        <Input placeholder={this.props.quantity} type="number" id={this.props.id} step="1" />
+                                    </Row>
+                                </InputGroup>
+                                <Button type="submit" color="success">Alterar</Button>{' '}
+                                <Button onClick={(e) => {this.handleRemove(e)}} color="danger">Remover</Button>{' '}
+                            </Form>
+                    
+                        </div>
+                    </Col>
+                    <Col className="col-12 col-lg-3">
+                        <div className="centerBlock text-center price-text">
+                            <PriceText>Subtotal</PriceText>
+                        <PriceText>R${this.props.quantity*this.props.price}</PriceText>
+                        </div>                                    
+                    </Col>      
+                </Row>
+                <Col>
+                    <div className="text-center " >
+                        {alert}     
+                    </div>
+                </Col>'
+            </div>
+        )
+  
+    }
+}
+
+class Cart extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.handleLoad = this.handleLoad.bind(this);
+        this.handleDelivery = this.handleDelivery.bind(this);
+        this.state = {
+            products: [],
+            deliveryCost: 0.0,
+            productsCost: 0.0,
+        };
+    }
+
+    handleLoad(event) {
+        event.preventDefault();
+    
+        // var func = this.handleLoad;
 
         axios.get('http://127.0.0.1:8000/cart/show_cart/')
         .then(response => {
@@ -216,7 +237,7 @@ class Cart extends Component {
                 prod_cost += product.price*product.quantity;
 
                 return  <Product
-                            id={product.product_id}
+                            id={product.id}
                             name={product.nome}
                             category={product.category}
                             src={product.url}
@@ -232,6 +253,40 @@ class Cart extends Component {
             // alert(error);
             
         });	
+    }
+
+    handleDelivery(event) {
+        event.preventDefault();
+		var cep = $("#cepForm").val();
+
+        const body =
+		{
+            "CEP": cep,
+            "tipoEntrega": "PAC",
+		}
+
+        axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
+        .then(response => {
+
+            // const value = response.data;
+            // alert(JSON.stringify(response.data));
+            this.setState({ deliveryCost: response.data.content });
+
+
+        })
+        .catch(function (error) {
+            // alert(error);
+
+        });
+
+
+    }
+
+    componentDidMount() {
+        // api
+        var ev = new Event('refresh');
+        this.handleLoad(ev)
+       
     }
 
 

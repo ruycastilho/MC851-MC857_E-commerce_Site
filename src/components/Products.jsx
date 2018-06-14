@@ -48,7 +48,7 @@ class Product extends Component {
             "product_quantity" : number,
 		}
 
-        alert(body);
+        // alert(body);
         axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
         .then(response => {
 
@@ -198,7 +198,8 @@ class Products extends Component {
             .then(response => {
     
                 products_raw = response.data.content;
-    
+                    // alert(JSON.stringify(products_raw))
+
                 const Test = products_raw.map(product => {
                     return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
                 });

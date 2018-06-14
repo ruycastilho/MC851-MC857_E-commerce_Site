@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Label, Container, Row, Col } from 'reactstrap';
+import { Card, CardBody, Label,Col } from 'reactstrap';
 
 import "../Orders.css";
 
