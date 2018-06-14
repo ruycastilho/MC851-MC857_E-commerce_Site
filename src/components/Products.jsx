@@ -43,110 +43,110 @@ class Product extends Component {
         var number = $("#"+this.props.product_id).val();
 
         const body =
-		{
-            "product_id": this.props.product_id,
-            "product_quantity" : number,
-		}
+	      {
+		  "product_id": this.props.product_id,
+		  "product_quantity" : number,
+	      }
 
         // alert(body);
         axios.post('http://127.0.0.1:8000/cart/add_product/', JSON.stringify(body))
-        .then(response => {
+            .then(response => {
 
-            const content = response.data;
+		const content = response.data;
 
-            if (content.status === 200 ) {
-                // this.setState({wasSucces: content});
-                axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
-                .then(response => {
+		if (content.status === 200 ) {
+                    // this.setState({wasSucces: content});
+                    axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
+			.then(response => {
 
-                    const content = response.data.content;
+			    const content = response.data.content;
 
-                    this.setState({stock: content});
+			    this.setState({stock: content});
 
-                })
-                .catch(function (error) {
-                    // alert(error);
+			})
+			.catch(function (error) {
+			    // alert(error);
 
-                });	
-            }
+			});	
+		}
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });	
+            });	
         
     }
     toggle(event) {
         event.preventDefault();
         axios.get('http://127.0.0.1:8000/products/get_stock_id/'+this.props.product_id)
-        .then(response => {
+            .then(response => {
 
-            const content = response.data.content;
+		const content = response.data.content;
 
-            this.setState({stock: content});
-            this.setState({ collapse: !this.state.collapse });
+		this.setState({stock: content});
+		this.setState({ collapse: !this.state.collapse });
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });	
+            });	
 
     }
 
     render() {
         const cart = this.props.amount !== 0 ? (
             <Form class=" text-center" onSubmit={(e) => {this.handleCart(e)}}>
-                <FormGroup >
-                    <div class="text-center">
-                        <Input type="number" min="0" max={this.state.stock} name="number" id={this.props.product_id} placeholder="Quantidade" />
-                    </div>
-                </FormGroup>
-                    <div class="button-cart text-center">
-                        <Button color="danger">Adicionar</Button>
-                    </div>
+              <FormGroup >
+                <div class="text-center">
+                  <Input type="number" min="0" max={this.state.stock} name="number" id={this.props.product_id} placeholder="Quantidade" />
+                </div>
+              </FormGroup>
+              <div class="button-cart text-center">
+                <Button color="danger">Adicionar</Button>
+              </div>
             </Form>
         ) : (
             <div class="text-center">
-                <SubLeg>Produto Indisponível</SubLeg>
+              <SubLeg>Produto Indisponível</SubLeg>
             </div>
         );
 
         return (
             <Col className="col-12 col-sm-4 col-lg-3">
-                <img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
-                <Col className="col-12">
-                    <div class="text-center">
-                        <Media body>
-                            <Media heading>
-                                <Legend>{this.props.legend}</Legend>
-                            </Media>
-                            <SubLeg>{this.state.sublegend}</SubLeg>
-                        </Media>
-                    </div>
-                </Col>
-                <Col className="col-12">
-                    <div class="text-center">
-                        <Button color="link" onClick={(e) => {this.toggle(e)}} style={{ marginBottom: '1rem' }}>Detalhes</Button>
-                    </div>
-                    <Collapse isOpen={this.state.collapse}>
-                        <Card>
-                            <CardBody >
-                                <div class="text-center">
-                                    <Legend>Estoque:{this.state.stock} </Legend>
-                                </div>
-                                {cart}
-                            </CardBody>
-                        </Card>
-                    </Collapse>
-                </Col>
+              <img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
+              <Col className="col-12">
+                <div class="text-center">
+                  <Media body>
+                    <Media heading>
+                      <Legend>{this.props.legend}</Legend>
+                    </Media>
+                    <SubLeg>{this.state.sublegend}</SubLeg>
+                  </Media>
+                </div>
+              </Col>
+              <Col className="col-12">
+                <div class="text-center">
+                  <Button color="link" onClick={(e) => {this.toggle(e)}} style={{ marginBottom: '1rem' }}>Detalhes</Button>
+                </div>
+                <Collapse isOpen={this.state.collapse}>
+                  <Card>
+                    <CardBody >
+                      <div class="text-center">
+                        <Legend>Estoque:{this.state.stock} </Legend>
+                      </div>
+                      {cart}
+                    </CardBody>
+                  </Card>
+                </Collapse>
+              </Col>
             </Col>
 
         )
     }
 }
-  
+
 
 class Products extends Component {
 
@@ -169,111 +169,111 @@ class Products extends Component {
 
     handleSearch(event, category) {
         event.preventDefault();
-		// var search = document.getElementById("searchForm");
-		var string = $("#searchInput").val();
+	// var search = document.getElementById("searchForm");
+	var string = $("#searchInput").val();
         
         // alert(string);
         var products_raw;
 
         if (string === "" && category === "") {
             axios.get('http://127.0.0.1:8000/products/get_products/')
-            .then(response => {
-    
-                products_raw = response.data.content;
-                // alert(JSON.stringify(products_raw[0]))
-                const Test = products_raw.map(product => {
-                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
-                });
-                this.setState({prod: Test});
-            })
-            .catch(function (error) {
-                // alert(error);
-    
-            });	
-         
+		.then(response => {
+		    
+                    products_raw = response.data.content;
+                    // alert(JSON.stringify(products_raw[0]))
+                    const Test = products_raw.map(product => {
+			return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    });
+                    this.setState({prod: Test});
+		})
+		.catch(function (error) {
+                    // alert(error);
+		    
+		});	
+            
         }
         else if (string === "" && category !== "") {
             // get by cat
             axios.get('http://127.0.0.1:8000/products/get_products_by_category/'+category)
-            .then(response => {
-    
-                products_raw = response.data.content;
+		.then(response => {
+		    
+                    products_raw = response.data.content;
                     // alert(JSON.stringify(products_raw))
 
-                const Test = products_raw.map(product => {
-                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
-                });
-                this.setState({prod: Test});
-            })
-            .catch(function (error) {
-                // alert(error);
-    
-            });	
+                    const Test = products_raw.map(product => {
+			return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    });
+                    this.setState({prod: Test});
+		})
+		.catch(function (error) {
+                    // alert(error);
+		    
+		});	
         }
         else if (string !== "" && category === "") {
             // get by name
             axios.get('http://127.0.0.1:8000/products/get_products_by_name/' + string)
-            .then(response => {
-    
-                products_raw = response.data.content;
-    
-                const Test = products_raw.map(product => {
-                    return <Product key={product.id} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
-                });
-                this.setState({prod: Test});
-            })
-            .catch(function (error) {
-                // alert(error);
-    
-            });	
+		.then(response => {
+		    
+                    products_raw = response.data.content;
+		    
+                    const Test = products_raw.map(product => {
+			return <Product key={product.id} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    });
+                    this.setState({prod: Test});
+		})
+		.catch(function (error) {
+                    // alert(error);
+		    
+		});	
 
         }
         else {
             // get by name and cat using both
             axios.get('http://127.0.0.1:8000/products/get_products_by_name_or_category/'+ category + "/" +string)
-            .then(response => {
-    
-                products_raw = response.data.content;
-    
-                const Test = products_raw.map(product => {
-                    return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
-                });
-                this.setState({prod: Test});
-            })
-            .catch(function (error) {
-                // alert(error);
-    
-            });	
+		.then(response => {
+		    
+                    products_raw = response.data.content;
+		    
+                    const Test = products_raw.map(product => {
+			return <Product key={product.nome} product_id={product.idproduto} legend={product.nome} sublegend={"Preço: R$" + product.preco} src={product.imagem_url} />
+                    });
+                    this.setState({prod: Test});
+		})
+		.catch(function (error) {
+                    // alert(error);
+		    
+		});	
         }
- 
+	
     }
 
     render() {
-   
+	
 	return(
-        <div>
-            <Nav className="search-nav">
+	    <div >
+	      <OptionsNav handleSearch={this.handleSearch} setActiveOption={this.setCategory} />
+              <Nav className="search-nav mt-2" >
                 <Form id="searchForm" onSubmit={(e) => {this.handleSearch(e, this.props.category) }}>		 
-                    <InputGroup >
-                        <Input id="searchInput" placeholder="O que você procura?"/>
-                        <InputGroupAddon addonType="prepend" >
-                        <Button color="coral" className="search-bar-button">
+                  <InputGroup >
+                    <Input id="searchInput" placeholder="O que você procura?"/>
+                    <InputGroupAddon addonType="prepend" >
+                      <Button color="coral" className="search-bar-button">
                         <FA.FaSearch color="white" style={{"font-size":"1.5em"}} />
-                        </Button>
-                        </InputGroupAddon>
-                    </InputGroup>
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
                 </Form>
-			</Nav>
-            <OptionsNav handleSearch={this.handleSearch} setActiveOption={this.setCategory}/>            
-            <MainDiv id="products">
-            <Container>
-                    <Row>
-                        {this.state.prod}
-                    </Row>
-            </Container>
-            </MainDiv>
-        </div>
-        
+	      </Nav>
+              <MainDiv id="products">
+		<Container>
+                  <Row>
+                    {this.state.prod}
+                  </Row>
+		</Container>
+              </MainDiv>
+            </div>
+            
 	);
     }
 } 
