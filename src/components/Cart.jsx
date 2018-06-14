@@ -5,9 +5,10 @@ import { Form, Media, Input, InputGroup, InputGroupText, InputGroupAddon, Button
 import "../Cart.css";
 import AlertMsg from './Alert';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import $ from 'jquery'
+import $ from 'jquery';
+import {url_backend} from "./Link";
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -109,38 +110,45 @@ class Product extends Component {
 
     handleChange(event) {
         event.preventDefault();
-		var number = $("#"+this.props.id).val();
+	var number = $("#"+this.props.id).val();
         const body =
-		{
-            "product_id": this.props.id,
-            "product_quantity": number,
-		}
+	    {
+		"product_id": this.props.id,
+		"product_quantity": number,
+	    };
 
         axios.post('http://127.0.0.1:8000/cart/update_product/', JSON.stringify(body))
-        .then(response => {
+            .then(response => {
 
+<<<<<<< HEAD
             // alert(JSON.stringify(response.data));
             if ( response.data.status !== 200) {
                 this.setState({ alertMsg: "Quantidade indisponível em estoque.", msgtype: "error"})
             } else {
                 this.setState({ quantity: number, alertMsg: "Quantidade alterada com sucesso!", msgtype: "success"})
+=======
+		// alert(JSON.stringify(response.data));
+		if ( response.data.status !== 200) {
+                    this.setState({ shouldAlert: true});
+		}
+>>>>>>> faa6a351133af674db6c48cccd7716a75f743610
 
             }
             this.setState({ shouldAlert: true})
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });
+            });
 
 
     }
     handleRemove(event) {
         const body =
-		{
-            "product_id": this.props.id,
-		}
+	    {
+		"product_id": this.props.id,
+	    };
 
         axios.post('http://127.0.0.1:8000/cart/remove_product/', JSON.stringify(body))
         .then(response => {
@@ -150,7 +158,7 @@ class Product extends Component {
         .catch(function (error) {
             // alert(error);
 
-        });
+            });
 
     }
 
@@ -213,8 +221,8 @@ class Product extends Component {
                     </div>
                 </Col>'
             </div>
-        )
-  
+        );
+	
     }
 }
 
@@ -265,27 +273,27 @@ class Cart extends Component {
 
     handleDelivery(event) {
         event.preventDefault();
-		var cep = $("#cepForm").val();
+	var cep = $("#cepForm").val();
 
         const body =
-		{
-            "CEP": cep,
-            "tipoEntrega": "PAC",
-		}
+	      {
+		  "CEP": cep,
+		  "tipoEntrega": "PAC",
+	      };
 
         axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
-        .then(response => {
+            .then(response => {
 
-            // const value = response.data;
-            // alert(JSON.stringify(response.data));
-            this.setState({ deliveryCost: response.data.content });
+		// const value = response.data;
+		// alert(JSON.stringify(response.data));
+		this.setState({ deliveryCost: response.data.content });
 
 
-        })
-        .catch(function (error) {
-            // alert(error);
+            })
+            .catch(function (error) {
+		// alert(error);
 
-        });
+            });
 
 
     }
@@ -293,12 +301,12 @@ class Cart extends Component {
     componentDidMount() {
         // api
         var ev = new Event('refresh');
-        this.handleLoad(ev)
-       
+        this.handleLoad(ev);
+	
     }
 
 
-  render() {
+    render() {
 
     var finalize;
 
@@ -317,14 +325,14 @@ class Cart extends Component {
 
     }
 
-    return (
-        <div>
-            <TopDiv>
+	return (
+            <div>
+              <TopDiv>
                 <TopLeftDiv>
-                    <Title>Carrinho</Title>
+                  <Title>Carrinho </Title>
                 </TopLeftDiv>
-            </TopDiv>
-            <MiddleDiv>
+              </TopDiv>
+              <MiddleDiv>
                 <Row>
                     <Col className="col-12 col-lg-8">
                         <MiddleLeftDiv>
@@ -374,11 +382,11 @@ class Cart extends Component {
                     </Col>
 
                 </Row>
-            </MiddleDiv>
-        </div>
+              </MiddleDiv>
+            </div>
 
-    );
-  }
+	);
+    }
 }
 
 // export default Cart;
@@ -396,15 +404,15 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({
                 type: "CHANGE_USER",
                 payload: username
-            })
+            });
         }    ,
         setStatus: (status) => {
             dispatch({
                 type: "CHANGE_STATUS",
                 payload: status
-            })
-        }    ,    }
-}
+            });
+        }    ,    };
+};
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Cart));

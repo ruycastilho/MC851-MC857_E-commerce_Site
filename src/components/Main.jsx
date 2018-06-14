@@ -24,7 +24,7 @@ class Main extends Component {
 
     render() {
         return (
-        <MainDiv>
+        <MainDiv >
             <Switch>
                 <Route exact path='/' component={Products}/>
                 <Route path='/Cadastro' component={Signup}/>
