@@ -24,7 +24,7 @@ import AlertMsg from './Alert';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const Logo = styled.img`
      float: left;
@@ -75,7 +75,6 @@ class Header extends Component {
 
 		axios.post('https://safe-beyond-19805.herokuapp.com/website/login/', JSON.stringify(body))
 		.then(response => {
-			alert("!");
 
 			if (response.data.status === 200) {
 				
