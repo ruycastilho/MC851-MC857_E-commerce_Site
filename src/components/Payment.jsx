@@ -7,6 +7,7 @@ import CPF from 'gerador-validador-cpf';
 import validator from 'validator';
 import AlertMsg from './Alert';
 import axios from 'axios';
+import {url_backend } from './Link';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -86,23 +87,28 @@ class Payment extends Component {
         var mes = $("#mes").val();
         var ano = $("#ano").val();
 
-        this.setState({didSubmit : true})
 
         if (name === "" || number === "" || code === "" || cep === "" || cpf === "" || mes === "" || ano === "" ) {
-            this.setState({wasSuccess: false});
-            this.setState({errorMsg: "Não é permitido deixar campo vazio."});
+            this.setState({ wasSuccess: false,
+                            errorMsg: "Não é permitido deixar campo vazio.",
+                            didSubmit : true})
+            
             return;
         }
 
         if (!CPF.validate(cpf)) {
-            this.setState({wasSuccess: false});
-            this.setState({errorMsg: "CPF inválido."});
+            this.setState({ wasSuccess: false,
+                            errorMsg: "CPF inválido.",
+                            didSubmit : true})
+            
             return;
         }
 
         if (!validator.isCreditCard(number)) {
-            this.setState({wasSuccess: false});
-            this.setState({errorMsg: "Número de Cartão inválido."});
+            this.setState({ wasSuccess: false,
+                            errorMsg: "Número de Cartão inválido.",
+                            didSubmit : true})
+            
             return;
 
         }
@@ -139,7 +145,7 @@ class Payment extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_card/',	JSON.stringify(body))
+		axios.post("http://127.0.0.1:8000" +'/payment/pay_by_credit_card/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {
@@ -148,10 +154,11 @@ class Payment extends Component {
 			}
 			else {
 
-                this.setState({wasSuccess: false});
-                this.setState({errorMsg: "Falha no Pagamento."});
+                this.setState({ wasSuccess: false,
+                                errorMsg: "Falha no Pagamento."});
 
 			}
+            this.setState({didSubmit : true})
 		
 		})
 		.catch(function (error) {
@@ -169,17 +176,18 @@ class Payment extends Component {
         var cep = $("#cepSlip").val();
         var cpf = $("#cpfSlip").val();
 
-        this.setState({didSubmit : true})
 
         if (name === "" || addr === "" || cep === "" || cpf === "" ) {
-            this.setState({wasSuccess: false});
-            this.setState({errorMsg: "Não é permitido deixar campo vazio."});
+            this.setState({ wasSuccess: false,
+                            errorMsg: "Não é permitido deixar campo vazio.",
+                            didSubmit : true})
+            
             return;
         }
 
         if (!CPF.validate(cpf)) {
-            this.setState({wasSuccess: false});
-            this.setState({errorMsg: "CPF inválido."});
+            this.setState({ wasSuccess: false,
+                            errorMsg: "CPF inválido."});
             return;
         }
 
@@ -207,7 +215,7 @@ class Payment extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post('http://127.0.0.1:8000/payment/pay_by_credit_slip/',	JSON.stringify(body))
+		axios.post("http://127.0.0.1:8000" +'/payment/pay_by_slip/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {
@@ -216,10 +224,11 @@ class Payment extends Component {
 			}
 			else {
 
-                this.setState({wasSuccess: false});
-                this.setState({errorMsg: "Falha no Pagamento."});
+                this.setState({ wasSuccess: false,
+                                errorMsg: "Falha no Pagamento."});
 
 			}
+            this.setState({didSubmit : true})
 		
 		})
 		.catch(function (error) {

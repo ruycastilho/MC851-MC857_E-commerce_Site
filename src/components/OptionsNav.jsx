@@ -3,7 +3,6 @@ import { Button, Row, Container } from 'reactstrap';
 import "../OptionsNav.css";
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import {url_backend } from "./Link";
 
 class OptionsNav extends Component {
 

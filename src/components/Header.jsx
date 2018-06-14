@@ -7,8 +7,6 @@ import { withRouter } from 'react-router';
 import {
     Button,
     Collapse,
-    Container,
-    Col,
     Form,
     FormGroup,
     Input,
@@ -16,10 +14,12 @@ import {
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    Row
+	NavItem,
+	Col,
+	Row,
+	Container
 } from 'reactstrap';
-
+import { url_backend } from './Link';
 import '../header.css';
 import $ from 'jquery';
 import AlertMsg from './Alert';
@@ -75,7 +75,7 @@ class Header extends Component {
 		password: pwd
 	    };
 
-	axios.post('http://127.0.0.1:8000/website/login/', JSON.stringify(body))
+	axios.post( "http://127.0.0.1:8000" + '/website/login/', JSON.stringify(body))
 	    .then(response => {
 
 		if (response.data.status === 200) {
@@ -104,7 +104,7 @@ class Header extends Component {
 	event.preventDefault();
 
 	try {
-	    axios.get('http://127.0.0.1:8000/website/logout/')
+	    axios.get("http://127.0.0.1:8000" + '/website/logout/')
 
 		.then(function (response) {
 
@@ -126,7 +126,6 @@ class Header extends Component {
     
     render() {
 	const isLoggedIn = this.props.isLoggedIn;
-
 	const error = (this.props.loginErrorMsg)  ? (
 	    <AlertMsg msg={"Falha no Login"} type="error" />
 	) : null;
@@ -134,47 +133,46 @@ class Header extends Component {
 	const shownElement = isLoggedIn ? (
 
 	    <Nav className="ml-auto" right navbar >
-	      <NavItem>
-		<h1>Boas vindas, {this.props.username}!</h1>
-	      </NavItem>
+			<NavItem>
+				<h1>Boas vindas, {this.props.username}!</h1>
+			</NavItem>
 	      
-	      <Link to='/Conta' id="link" style={{"min-width":"40px","line-height":"3em"}}>
-		<FA.FaUser style={{"color":"coral", "font-size":"1.5em",}}/>
-	      </Link>
+			<Link to='/Conta' id="link" style={{"min-width":"40px","line-height":"3em"}}>
+				<FA.FaUser style={{"color":"coral", "font-size":"1.5em",}}/>
+			</Link>
 	      
-	      <NavItem>
-		<Form>
-		  <Button type="button" onClick={this.handleLogout}>Sair</Button>
-
-		</Form>
-	      </NavItem>
+	        <NavItem>
+				<Form>
+					<Button type="button" onClick={this.handleLogout}>Sair</Button>
+				</Form>
+	        </NavItem>
 	    </Nav>
 
 	) : (
 	    <Form  className="ml-auto container-fluid" id="loginForm" onSubmit={this.handleLogin}>
-	      <Nav className="ml-auto row" right navbar >
-		<NavItem className="col-12 col-md-3">
-		  <FormGroup className="col-12">
-		    <Input id="loginId" type="text" placeholder="Nome" className="col-12" ></Input>
-		  </FormGroup>
-		</NavItem>
+	    	<Nav className="ml-auto row"  navbar >
+				<NavItem className="col-12 col-md-3">
+					<FormGroup className="col-12">
+						<Input id="loginId" type="text" placeholder="Nome" className="col-12" ></Input>
+					</FormGroup>
+				</NavItem>
 
-		<NavItem className="col-12 col-md-3">
-		  <FormGroup className="col-12">
-		    <Input id="loginPwd" type="password" placeholder="Senha"  className="col-12"></Input>
-		  </FormGroup>
-		</NavItem>
+				<NavItem className="col-12 col-md-3">
+					<FormGroup className="col-12">
+						<Input id="loginPwd" type="password" placeholder="Senha"  className="col-12"></Input>
+					</FormGroup>
+				</NavItem>
 
-		<NavItem className="col-12 col-md-3">
-		    <Button id="" className="col-12">Entrar</Button>
-		</NavItem>
+				<NavItem className="col-12 col-md-3">
+					<Button id="">Entrar</Button>
+				</NavItem>
 
-		<NavItem className="col-12 col-md-3">
-		  <Link to='/Cadastro' id="link" className="">
-		    <Button id="" className="col-12"> Cadastrar </Button>
-		  </Link>
-		</NavItem>
-	      </Nav>
+				<NavItem className="col-12 col-md-3">
+					<Link to='/Cadastro' id="link" className="">
+						<Button id=""> Cadastrar </Button>
+					</Link>
+				</NavItem>
+			</Nav>
 	    </Form>
 
 	);
@@ -182,18 +180,18 @@ class Header extends Component {
 	
 	return (
 	    <div>
-	      <Navbar light expand="md" className="navbar2">
-		<Logo src={logo} className="Title-Logo"/>
-		<NavbarBrand href="/" className="navbar-brand2"> SAColão E-commerce </NavbarBrand>
-		<NavbarToggler onClick={this.toggle} />
-		<Collapse isOpen={this.state.isOpen} navbar id="loginForm"  >
-		  {shownElement}
-		    <Link to='/Carrinho' className="link">
-			<img alt="cart" src={cart} id="carrinho"></img>
-		    </Link>
-		</Collapse>
-	      </Navbar>
-	      {error}
+	     	<Navbar light expand="md" className="navbar2">
+				<Logo src={logo} className="Title-Logo"/>
+				<NavbarBrand href="/" className="navbar-brand2"> SAColão E-commerce </NavbarBrand>
+				<NavbarToggler onClick={this.toggle} />
+				<Collapse isOpen={this.state.isOpen} navbar id="loginForm"  >
+					{shownElement}
+					<Link to='/Carrinho' className="link">
+						<img alt="cart" src={cart} id="carrinho"></img>
+					</Link>
+				</Collapse>
+	      	</Navbar>
+	    	{error}
 	    </div>
 	);
     }

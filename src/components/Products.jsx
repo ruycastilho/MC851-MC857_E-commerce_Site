@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import * as FA from 'react-icons/lib/fa';
 import $ from 'jquery';
 import axios from 'axios';
-import {url_backend} from "./Link";
+import {url_backend } from "./Link";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -50,14 +50,14 @@ class Product extends Component {
 	      };
 
         // alert(body);
-        axios.post( 'https://safe-beyond-19805.herokuapp.com/cart/add_product/', JSON.stringify(body))
+        axios.post( "http://127.0.0.1:8000" + '/cart/add_product/', JSON.stringify(body))
             .then(response => {
 
 		const content = response.data;
 
 		if (content.status === 200 ) {
                     // this.setState({wasSucces: content});
-                    axios.get('https://safe-beyond-19805.herokuapp.com/products/get_stock_id/' + this.props.product_id)
+                    axios.get("http://127.0.0.1:8000" + '/products/get_stock_id/' + this.props.product_id)
 			.then(response => {
 
 			    const content = response.data.content;
@@ -80,7 +80,7 @@ class Product extends Component {
     }
     toggle(event) {
         event.preventDefault();
-        axios.get( {url_backend} + '/products/get_stock_id/'+this.props.product_id)
+        axios.get( "http://127.0.0.1:8000" + '/products/get_stock_id/'+this.props.product_id)
             .then(response => {
 
 		const content = response.data.content;
@@ -177,7 +177,7 @@ class Products extends Component {
         var products_raw;
 
         if (string === "" && category === "") {
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products/')
+            axios.get("http://127.0.0.1:8000" + '/products/get_products/')
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -195,7 +195,7 @@ class Products extends Component {
         }
         else if (string === "" && category !== "") {
             // get by cat
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_category/'+category)
+            axios.get("http://127.0.0.1:8000" + '/products/get_products_by_category/'+category)
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -213,7 +213,7 @@ class Products extends Component {
         }
         else if (string !== "" && category === "") {
             // get by name
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name/' + string)
+            axios.get("http://127.0.0.1:8000" + '/products/get_products_by_name/' + string)
 		.then(response => {
 		    
                     products_raw = response.data.content;
@@ -231,7 +231,7 @@ class Products extends Component {
         }
         else {
             // get by name and cat using both
-            axios.get('https://safe-beyond-19805.herokuapp.com/products/get_products_by_name_or_category/'+ category + "/" +string)
+            axios.get( "http://127.0.0.1:8000" + '/products/get_products_by_name_or_category/'+ category + "/" +string)
 		.then(response => {
 		    
                     products_raw = response.data.content;

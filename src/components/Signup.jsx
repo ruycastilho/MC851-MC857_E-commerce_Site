@@ -8,6 +8,7 @@ import axios from 'axios';
 import $ from 'jquery'
 import CPF from 'gerador-validador-cpf';
 import validator from 'validator';
+import {url_backend } from './Link';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -109,7 +110,7 @@ class Signup extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post('http://127.0.0.1:8000/website/createuser/',	JSON.stringify(body))
+		axios.post({url_backend} +'/website/createuser/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {

@@ -79,21 +79,6 @@ class Order extends Component {
     }
 }
 
-// export default Order;
-
- // 		  <Col xs="12">
- // 		    <Item
- // 		      data={"10/06/2018"}
- // 		      id={2489294839}
- // 		      status_ent={"Ainda em estoque"}
- // 		      name={"Gotham"}
- // 		      src={"https://images.livrariasaraiva.com.br/imagemnet/imagem.aspx/?pro_id=9417533&qld=90&l=430&a=-1"}
- // 		      valor={"R$66,60"}
- // 		      qtdade={"7"}
- // 		      adress={"Av. dos bobos, número zero"}
- // 		      />
- // 		  </Col>
-
  const mapStateToProps = (state) => {
     return {
         username: state.username,

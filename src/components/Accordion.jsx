@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Collapse, CardBody, Card, Contai
 import $ from 'jquery';
 import axios from 'axios';
 import AlertMsg from './Alert';
+import {url_backend} from './Link';
 
 const itemstyle = {
     "margin-top": '1em',
@@ -51,7 +52,7 @@ class AccordionItem extends Component {
 				message: "Ticket Fechado",
 			};	
 
-			axios.post('http://127.0.0.1:8000/customer_support/close_ticket/' + this.props.id,	JSON.stringify(body))
+			axios.post( "http://127.0.0.1:8000" +'/customer_support/close_ticket/' + this.props.id,	JSON.stringify(body))
 			.then(response => {
 
 				this.setState({wasSubmitted: true});
@@ -83,7 +84,7 @@ class AccordionItem extends Component {
 	updateMessages(event) {
 		event.preventDefault();
 
-		axios.get('http://127.0.0.1:8000/customer_support/get_message_by_number/' + this.props.id)
+		axios.get("http://127.0.0.1:8000" +'/customer_support/get_message_by_number/' + this.props.id)
 		.then(response => {
 			const messages = response.data.content;
 			// alert(JSON.stringify(response.data.content));
@@ -131,7 +132,7 @@ class AccordionItem extends Component {
 				message: message,
 			};	
 
-			axios.post('http://127.0.0.1:8000/customer_support/add_message_to_ticket/' + this.props.id,	JSON.stringify(body))
+			axios.post("http://127.0.0.1:8000" +'/customer_support/add_message_to_ticket/' + this.props.id,	JSON.stringify(body))
 			.then(response => {
 
 				this.setState({wasSubmitted: true});

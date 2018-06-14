@@ -10,6 +10,7 @@ import AlertMsg from './Alert';
 import Item from './OrdersItens';
 import AccordionItem from "./Accordion";
 import CPF from 'gerador-validador-cpf';
+import {url_backend } from './Link';
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -81,7 +82,7 @@ class User extends Component {
     handleInfo(event) {
         event.preventDefault();
 
-        axios.get('http://127.0.0.1:8000/website/get_info/')
+        axios.get( "http://127.0.0.1:8000" + '/website/get_info/')
         .then(response => {
 
             const content = response.data.content;
@@ -114,7 +115,7 @@ class User extends Component {
         }
         else {
     
-            axios.get('http://127.0.0.1:8000/website/get_all_orders/')
+            axios.get( "http://127.0.0.1:8000" + '/website/get_all_orders/')
             .then(response => {
                 const orders = response.data.content;
                 // alert(JSON.stringify(orders));
@@ -180,7 +181,7 @@ class User extends Component {
 		}
         this.setState({didSubmit : true})
 
-        axios.post('http://127.0.0.1:8000/website/change_email/', JSON.stringify(body))
+        axios.post( "http://127.0.0.1:8000" + '/website/change_email/', JSON.stringify(body))
         .then(response => {
 
             if (response.data.status === 200) {

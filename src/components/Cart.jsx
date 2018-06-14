@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import {url_backend} from "./Link";
+import {url_backend } from "./Link";
 
 const MiddleDiv = styled.div`
     background-color: whitesmoke;
@@ -117,21 +117,14 @@ class Product extends Component {
 		"product_quantity": number,
 	    };
 
-        axios.post('http://127.0.0.1:8000/cart/update_product/', JSON.stringify(body))
+        axios.post("http://127.0.0.1:8000" + '/cart/update_product/', JSON.stringify(body))
             .then(response => {
-
-<<<<<<< HEAD
-            // alert(JSON.stringify(response.data));
+            
+                // alert(JSON.stringify(response.data));
             if ( response.data.status !== 200) {
                 this.setState({ alertMsg: "Quantidade indisponível em estoque.", msgtype: "error"})
             } else {
                 this.setState({ quantity: number, alertMsg: "Quantidade alterada com sucesso!", msgtype: "success"})
-=======
-		// alert(JSON.stringify(response.data));
-		if ( response.data.status !== 200) {
-                    this.setState({ shouldAlert: true});
-		}
->>>>>>> faa6a351133af674db6c48cccd7716a75f743610
 
             }
             this.setState({ shouldAlert: true})
@@ -150,7 +143,7 @@ class Product extends Component {
 		"product_id": this.props.id,
 	    };
 
-        axios.post('http://127.0.0.1:8000/cart/remove_product/', JSON.stringify(body))
+        axios.post( "http://127.0.0.1:8000" + '/cart/remove_product/', JSON.stringify(body))
         .then(response => {
             this.props.refresh(event);
 
@@ -242,7 +235,7 @@ class Cart extends Component {
     handleLoad(event) {
         event.preventDefault();
     
-        axios.get('http://127.0.0.1:8000/cart/show_cart/')
+        axios.get( "http://127.0.0.1:8000" +'/cart/show_cart/')
         .then(response => {
             const cart = response.data.content;
             // alert(JSON.stringify(cart));
@@ -281,7 +274,7 @@ class Cart extends Component {
 		  "tipoEntrega": "PAC",
 	      };
 
-        axios.post('http://127.0.0.1:8000/cart/get_frete_value/', JSON.stringify(body))
+        axios.post( "http://127.0.0.1:8000" + '/cart/get_frete_value/', JSON.stringify(body))
             .then(response => {
 
 		// const value = response.data;
