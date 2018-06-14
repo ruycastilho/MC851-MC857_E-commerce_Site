@@ -247,6 +247,9 @@ class AccordionItem extends Component {
 						<Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
 							<Container>
 								<Row>
+								<Col className="col-12">
+										Situação do Pedido: {this.props.order_status}						
+									</Col>
 									<Col className="col-12">
 										Tipo de Pagamento: {this.props.type_payment}						
 									</Col>

@@ -126,21 +126,21 @@ class User extends Component {
                                 type_payment={order.type_of_payment}
                                 date_payment={order.date_of_payment}
                                 date_deliver={order.date_of_order}
+                                order_status={order.order_status}
                                 status_payment={order.payment_status}
                                 status_deliver={order.delivery_status}
                                 code={order.delivery_code}
                                 address={order.address}
                                 price={order.price}
-                                orders={order.products.map( (x) => {
+                                orders={order.products.map( (data) => {
                                         return <Item
-                                                name={x.nome}
-                                                src={x.url}
-                                                price={x.price}
-                                                amount={x.quantity}
+                                                name={data.nome}
+                                                src={data.url}
+                                                price={data.price}
+                                                amount={data.quantity}
                                                 />
                                     })}
                             />
-                    // return <AlertMsg msg="Test" type="error"/>
                 });
 
                 this.setState({orders: Test});

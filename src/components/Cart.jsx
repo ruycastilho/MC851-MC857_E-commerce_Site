@@ -101,8 +101,9 @@ class Product extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
         this.state = {
-            quantity: this.state,
+            quantity: this.props.quantity,
             shouldAlert: false,
+            msgtype: ""
         };
     }
 
@@ -120,9 +121,12 @@ class Product extends Component {
 
             // alert(JSON.stringify(response.data));
             if ( response.data.status !== 200) {
-                this.setState({ shouldAlert: true})
-            }
+                this.setState({ alertMsg: "Quantidade indisponível em estoque.", msgtype: "error"})
+            } else {
+                this.setState({ quantity: number, alertMsg: "Quantidade alterada com sucesso!", msgtype: "success"})
 
+            }
+            this.setState({ shouldAlert: true})
 
         })
         .catch(function (error) {
@@ -133,7 +137,6 @@ class Product extends Component {
 
     }
     handleRemove(event) {
-        event.preventDefault();
         const body =
 		{
             "product_id": this.props.id,
@@ -141,6 +144,8 @@ class Product extends Component {
 
         axios.post('http://127.0.0.1:8000/cart/remove_product/', JSON.stringify(body))
         .then(response => {
+            this.props.refresh(event);
+
         })
         .catch(function (error) {
             // alert(error);
@@ -152,7 +157,7 @@ class Product extends Component {
     render() {
 
         const alert = this.state.shouldAlert ? (
-            <AlertMsg type="error" msg="Não há estoque suficiente!" />
+            <AlertMsg type={this.state.msgtype} msg={this.state.alertMsg} />
         ) : (
             null
         );
@@ -171,8 +176,12 @@ class Product extends Component {
                                 <Media heading>
                                 {this.props.name}
                                 </Media>
-                                {this.props.category}
-                                Preço Unitário: {this.props.price}
+                                <Col xs="12">
+                                    {this.props.category}
+                                </Col>
+                                <Col xs="12">
+                                    Preço Unitário: {this.props.price}
+                                </Col>
                             </Media>
                         </div>
                         
@@ -194,7 +203,7 @@ class Product extends Component {
                     <Col className="col-12 col-lg-3">
                         <div className="centerBlock text-center price-text">
                             <PriceText>Subtotal</PriceText>
-                        <PriceText>R${this.props.quantity*this.props.price}</PriceText>
+                        <PriceText>R$ {Math.round((this.state.quantity*this.props.price) * 100)/100}</PriceText>
                         </div>                                    
                     </Col>      
                 </Row>
@@ -225,8 +234,6 @@ class Cart extends Component {
     handleLoad(event) {
         event.preventDefault();
     
-        // var func = this.handleLoad;
-
         axios.get('http://127.0.0.1:8000/cart/show_cart/')
         .then(response => {
             const cart = response.data.content;
@@ -237,6 +244,7 @@ class Cart extends Component {
                 prod_cost += product.price*product.quantity;
 
                 return  <Product
+                            refresh={this.handleLoad}
                             id={product.id}
                             name={product.nome}
                             category={product.category}
@@ -292,12 +300,22 @@ class Cart extends Component {
 
   render() {
 
-    const finalize = this.props.isLoggedIn ? (
-        // this.state.cart.lenght for zero dar alerta
-        <Link to="/Pagamento"><Button color="danger">Finalizar Compra</Button></Link>
-    ) : (
-        <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
-    );
+    var finalize;
+
+    if (this.props.isLoggedIn === false ) {
+        finalize = <AlertMsg msg="Faça Login para Finalizar Compra!" type="error" />
+
+    } else if ( this.state.products.length === 0 ) {
+        finalize = <AlertMsg msg="É necessário adicionar algum produto" type="error" />
+    
+    } else if (this.state.deliveryCost === 0) {
+        finalize = <AlertMsg msg="É necessário calcular o frete!" type="error" />
+
+    }
+    else {
+        finalize = <Link to="/Pagamento"><Button color="danger">Finalizar Compra</Button></Link>
+
+    }
 
     return (
         <div>
@@ -333,13 +351,13 @@ class Cart extends Component {
 
                             <Col className="col-12" >
                                 <Text>Custo dos Produtos</Text>
-                                <PriceText>R$: {this.state.productsCost}</PriceText>
+                                <PriceText>R$: {Math.round(this.state.productsCost * 100)/100}</PriceText>
 
                                 <Text>Custo do Frete</Text>
-                                <PriceText>R$: {this.state.deliveryCost}</PriceText>
+                                <PriceText>R$: {Math.round(this.state.deliveryCost * 100)/100}</PriceText>
 
                                 <Text>Custo Total</Text>
-                                <PriceText>R$: {this.state.productsCost + this.state.deliveryCost}</PriceText>
+                                <PriceText>R$: {Math.round((this.state.productsCost + this.state.deliveryCost) * 100)/100}</PriceText>
 
 
                             </Col>
