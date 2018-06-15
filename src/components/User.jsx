@@ -126,7 +126,7 @@ class User extends Component {
                                 id={order.order_id}
                                 type_payment={order.type_of_payment}
                                 date_payment={order.date_of_payment}
-                                date_deliver={order.date_of_order}
+                                date_deliver={order.date_of_delivery}
                                 order_status={order.order_status}
                                 status_payment={order.payment_status}
                                 status_deliver={order.delivery_status}

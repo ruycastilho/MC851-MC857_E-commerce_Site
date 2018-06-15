@@ -258,7 +258,7 @@ class AccordionItem extends Component {
 										Data do Pagamento: {this.props.date_payment}						
 									</Col>
 									<Col className="col-12">
-										Data da Entrega: {this.props.date_deliver}	
+										Tempo para Entrega: {this.props.date_deliver} dias.	
 									</Col>
 									<Col className="col-12">
 										Situação do Pagamento: {this.props.status_payment}								

@@ -110,7 +110,7 @@ class Signup extends Component {
 
         // alert(name + " " + pwd + " " + email + " " + cpf + " " + address);
 
-		axios.post({url_backend} +'/website/createuser/',	JSON.stringify(body))
+		axios.post("http://127.0.0.1:8000" +'/website/createuser/',	JSON.stringify(body))
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {

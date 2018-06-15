@@ -40,14 +40,14 @@ const Logo = styled.img`
 class Header extends Component {
     constructor(props) {
 	super(props);
-	this.state = {
-	    isOpen: false,
-	    loginAttempt: 0,
-	};
+		this.state = {
+			isOpen: false,
+			loginAttempt: 0,
+		};
 
-	this.toggle = this.toggle.bind(this);
-	this.handleLogin = this.handleLogin.bind(this);
-	this.handleLogout = this.handleLogout.bind(this);
+		this.toggle = this.toggle.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
     }
 
     checkAttempt(){
@@ -132,51 +132,50 @@ class Header extends Component {
 
 	const shownElement = isLoggedIn ? (
 
-	    <Nav className="ml-auto" right navbar >
-			<NavItem>
-				<h1>Boas vindas, {this.props.username}!</h1>
+		<Nav className="ml-auto" right navbar >
+			<NavItem >
+				<h3>Boas vindas, {this.props.username}!</h3>
 			</NavItem>
-	      
-			<Link to='/Conta' id="link" style={{"min-width":"40px","line-height":"3em"}}>
+			<Link to='/Conta' id="link" style={{"min-width":"40px","line-height":"4.0em"}}>
 				<FA.FaUser style={{"color":"coral", "font-size":"1.5em",}}/>
 			</Link>
-	      
-	        <NavItem>
+			
+			<NavItem>
 				<Form>
 					<Button type="button" onClick={this.handleLogout}>Sair</Button>
 				</Form>
-	        </NavItem>
-	    </Nav>
+			</NavItem>
+			<Link to='/Carrinho' className="text-center link" style={{"min-width":"40px","line-height":"3.5em"}}>
+				<img alt="cart" src={cart} id="carrinho"></img>
+			</Link>
+		</Nav>
 
 	) : (
-	    <Form  className="ml-auto container-fluid" id="loginForm" onSubmit={this.handleLogin}>
-	    	<Nav className="ml-auto row"  navbar >
-				<NavItem className="col-12 col-md-3">
-					<FormGroup className="col-12">
-						<Input id="loginId" type="text" placeholder="Nome" className="col-12" ></Input>
+		<Form inline className="ml-auto" id="loginForm" onSubmit={this.handleLogin}>
+			<Nav className="ml-auto" right navbar >
+				<NavItem>
+					<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+						<Input id="loginId" type="text" placeholder="Nome" ></Input>
 					</FormGroup>
 				</NavItem>
-
-				<NavItem className="col-12 col-md-3">
-					<FormGroup className="col-12">
-						<Input id="loginPwd" type="password" placeholder="Senha"  className="col-12"></Input>
+				<NavItem>
+					<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+						<Input id="loginPwd" type="password" placeholder="Senha" ></Input>
 					</FormGroup>
 				</NavItem>
-
-				<NavItem className="col-12 col-md-3">
+				<NavItem className="mr-sm-2" >
 					<Button id="">Entrar</Button>
 				</NavItem>
-
-				<NavItem className="col-12 col-md-3">
-					<Link to='/Cadastro' id="link" className="">
-						<Button id=""> Cadastrar </Button>
-					</Link>
+					<NavItem>
+				<Link to='/Cadastro' id="link"><Button id=""> Cadastrar </Button></Link>
 				</NavItem>
 			</Nav>
-	    </Form>
+			<Link to='/Carrinho' className="link" style={{"min-width":"40px","line-height":"3.5em"}}>
+				<img alt="cart" src={cart} id="carrinho"></img>
+			</Link>
+		</Form>
 
 	);
-
 	
 	return (
 	    <div>
@@ -186,9 +185,7 @@ class Header extends Component {
 				<NavbarToggler onClick={this.toggle} />
 				<Collapse isOpen={this.state.isOpen} navbar id="loginForm"  >
 					{shownElement}
-					<Link to='/Carrinho' className="link">
-						<img alt="cart" src={cart} id="carrinho"></img>
-					</Link>
+		
 				</Collapse>
 	      	</Navbar>
 	    	{error}

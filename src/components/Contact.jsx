@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import AlertMsg from './Alert';
 import axios from 'axios';
 import $ from 'jquery';
-import {url_backend} from './Link';
+import {url_backend } from './Link';
 
 class Contact extends Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class Contact extends Component {
 			};	
 
 			
-			axios.post({url_backend} +'/customer_support/add_ticket/',	JSON.stringify(body))
+			axios.post("http://127.0.0.1:8000" +'/customer_support/add_ticket/',	JSON.stringify(body))
 			.then(response => {
 
 				if (response.data.status === 201) {
@@ -67,7 +67,7 @@ class Contact extends Component {
 
 			};	
 
-			axios.post({url_backend} +'/customer_support/add_ticket_order/',	JSON.stringify(body))
+			axios.post("http://127.0.0.1:8000" +'/customer_support/add_ticket_order/',	JSON.stringify(body))
 			.then(response => {
 
 				if (response.data.status === 201) {
@@ -101,7 +101,7 @@ class Contact extends Component {
 		// alert("!");
 		if (this.props.isLoggedIn && x === 1) {
 		
-			axios.get({url_backend} +'/customer_support/get_all_tickets/')
+			axios.get("http://127.0.0.1:8000" +'/customer_support/get_all_tickets/')
 			.then(response => {
 				const tickets = response.data.content;
 				// alert(JSON.stringify(response.data.content));

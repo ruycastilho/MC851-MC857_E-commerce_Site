@@ -152,12 +152,16 @@ class Payment extends Component {
                 this.setState({wasSuccess: true});
 
 			}
-			else {
-
+			else if (response.data.status === 404) {
                 this.setState({ wasSuccess: false,
-                                errorMsg: "Falha no Pagamento."});
+                                errorMsg: "Falha no Pagamento devido ao crédito."});
 
-			}
+            }
+            else if (response.data.status === 400) {
+                this.setState({ wasSuccess: false,
+                    errorMsg: "Falha no Pagamento devido a CEP inválido."});
+
+            }
             this.setState({didSubmit : true})
 		
 		})
@@ -222,12 +226,16 @@ class Payment extends Component {
                 this.setState({wasSuccess: true});
 
 			}
-			else {
-
+			else if (response.data.status === 404) {
                 this.setState({ wasSuccess: false,
-                                errorMsg: "Falha no Pagamento."});
+                                errorMsg: "Falha no Pagamento devido ao crédito."});
 
-			}
+            }
+            else if (response.data.status === 400) {
+                this.setState({ wasSuccess: false,
+                    errorMsg: "Falha no Pagamento devido a CEP inválido."});
+
+            }
             this.setState({didSubmit : true})
 		
 		})
@@ -251,6 +259,19 @@ class Payment extends Component {
 
     }
 
+    var button;
+
+    if (this.state.didSubmit && this.state.wasSuccess ) {
+        button = null;
+    }
+    else if ( this.state.didSubmit && ( this.state.errorMsg === "Falha no Pagamento devido a CEP inválido."|| this.state.errorMsg === "Falha no Pagamento devido ao crédito.") ) {
+        button = null;
+    }
+    else {
+        button = <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Finalizar</Button>;
+
+    }
+    
     const paymentMethod = this.state.typeOfPayment === "creditCard" ? (
         <Container>
             <Form id="payForm" onSubmit={(e) => {this.handleCard(e)} } className="form-group" >
@@ -282,7 +303,7 @@ class Payment extends Component {
                     <Label for="data">CEP</Label>
                     <Input name="data" id="cep" placeholder="Digite o CEP" />
                 </FormGroup>
-                <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Finalizar</Button>
+                {button}
             </Form>
 
         </Container>
@@ -306,7 +327,7 @@ class Payment extends Component {
                     <Label for="cpf">CPF</Label>
                     <Input name="cpf" id="cpfSlip" placeholder="Digite seu CPF aqui" />
                 </FormGroup>
-                <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Finalizar</Button>
+                {button}
             </Form>
 
         </Container>

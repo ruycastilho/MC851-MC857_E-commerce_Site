@@ -229,6 +229,8 @@ class Cart extends Component {
             products: [],
             deliveryCost: 0.0,
             productsCost: 0.0,
+            deliveryAlert: false,
+            deliveryAlertType: ""
         };
     }
 
@@ -266,27 +268,35 @@ class Cart extends Component {
 
     handleDelivery(event) {
         event.preventDefault();
-	var cep = $("#cepForm").val();
+	    var cep = $("#cepForm").val();
 
         const body =
-	      {
-		  "CEP": cep,
-		  "tipoEntrega": "PAC",
-	      };
+        {
+            "CEP": cep,
+            "tipoEntrega": "PAC",
+        };
 
         axios.post( "http://127.0.0.1:8000" + '/cart/get_frete_value/', JSON.stringify(body))
-            .then(response => {
+        .then(response => {
 
-		// const value = response.data;
-		// alert(JSON.stringify(response.data));
-		this.setState({ deliveryCost: response.data.content });
+            // const value = response.data;
+            // alert(JSON.stringify(response.data));
+            if (response.data.status === 404 ) {
+                this.setState({ deliveryAlert: true, deliveryAlertType: "Failure" });
+
+            }
+            else {
+                this.setState({ deliveryCost: response.data.content,
+                                deliveryAlert: true,
+                                deliveryAlertType: "Success" });
+            }
 
 
-            })
-            .catch(function (error) {
-		// alert(error);
+        })
+        .catch(function (error) {
+            // alert(error);
 
-            });
+        });
 
 
     }
@@ -300,6 +310,38 @@ class Cart extends Component {
 
 
     render() {
+
+    const alertdelivery = this.state.deliveryAlert ? (
+        this.state.deliveryAlertType === "Success" ? (
+            <AlertMsg type="success" msg="Frete calculado!"/>
+
+        ) : (
+            <AlertMsg type="error" msg="CEP inválido"/>
+        )
+    ) : (
+        null
+    );
+
+    const delivery = this.state.products.length !== 0 ? (
+        <Col className="col-12" >
+            <Form onSubmit={(e) => {this.handleDelivery(e)}}>
+                <Text>Cálculo do Frete</Text>
+                <InputGroup>
+                    <InputGroupAddon addonType="prepend">
+                        <InputGroupText color="link">CEP</InputGroupText>
+                    </InputGroupAddon>
+                    <Input id="cepForm" placeholder="Digite seu CEP" />
+                    <InputGroupAddon addonType="append">
+                        <Button type="submit" color="info">Calcular</Button>
+                    </InputGroupAddon>
+                </InputGroup>
+            </Form>
+        </Col>
+    ) : (
+        <Col className="col-12" >
+        </Col>
+
+    );
 
     var finalize;
 
@@ -334,21 +376,7 @@ class Cart extends Component {
                     </Col>
                     <Col className="col-12 col-lg-4">
                         <MiddleRightDiv>
-                            
-                            <Col className="col-12"  >
-                                <Form onSubmit={(e) => {this.handleDelivery(e)}}>
-                                    <Text>Cálculo do Frete</Text>
-                                    <InputGroup>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText color="link">CEP</InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input id="cepForm" placeholder="Digite seu CEP" />
-                                        <InputGroupAddon addonType="append">
-                                            <Button type="submit" color="info">Calcular</Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                </Form>
-                            </Col>
+                            {delivery}
 
                             <Col className="col-12" >
                                 <Text>Custo dos Produtos</Text>
@@ -376,6 +404,7 @@ class Cart extends Component {
 
                 </Row>
               </MiddleDiv>
+              {alertdelivery}
             </div>
 
 	);
