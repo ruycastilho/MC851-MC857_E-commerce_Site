@@ -123,15 +123,17 @@ class User extends Component {
                 const Test = orders.map(order => {
                     return  <AccordionItem
                                 type="Order"
+                                track_id={order.track_id}
+                                slip_code={order.slip_code}
                                 id={order.order_id}
                                 type_payment={order.type_of_payment}
                                 date_payment={order.date_of_payment}
                                 date_deliver={order.date_of_delivery}
+                                date_order={order.date_of_order}
                                 order_status={order.order_status}
                                 status_payment={order.payment_status}
                                 status_deliver={order.delivery_status}
-                                code={order.delivery_code}
-                                address={order.address}
+                                address={order.delivery_code}
                                 price={order.price}
                                 orders={order.products.map( (data) => {
                                         return <Item

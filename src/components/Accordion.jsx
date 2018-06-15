@@ -237,11 +237,23 @@ class AccordionItem extends Component {
 
 			}
 			else if (this.props.type === "Order") {
-				// adicionar detalhes de pedido:
-				//     detalhes da compra: nome do item, o valor unitário, quantidade de itens comprados, valor total dos itens, valor total da compra e
-				//     endereço de entrega, datas de compras, de entrega, código de rastreio, situação de pagamento, situação de
-				//     entrega. ORDENADOS do mais novo pro mais antigo
 
+				const payment = this.props.type_payment === "Cartão de Crédito" ? (
+					<Col className="col-12">
+						Data do Pagamento: {this.props.date_payment}						
+					</Col>
+				) : (
+					null
+
+				);
+
+				const payment = this.props.type_payment === "Cartão de Crédito" ? (
+					null
+				) : (
+					<Col className="col-12">
+						Código do Boleto: {this.props.slip_code}						
+					</Col>
+				);
 				return (
 					<div style={itemstyle}>
 						<Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
@@ -254,9 +266,11 @@ class AccordionItem extends Component {
 									<Col className="col-12">
 										Tipo de Pagamento: {this.props.type_payment}						
 									</Col>
+									{slip}
 									<Col className="col-12">
-										Data do Pagamento: {this.props.date_payment}						
+										Data do Pedido: {this.props.date_order}						
 									</Col>
+									{payment}
 									<Col className="col-12">
 										Tempo para Entrega: {this.props.date_deliver} dias.	
 									</Col>
@@ -267,7 +281,7 @@ class AccordionItem extends Component {
 										Situação da Entrega: {this.props.status_deliver}
 									</Col>
 									<Col className="col-12">
-										Código de Rastreio: {this.props.code}
+										Código de Rastreio: {this.props.track_id}
 									</Col>
 									<Col className="col-12">
 										Endereço de Entrega: {this.props.address}
