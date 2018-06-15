@@ -124,7 +124,7 @@ class User extends Component {
                     return  <AccordionItem
                                 type="Order"
                                 track_id={order.track_id}
-                                slip_code={order.slip_code}
+                                slip_code={order.slip_id}
                                 id={order.order_id}
                                 type_payment={order.type_of_payment}
                                 date_payment={order.date_of_payment}
@@ -147,21 +147,11 @@ class User extends Component {
                 });
 
                 this.setState({orders: Test});
-                // if (response.data.status === 201) {
-                //     this.setState({wasSuccess: true});
 
-                // }
-                // else {
-                //     this.setState({wasSuccess: false});
-
-                // }
-                // this.setState({wasSubmitted: true});
 
             })
             .catch(function (error) {
                 // alert(error);
-                // this.setState({wasSuccess: false});
-                // this.setState({wasSubmitted: true});
 
             });	
 

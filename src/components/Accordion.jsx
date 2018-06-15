@@ -247,7 +247,7 @@ class AccordionItem extends Component {
 
 				);
 
-				const payment = this.props.type_payment === "Cartão de Crédito" ? (
+				const slip = this.props.type_payment === "Cartão de Crédito" ? (
 					null
 				) : (
 					<Col className="col-12">
@@ -259,7 +259,7 @@ class AccordionItem extends Component {
 						<Toggle  onClick={this.toggle} style={togglestyle} >ID: {this.props.id}</Toggle>
 						<Collapse isOpen={this.state.collapse} style={collapsiblestyle}>
 							<Container>
-								<Row>
+								<Row>	
 								<Col className="col-12">
 										Situação do Pedido: {this.props.order_status}						
 									</Col>
@@ -287,7 +287,7 @@ class AccordionItem extends Component {
 										Endereço de Entrega: {this.props.address}
 									</Col>
 									<Col className="col-12">
-										Preço Total: {this.props.price}
+										Preço Total: R$ {this.props.price}
 									</Col>
 									<Col className="col-12">
 										Lista de Produtos:

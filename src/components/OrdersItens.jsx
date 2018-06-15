@@ -8,11 +8,11 @@ class Item extends Component {
     render() {
 
 				return (
-						<Col className="col-3">
+						<Col className="col-12 col-lg-4">
 								<Card>
 										<CardBody>
 											<Col className="col-12">
-													<img alt="image" className="col-6 offset-3 offset-md-0 col-md-12" src={this.props.src} />
+													<img alt="image" className="col-12 offset-md-0" src={this.props.src} />
 											</Col>
 											<Col className="col-12 text-center">
 												<Col>
@@ -22,7 +22,7 @@ class Item extends Component {
 														<Label >Quantidade: {this.props.amount} </Label>
 													</Col>
 													<Col>
-														<Label >Preço Unitário: {this.props.price} </Label>
+														<Label >Preço Unitário: R$ {this.props.price} </Label>
 													</Col>
 											</Col>
 									</CardBody>

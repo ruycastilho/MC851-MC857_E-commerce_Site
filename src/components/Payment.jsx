@@ -113,7 +113,7 @@ class Payment extends Component {
 
         }
 
-        CPF.format(cpf, 'digits');
+        cpf = CPF.format(cpf, 'digits');
         var formatted_cep = cep;
         formatted_cep.substring(1,5);
         formatted_cep.concat("-");
@@ -191,11 +191,13 @@ class Payment extends Component {
 
         if (!CPF.validate(cpf)) {
             this.setState({ wasSuccess: false,
-                            errorMsg: "CPF inválido."});
+                            errorMsg: "CPF inválido.",
+                            didSubmit : true,
+                        });
             return;
         }
 
-        CPF.format(cpf, 'digits');
+        cpf = CPF.format(cpf, 'digits');
         var formatted_cep = cep;
         formatted_cep.substring(1,5);
         formatted_cep.concat("-");
@@ -223,8 +225,8 @@ class Payment extends Component {
 		.then(response => {
             // alert(response.data.status);
 			if (response.data.status === 200) {
+                
                 this.setState({wasSuccess: true});
-
 			}
 			else if (response.data.status === 404) {
                 this.setState({ wasSuccess: false,

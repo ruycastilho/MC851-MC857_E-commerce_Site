@@ -145,6 +145,18 @@ class Signup extends Component {
 
     }
 
+    var button;
+    if (this.state.didSubmit ) {
+        button = this.state.wasSuccess ? (
+            null
+        ) : (
+        <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Cadastrar</Button>
+        )
+    } else {
+        button = <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Cadastrar</Button>
+
+    }
+
     return (
         <div>
             <TopDiv>
@@ -176,7 +188,7 @@ class Signup extends Component {
                             <Label for="address">Endereço</Label>
                             <Input id="signupAddr" type="address" name="address" placeholder="Digite seu endereço aqui" />
                         </FormGroup>
-                        <Button type="submit" className=" col-12 col-sm-12 col-md-6 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4" >Cadastrar</Button>
+                        {button}
                     </Form>
 
                 </Container>
